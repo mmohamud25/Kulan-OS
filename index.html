@@ -24,6 +24,27 @@
 .th-dim{--bg:#0f1117;--sf:#161820;--sf2:#1c1f2a;--sf3:#222636;--t1:#d8daf0;--t2:#6870a0;--t3:#30364a;}
 .th-warm{--bg:#0e0a07;--sf:#15110c;--sf2:#1c1710;--sf3:#231d15;--t1:#f0e8df;--t2:#8c7a68;--t3:#46372a;--bd:rgba(255,200,150,0.07);--acc:#e07a40;}
 .th-green{--bg:#070f08;--sf:#0c1610;--sf2:#101d13;--sf3:#152417;--t1:#dff0e3;--t2:#6a9070;--t3:#2a4030;--bd:rgba(100,200,100,0.07);--acc:#2eb86a;}
+/* Light Pro — clean white, indigo accent, shadow depth */
+.th-lightpro{--bg:#f0f1f5;--sf:#ffffff;--sf2:#f7f8fc;--sf3:#edeef5;--t1:#0a0a0a;--t2:#4a5270;--t3:#b8bcd0;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.12);--sh:0 1px 4px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.06);--acc:#4361ee;}
+/* Dark Refined — deeper black, high contrast text */
+.th-darkref{--bg:#06070c;--sf:#0c0e16;--sf2:#11141f;--sf3:#181b28;--t1:#edf0fa;--t2:#6878a0;--t3:#2e3448;--bd:rgba(255,255,255,0.055);--bd2:rgba(255,255,255,0.1);--sh:0 4px 20px rgba(0,0,0,0.5);--acc:#5b8def;}
+/* Sharp Mono — black borders, near-zero color, editorial */
+.th-sharpmono{--bg:#f5f5f5;--sf:#ffffff;--sf2:#f0f0f0;--sf3:#e8e8e8;--t1:#0a0a0a;--t2:#555555;--t3:#bbbbbb;--bd:rgba(0,0,0,0.88);--bd2:rgba(0,0,0,1);--sh:3px 3px 0 rgba(0,0,0,0.88);--acc:#0a0a0a;}
+/* Sharp Mono special overrides */
+.th-sharpmono .card,.th-sharpmono .scard,.th-sharpmono .pc,.th-sharpmono .kcol,.th-sharpmono .tc,.th-sharpmono .jc,.th-sharpmono .fitem,.th-sharpmono .sdi,.th-sharpmono .rv-c,.th-sharpmono .set-c{border-width:2px;border-style:solid;border-color:#0a0a0a;box-shadow:3px 3px 0 rgba(0,0,0,0.15);}
+.th-sharpmono .btn-c{background:#0a0a0a!important;border-color:#0a0a0a!important;}
+.th-sharpmono .ni.act::before{background:#0a0a0a;}
+.th-sharpmono .ni.act{background:#f0f0f0;}
+.th-sharpmono #sb{border-right:2px solid #0a0a0a;}
+.th-sharpmono .sb-brand{border-bottom:2px solid #0a0a0a;}
+.th-sharpmono #sb-foot{border-top:2px solid #0a0a0a;}
+.th-sharpmono #topbar{border-bottom:2px solid #0a0a0a;}
+.th-sharpmono .kula-topbtn{border-color:#0a0a0a!important;background:#0a0a0a!important;color:#fff!important;}
+.th-sharpmono .m-kula-btn,.th-sharpmono #kula-btn{border-color:#0a0a0a;background:#0a0a0a;color:#fff;}
+.th-sharpmono .pb-f{background:#0a0a0a!important;}
+.th-sharpmono .tpill{background:#0a0a0a14;color:#0a0a0a;}
+.th-sharpmono .bdg{background:#0a0a0a0a;color:#0a0a0a;border-color:#0a0a0a30;}
+.th-sharpmono .th-o{border-width:2px;}
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;}
@@ -370,7 +391,7 @@ select.fi2{cursor:pointer;}
 .srow:last-child{border-bottom:none;}
 .srlbl{font-size:13px;font-weight:500;margin-bottom:2px;}
 .srsub{font-size:11px;color:var(--t3);}
-.theme-g{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:3px;}
+.theme-g{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-top:3px;}
 .th-o{border-radius:8px;border:2px solid transparent;overflow:hidden;transition:all 0.14s;padding:0;}
 .th-o.sel{border-color:var(--acc);}
 .th-sw{height:40px;display:flex;align-items:flex-end;padding:5px;}
@@ -508,6 +529,7 @@ svg{display:block;}
       <button class="k-mode" data-mode="job">💼 Job Coaching</button>
       <button class="k-mode" data-mode="study">📚 Study Mode</button>
       <button class="k-mode" data-mode="quiz">🧠 Quiz Me</button>
+      <button class="k-mode" data-mode="linkedin">🔗 LinkedIn</button>
     </div>
     <div id="k-msgs"></div>
     <div class="k-foot">
@@ -602,7 +624,7 @@ const {createClient}=supabase;
 const db=createClient(SURL,SKEY);
 
 // ── THEMES & FONT ────────────────────────────────────────────
-const THEMES={dark:{label:'Dark',bg:'#08090e',sf:'#0e1018',acc:'#5b8def'},dim:{label:'Dim',bg:'#0f1117',sf:'#161820',acc:'#5b8def'},warm:{label:'Warm',bg:'#0e0a07',sf:'#15110c',acc:'#e07a40'},green:{label:'Forest',bg:'#070f08',sf:'#0c1610',acc:'#2eb86a'},light:{label:'Light',bg:'#f0f1f5',sf:'#ffffff',acc:'#3b6ef5'}};
+const THEMES={dark:{label:'Dark',bg:'#08090e',sf:'#0e1018',acc:'#5b8def'},dim:{label:'Dim',bg:'#0f1117',sf:'#161820',acc:'#5b8def'},warm:{label:'Warm',bg:'#0e0a07',sf:'#15110c',acc:'#e07a40'},green:{label:'Forest',bg:'#070f08',sf:'#0c1610',acc:'#2eb86a'},light:{label:'Light',bg:'#f0f1f5',sf:'#ffffff',acc:'#3b6ef5'},lightpro:{label:'Light Pro',bg:'#f0f1f5',sf:'#ffffff',acc:'#4361ee'},darkref:{label:'Dark+',bg:'#06070c',sf:'#0c0e16',acc:'#5b8def'},sharpmono:{label:'Mono',bg:'#f5f5f5',sf:'#ffffff',acc:'#0a0a0a'}};
 const FSM={small:'13px',medium:'14px',large:'16px',xl:'18px'};
 let curTheme=localStorage.getItem('kos-theme')||'dark';
 let curFS=localStorage.getItem('kos-fs')||'medium';
@@ -617,12 +639,13 @@ const NAVITEMS=[
   {id:'tasks',    label:'Tasks',    group:'main'},
   {id:'focus',    label:'Weekly Focus',group:'main'},
   {id:'goals',    label:'Goals',    group:'main'},
-  {id:'career',   label:'Career',   group:'tools'},
-  {id:'infra',    label:'Infrastructure',group:'tools'},
-  {id:'study',    label:'Study Tracker',group:'tools'},
-  {id:'someday',  label:'Parking Lot',group:'tools'},
-  {id:'log',      label:'Daily Log', group:'tools'},
-  {id:'review',   label:'Weekly Review',group:'tools'},
+  {id:'career',    label:'Career',       group:'tools'},
+  {id:'ecosystem', label:'Ecosystem',    group:'tools'},
+  {id:'infra',     label:'Infrastructure',group:'tools'},
+  {id:'study',     label:'Study Tracker',group:'tools'},
+  {id:'someday',   label:'Parking Lot', group:'tools'},
+  {id:'log',       label:'Daily Log',   group:'tools'},
+  {id:'review',    label:'Weekly Review',group:'tools'},
   {id:'settings', label:'Settings', group:'system'},
 ];
 // SVG paths for nav icons
@@ -632,7 +655,8 @@ const NICONS={
   tasks:'<path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>',
   focus:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
   goals:'<path d="M13 10V3L4 14h7v7l9-11h-7z"/>',
-  career:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>',
+  career:  '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>',
+  ecosystem:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>',
   infra:'<rect x="2" y="3" width="20" height="5" rx="1"/><rect x="2" y="11" width="20" height="5" rx="1"/><circle cx="6" cy="5.5" r="1"/><circle cx="6" cy="13.5" r="1"/>',
   study:'<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>',
   someday:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
@@ -641,8 +665,8 @@ const NICONS={
   settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>',
 };
 // Section colors
-const NC={dashboard:'var(--c-d)',projects:'var(--c-p)',tasks:'var(--c-t)',focus:'var(--c-f)',goals:'var(--c-g)',career:'var(--c-ca)',infra:'var(--c-i)',study:'var(--c-st)',someday:'var(--c-pk)',log:'var(--c-l)',review:'var(--c-rv)',settings:'var(--c-se)'};
-const NCH={dashboard:'#5b8def',projects:'#22c55e',tasks:'#f59e0b',focus:'#a78bfa',goals:'#fb7185',career:'#22d3ee',infra:'#38bdf8',study:'#fb923c',someday:'#94a3b8',log:'#2dd4bf',review:'#e879f9',settings:'#64748b'};
+const NC={dashboard:'var(--c-d)',projects:'var(--c-p)',tasks:'var(--c-t)',focus:'var(--c-f)',goals:'var(--c-g)',career:'var(--c-ca)',ecosystem:'var(--c-i)',infra:'var(--c-i)',study:'var(--c-st)',someday:'var(--c-pk)',log:'var(--c-l)',review:'var(--c-rv)',settings:'var(--c-se)'};
+const NCH={dashboard:'#5b8def',projects:'#22c55e',tasks:'#f59e0b',focus:'#a78bfa',goals:'#fb7185',career:'#22d3ee',ecosystem:'#06b6d4',infra:'#38bdf8',study:'#fb923c',someday:'#94a3b8',log:'#2dd4bf',review:'#e879f9',settings:'#64748b'};
 
 const SM={complete:{l:'Complete',c:'#22c55e'},live:{l:'Live',c:'#5b8def'},active:{l:'Active',c:'#a78bfa'},'in-progress':{l:'In Progress',c:'#f59e0b'},'at-risk':{l:'At Risk',c:'#fb7185'},pending:{l:'Pending',c:'#64748b'},stable:{l:'Stable',c:'#22c55e'},todo:{l:'To Do',c:'#64748b'},review:{l:'In Review',c:'#5b8def'},done:{l:'Done',c:'#22c55e'}};
 const PM={urgent:{l:'Urgent',c:'#fb7185'},high:{l:'High',c:'#f59e0b'},medium:{l:'Medium',c:'#a78bfa'},low:{l:'Low',c:'#22c55e'}};
@@ -799,6 +823,7 @@ function updateModeSugs(){
     job:['How should I prepare for a SOC Analyst interview?','What skills should I highlight for IT Security Analyst roles?','Review my background for cybersecurity roles','What certifications matter most for my target roles?'],
     study:['Explain Security+ Domain 2: Threats and Vulnerabilities','What are the key concepts for ISC2 CC?','What should I study next?','Compare SOC Analyst day-to-day vs IT Security Analyst'],
     quiz:['Quiz me on Security+ Domain 1','Quiz me on Threats and Vulnerabilities','Quiz me on ISC2 CC Security Principles','Generate 3 Security+ practice questions'],
+    linkedin:['Draft today\'s LinkedIn post based on my activity','Write a Security+ study update post','Write a post about Kulan Group\'s latest work','Draft a post about my cybersecurity journey'],
   };
   const list=sugs[kMode]||sugs.chat;
   sugsEl.innerHTML=list.map(q=>`<button class="ks" data-q="${esc(q)}">${q}</button>`).join('');
@@ -889,6 +914,7 @@ async function sendKula(text){
     job:'\n\nCurrent mode: JOB COACHING. Focus on giving Muzz specific, actionable interview prep and job search coaching based on his actual background (WGU MS Cybersecurity, CompTIA Security+ SY0-701 in progress, Desktop Technician at Franklin University, Security Officer at Allied Universal, Founder of Kulan Institute). Target roles: SOC Analyst and IT Security Analyst in Columbus OH.',
     study:'\n\nCurrent mode: STUDY MODE. Act as a cybersecurity study coach. Give clear, structured explanations of security concepts. Reference the specific domains and topics in his study tracker. Suggest what to study next based on his progress.',
     quiz:'\n\nCurrent mode: QUIZ MODE. Generate 1-3 practice questions in multiple choice format (A, B, C, D). Format each question clearly with the question on its own line, then options labeled A), B), C), D). After the user answers, explain why the correct answer is correct.',
+    linkedin:`\n\nCurrent mode: LINKEDIN DRAFT. Write a LinkedIn post for Muzz to publish. STRICT RULES:\n- 150-250 words\n- First-person but NEVER start with "I"\n- Max 2 emojis in the whole post\n- End with one short engagement question\n- No em dashes anywhere\n- No AI phrases: no "leverage", "delve", "game-changer", "in today's world", "excited to share"\n- No source links, no article titles in the text\n- No hashtags\n- Natural, conversational, human tone\n- Draw from his actual work: cybersecurity, Security+, WGU, Kulan Institute, IT support, Franklin University\n- Use his recent log entries and project activity as the basis if drafting about recent work\n- After the post, show: word count, starts with what word, emoji count\n- Wrap the final post in a code block so he can copy it easily`,
   };
 
   try{
@@ -900,6 +926,7 @@ async function sendKula(text){
     if(data.content&&data.content[0]){
       const reply=data.content[0].text;
       if(kMode==='quiz'){handleQuizResponse(reply);}
+      else if(kMode==='linkedin'){handleLinkedInResponse(reply);}
       else{addKMsg('ai',reply);}
       const action=parseAction(reply);
       if(action)showActBar(action,descAct(action));
@@ -1793,6 +1820,9 @@ function bindEvents(){
   mi.querySelectorAll('[data-theme]').forEach(b=>{b.onclick=()=>{applyTheme(b.dataset.theme);render();};});
   mi.querySelectorAll('[data-fsset]').forEach(b=>{b.onclick=()=>{applyFS(b.dataset.fsset);render();};});
 
+  // Sync buttons
+  mi.querySelectorAll('[data-sync]').forEach(b=>{b.onclick=()=>syncApp(b.dataset.sync);});
+
   // Modal backdrop
   document.getElementById('mo').onclick=e=>{if(e.target===document.getElementById('mo'))closeM();};
 
@@ -1810,7 +1840,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='/'&&!typing){e.preventDefault();openQA();return;}
   if(!typing){
     if(e.key==='g'){gBuf='g';setTimeout(()=>{gBuf='';},800);return;}
-    if(gBuf==='g'){const map={d:'dashboard',p:'projects',t:'tasks',f:'focus',g:'goals',c:'career',i:'infra',s:'study',l:'log',r:'review'};if(map[e.key]){S.section=map[e.key];S.selProj=null;gBuf='';render();}gBuf='';}
+    if(gBuf==='g'){const map={d:'dashboard',p:'projects',t:'tasks',f:'focus',g:'goals',c:'career',e:'ecosystem',i:'infra',s:'study',l:'log',r:'review'};if(map[e.key]){S.section=map[e.key];S.selProj=null;gBuf='';render();}gBuf='';}
   }
 });
 
@@ -1842,6 +1872,159 @@ document.getElementById('sb-ov').onclick=closeMob;
 document.querySelectorAll('.bni[data-nav]').forEach(b=>{b.onclick=()=>{S.section=b.dataset.nav;S.selProj=null;render();};});
 
 // ── RENDER ────────────────────────────────────────────────────
+// ── LINKEDIN POST HANDLER ─────────────────────────────────────
+function handleLinkedInResponse(text){
+  const clean=text.replace(/<action>[\s\S]*?<\/action>/g,'').trim();
+  // extract code block if present
+  const codeMatch=clean.match(/```[\s\S]*?\n([\s\S]*?)```/);
+  const postText=codeMatch?codeMatch[1].trim():clean;
+  const box=document.getElementById('k-msgs');
+  const div=document.createElement('div');div.className='km-ai';
+  const wordCount=postText.split(/\s+/).filter(w=>w).length;
+  const emojiCount=(postText.match(/\p{Emoji_Presentation}/gu)||[]).length;
+  const firstWord=postText.split(/\s+/)[0]||'';
+  div.innerHTML=`<div class="kb">
+    <div style="font-size:9px;font-weight:700;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">🔗 LinkedIn Draft</div>
+    <div style="background:var(--sf3);border:1px solid var(--bd2);border-radius:8px;padding:13px;font-size:13px;line-height:1.65;white-space:pre-wrap;margin-bottom:10px">${esc(postText)}</div>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <span style="font-size:10px;color:${wordCount>=150&&wordCount<=250?'#22c55e':'#f59e0b'};font-weight:600">${wordCount} words ${wordCount>=150&&wordCount<=250?'✓':'(target 150-250)'}</span>
+      <span style="font-size:10px;color:${emojiCount<=2?'#22c55e':'#fb7185'};font-weight:600">${emojiCount} emoji${emojiCount!==1?'s':''} ${emojiCount<=2?'✓':'(max 2)'}</span>
+      <span style="font-size:10px;color:${firstWord.toLowerCase()==='i'?'#fb7185':'#22c55e'};font-weight:600">Starts with "${firstWord}" ${firstWord.toLowerCase()==='i'?'✗':'✓'}</span>
+      <button onclick="navigator.clipboard.writeText(${JSON.stringify(postText)}).then(()=>toast('Post copied to clipboard!'))" style="margin-left:auto;padding:5px 13px;border-radius:7px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);color:#a78bfa;font-size:11px;font-weight:600">Copy Post</button>
+    </div>
+  </div>`;
+  box.appendChild(div);box.scrollTop=box.scrollHeight;
+}
+
+// ── RECRUITER EMAIL SCANNER ───────────────────────────────────
+async function scanRecruiters(){
+  const btn=document.getElementById('recruit-scan-btn');
+  if(btn){btn.textContent='Scanning...';btn.disabled=true;}
+  try{
+    // Use Kula to analyze pasted email
+    openKula();
+    setKMode('job');
+    addKMsg('ai','Paste a recruiter email or LinkedIn message below and I\'ll extract the details and add it to your Career Tracker automatically.');
+    document.getElementById('k-in').focus();
+    document.getElementById('k-in').placeholder='Paste recruiter email or message here...';
+    // Override next send to parse as recruiter message
+    const origPlaceholder=document.getElementById('k-in').placeholder;
+    const origMode=kMode;
+    const handler=async(text)=>{
+      if(text.length>50){
+        const parsePrompt=`Parse this recruiter message and extract: company name, role/position, location, salary if mentioned, source (LinkedIn/email/etc), and suggest a next step. Then respond with ONLY a JSON object like: {"company":"X","role":"Y","location":"Z","salary":"A","source":"B","next_step":"C","notes":"D"}. Message:\n\n${text}`;
+        const resp=await fetch(AIURL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SKEY}`},body:JSON.stringify({messages:[{role:'user',content:parsePrompt}],context:''})});
+        const data=await resp.json();
+        if(data.content&&data.content[0]){
+          try{
+            const jsonMatch=data.content[0].text.match(/\{[\s\S]*\}/);
+            if(jsonMatch){
+              const parsed=JSON.parse(jsonMatch[0]);
+              mJob({...parsed,status:'Researching'});
+              toast('Recruiter details extracted — review and save.');
+              return;
+            }
+          }catch{}
+        }
+        addKMsg('ai','Could not parse that automatically. Try pasting just the key details — company, role, and location.');
+      }
+    };
+    // Store handler reference for next message
+    window._recruitHandler=handler;
+  }catch(e){toast('Scanner error: '+e.message,true);}
+  if(btn){btn.textContent='Scan Inbox';btn.disabled=false;}
+}
+
+// ── ECOSYSTEM SYNC ────────────────────────────────────────────
+const ECOSYSTEM_APPS=[
+  {id:'secplus',name:'Security+ App',url:'secplus.kulaninstitute.org',desc:'Quiz scores → Study Tracker',color:'#38bdf8',status:'manual',icon:'📚'},
+  {id:'cyberlab',name:'Kulan Cyber Lab',url:'kulaninstitute.org/cyberlab',desc:'CTF completions → Daily Log',color:'#22c55e',status:'manual',icon:'🔬'},
+  {id:'kiconnect',name:'KI Connect',url:'connect.kulaninstitute.org',desc:'Session logs → Daily Log',color:'#a78bfa',status:'manual',icon:'🎓'},
+  {id:'intelcast',name:'Intel Cast',url:'intelcast.kulaninstitute.org',desc:'Episodes published → Log',color:'#fb923c',status:'manual',icon:'🎙'},
+  {id:'fintrack',name:'FinTrack Pro',url:'fintrackpro.kulaninstitute.org',desc:'Budget alerts → Log',color:'#fb7185',status:'manual',icon:'💰'},
+];
+let syncStatus={};
+
+async function syncApp(appId){
+  syncStatus[appId]='loading';
+  renderSync();
+  // Simulate sync — in production each app would POST to the OS webhook
+  // For now log the sync attempt
+  await new Promise(r=>setTimeout(r,1200));
+  const r=await dbi('logs',{text:`Manual sync triggered for ${ECOSYSTEM_APPS.find(a=>a.id===appId)?.name||appId}`,tag:'SYSTEM',project:null});
+  if(r)S.logs.unshift(r);
+  syncStatus[appId]='done';
+  toast('Sync logged. Set up webhooks to automate this.');
+  renderSync();
+}
+function renderSync(){if(S.section==='ecosystem'){document.getElementById('mi').innerHTML=vEcosystem();bindEvents();}}
+
+function vEcosystem(){
+  const webhookUrl=`${SURL}/functions/v1/kulan-sync`;
+  return `<div class="fade-up">
+    <div style="font-size:13px;color:var(--t2);margin-bottom:18px;line-height:1.6">Connect your Kulan apps so activity flows into the OS automatically. Each app can POST to your webhook when something happens.</div>
+    <div class="card" style="margin-bottom:18px;border-color:rgba(6,182,212,0.2)">
+      <div class="sl" style="color:#06b6d4">Your Webhook Endpoint</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:9px">Any Kulan app can POST events here. The OS will log them automatically.</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <code style="flex:1;background:var(--sf2);border:1px solid var(--bd);border-radius:7px;padding:9px 12px;font-size:11px;color:var(--t1);word-break:break-all">${webhookUrl}</code>
+        <button onclick="navigator.clipboard.writeText('${webhookUrl}').then(()=>toast('Webhook URL copied!'))" class="btn btn-g" style="font-size:11px;flex-shrink:0">Copy</button>
+      </div>
+      <div style="margin-top:10px;padding:10px 13px;background:var(--sf2);border-radius:7px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Payload format</div>
+        <code style="font-size:11px;color:var(--t2);line-height:1.7;display:block">POST ${webhookUrl}<br>{"app":"secplus","event":"quiz_completed","data":{"score":85,"domain":"Threats"}}</code>
+      </div>
+    </div>
+    <div class="sl">Connected Apps</div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+      ${ECOSYSTEM_APPS.map(app=>{
+        const st=syncStatus[app.id];
+        return `<div class="card" style="border-color:${app.color}18">
+          <div class="fb" style="flex-wrap:wrap;gap:10px">
+            <div class="fg" style="gap:12px">
+              <div style="width:38px;height:38px;border-radius:10px;background:${app.color}14;border:1px solid ${app.color}25;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">${app.icon}</div>
+              <div>
+                <div style="font-size:14px;font-weight:700;margin-bottom:2px">${app.name}</div>
+                <div style="font-size:11px;color:var(--t3);font-family:monospace">${app.url}</div>
+                <div style="font-size:11px;color:var(--t2);margin-top:2px">${app.desc}</div>
+              </div>
+            </div>
+            <div class="fg" style="gap:8px;flex-shrink:0">
+              <span style="font-size:9px;font-weight:700;padding:3px 9px;border-radius:20px;background:rgba(245,158,11,0.1);color:#f59e0b;border:1px solid rgba(245,158,11,0.2)">Manual</span>
+              <button class="btn btn-g" data-sync="${app.id}" style="font-size:11px;padding:5px 12px">${st==='loading'?'Syncing...':st==='done'?'✓ Synced':'Log Sync'}</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="card" style="border-color:rgba(167,139,250,0.18)">
+      <div class="sl" style="color:#a78bfa">Weekly Digest</div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:14px">Every Sunday, Kulan OS emails you a summary of the week — completions, overdue items, goal progress, job search status, and streak. Deploy the digest Edge Function to enable it.</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <div style="flex:1">
+          <div style="font-size:11px;color:var(--t3);margin-bottom:5px">Digest Edge Function</div>
+          <code style="font-size:11px;color:var(--t2)">supabase/functions/kulan-digest/index.ts</code>
+        </div>
+        <button class="btn btn-g" onclick="toast('Download the digest function from the files panel and deploy it.')" style="font-size:11px">Setup Guide</button>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--bd)">
+        <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:8px">Configure your email</div>
+        <div style="display:flex;gap:8px">
+          <input id="digest-email" type="email" class="fi2" placeholder="your@email.com" style="flex:1;font-size:12px;padding:8px 11px">
+          <button class="btn btn-c" style="background:#a78bfa;font-size:11px" onclick="saveDigestEmail()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function saveDigestEmail(){
+  const email=document.getElementById('digest-email')?.value.trim();
+  if(!email){toast('Enter your email.',true);return;}
+  localStorage.setItem('kos-digest-email',email);
+  toast('Digest email saved.');
+}
+
 function render(){
   setAcc();renderSB();renderTopbar();renderBotNav();
   let html='';
@@ -1851,6 +2034,7 @@ function render(){
   else if(S.section==='focus')     html=vFocus();
   else if(S.section==='goals')     html=vGoals();
   else if(S.section==='career')    html=vCareer();
+  else if(S.section==='ecosystem') html=vEcosystem();
   else if(S.section==='infra')     html=vInfra();
   else if(S.section==='study')     html=vStudy();
   else if(S.section==='someday')   html=vSomeday();
