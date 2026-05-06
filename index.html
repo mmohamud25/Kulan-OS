@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="Kulan OS — Private project workspace for Kulan Group Ltd">
+<meta name="robots" content="noindex,nofollow">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.supabase.co https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://api.anthropic.com https://api.resend.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co https://api.anthropic.com https://api.resend.com;">
 <title>Kulan OS</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
@@ -12,24 +15,42 @@
   --bg:#08090e;--sf:#0e1018;--sf2:#14161f;--sf3:#1a1d28;
   --t1:#eceef5;--t2:#7880a0;--t3:#363d52;
   --bd:rgba(255,255,255,0.055);--bd2:rgba(255,255,255,0.1);
-  --sh:0 2px 16px rgba(0,0,0,0.4);--sh2:0 8px 40px rgba(0,0,0,0.6);
-  --r:8px;--r2:11px;--r3:15px;
+  --sh:0 2px 12px rgba(0,0,0,0.35),0 1px 3px rgba(0,0,0,0.2);
+  --sh2:0 4px 24px rgba(0,0,0,0.5),0 1px 6px rgba(0,0,0,0.25);
+  --r:6px;--r2:10px;--r3:14px;
   --acc:#5b8def;--fs:14px;--sbw:220px;
   /* Section accent colors */
   --c-d:#5b8def;--c-p:#22c55e;--c-t:#f59e0b;--c-f:#a78bfa;
   --c-g:#fb7185;--c-ca:#22d3ee;--c-i:#38bdf8;--c-st:#fb923c;
   --c-pk:#94a3b8;--c-l:#2dd4bf;--c-rv:#e879f9;--c-se:#64748b;
 }
-.th-light{--bg:#f0f1f5;--sf:#ffffff;--sf2:#f7f8fc;--sf3:#edeef5;--t1:#111218;--t2:#6470a0;--t3:#c8cce0;--bd:rgba(0,0,0,0.06);--bd2:rgba(0,0,0,0.11);--sh:0 2px 12px rgba(0,0,0,0.07);}
-.th-dim{--bg:#0f1117;--sf:#161820;--sf2:#1c1f2a;--sf3:#222636;--t1:#d8daf0;--t2:#6870a0;--t3:#30364a;}
-.th-warm{--bg:#0e0a07;--sf:#15110c;--sf2:#1c1710;--sf3:#231d15;--t1:#f0e8df;--t2:#8c7a68;--t3:#46372a;--bd:rgba(255,200,150,0.07);--acc:#e07a40;}
+.th-light{--bg:#f2f2f0;--sf:#ffffff;--sf2:#f7f6f3;--sf3:#eeede9;--t1:#111118;--t2:#60607a;--t3:#c0c0cc;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.13);--sh:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.05);--sh2:0 2px 8px rgba(0,0,0,0.08),0 8px 28px rgba(0,0,0,0.07);--acc:#0891b2;}
+.th-dim{--bg:#0f1117;--sf:#161820;--sf2:#1c1f2a;--sf3:#222636;--t1:#dce0f0;--t2:#6870a0;--t3:#30364a;--sh:0 2px 12px rgba(0,0,0,0.4),0 1px 3px rgba(0,0,0,0.2);--sh2:0 4px 24px rgba(0,0,0,0.5),0 1px 6px rgba(0,0,0,0.25);}
+.th-warm{--bg:#0e0b08;--sf:#17120d;--sf2:#1e1810;--sf3:#261f15;--t1:#f2e9e0;--t2:#8c7a68;--t3:#4a3828;--bd:rgba(255,200,150,0.07);--acc:#d4714a;}
 .th-green{--bg:#070f08;--sf:#0c1610;--sf2:#101d13;--sf3:#152417;--t1:#dff0e3;--t2:#6a9070;--t3:#2a4030;--bd:rgba(100,200,100,0.07);--acc:#2eb86a;}
 /* Light Pro — clean white, indigo accent, shadow depth */
-.th-lightpro{--bg:#f0f1f5;--sf:#ffffff;--sf2:#f7f8fc;--sf3:#edeef5;--t1:#0a0a0a;--t2:#4a5270;--t3:#b8bcd0;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.12);--sh:0 1px 4px rgba(0,0,0,0.08),0 4px 12px rgba(0,0,0,0.06);--acc:#4361ee;}
+.th-lightpro{
+  --bg:#f5f4f8;--sf:#ffffff;--sf2:#f0eff5;--sf3:#e8e7f0;
+  --t1:#0f0e1a;--t2:#5c6080;--t3:#b0b4c8;
+  --bd:rgba(79,82,222,0.09);--bd2:rgba(79,82,222,0.18);
+  --sh:0 1px 3px rgba(79,82,222,0.06),0 4px 16px rgba(0,0,0,0.06);
+  --sh2:0 2px 8px rgba(79,82,222,0.08),0 8px 32px rgba(0,0,0,0.08);
+  --acc:#4f52de;
+}
+.th-lightpro .lfi,.th-lightpro .fi2,.th-lightpro #k-in,.th-lightpro .rv-a,.th-lightpro .qsel{background:#f0eff5;border-color:rgba(79,82,222,0.12);}
+.th-lightpro .lfi:focus,.th-lightpro .fi2:focus,.th-lightpro #k-in:focus,.th-lightpro .rv-a:focus{border-color:#4f52de;background:#ffffff;}
+.th-lightpro .lfi{background:#edecf5;}
 /* Dark Refined — deeper black, high contrast text */
 .th-darkref{--bg:#06070c;--sf:#0c0e16;--sf2:#11141f;--sf3:#181b28;--t1:#edf0fa;--t2:#6878a0;--t3:#2e3448;--bd:rgba(255,255,255,0.055);--bd2:rgba(255,255,255,0.1);--sh:0 4px 20px rgba(0,0,0,0.5);--acc:#5b8def;}
 /* Sharp Mono — black borders, near-zero color, editorial */
-.th-sharpmono{--bg:#f5f5f5;--sf:#ffffff;--sf2:#f0f0f0;--sf3:#e8e8e8;--t1:#0a0a0a;--t2:#555555;--t3:#bbbbbb;--bd:rgba(0,0,0,0.88);--bd2:rgba(0,0,0,1);--sh:3px 3px 0 rgba(0,0,0,0.88);--acc:#0a0a0a;}
+.th-sharpmono{
+  --bg:#f5f5f5;--sf:#ffffff;--sf2:#f0f0f0;--sf3:#e8e8e8;
+  --t1:#0a0a0a;--t2:#555555;--t3:#bbbbbb;
+  --bd:rgba(0,0,0,0.85);--bd2:rgba(0,0,0,1);
+  --sh:3px 3px 0 rgba(0,0,0,0.85);--sh2:4px 4px 0 rgba(0,0,0,0.85);
+  --acc:#0a0a0a;
+  --r:2px;--r2:3px;--r3:4px;
+}
 /* Sharp Mono special overrides */
 .th-sharpmono .card,.th-sharpmono .scard,.th-sharpmono .pc,.th-sharpmono .kcol,.th-sharpmono .tc,.th-sharpmono .jc,.th-sharpmono .fitem,.th-sharpmono .sdi,.th-sharpmono .rv-c,.th-sharpmono .set-c{border-width:2px;border-style:solid;border-color:#0a0a0a;box-shadow:3px 3px 0 rgba(0,0,0,0.15);}
 .th-sharpmono .btn-c{background:#0a0a0a!important;border-color:#0a0a0a!important;}
@@ -78,7 +99,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .lc-h{font-size:20px;font-weight:700;margin-bottom:4px;}
 .lc-s{font-size:13px;color:var(--t2);margin-bottom:28px;}
 .lf{margin-bottom:14px;}
-.lf label{display:block;font-size:11px;color:var(--t2);margin-bottom:5px;font-weight:500;letter-spacing:0.3px;}
+.lf label{display:block;font-size:12px;color:var(--t2);margin-bottom:6px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;}
 .lfi{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:9px;color:var(--t1);padding:10px 13px;transition:border-color 0.15s;}
 .lfi:focus{border-color:var(--acc);}
 .btn-login{width:100%;background:var(--acc);border:none;border-radius:9px;color:#fff;padding:12px;font-size:14px;font-weight:600;transition:opacity 0.15s;margin-top:4px;}
@@ -361,7 +382,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 @media(max-width:480px){.mg2{grid-template-columns:1fr;}}
 .mfoot{display:flex;gap:9px;justify-content:flex-end;margin-top:20px;padding-top:15px;border-top:1px solid var(--bd);}
 .fl2{margin-bottom:12px;}
-.fl2 label{display:block;font-size:10px;color:var(--t2);margin-bottom:5px;font-weight:600;letter-spacing:0.3px;}
+.fl2 label{display:block;font-size:11px;color:var(--t2);margin-bottom:5px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;}
 .fi2{width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:8px;color:var(--t1);padding:9px 12px;transition:border-color 0.14s;font-size:13px;}
 .fi2:focus{border-color:var(--acc);}
 textarea.fi2{resize:vertical;min-height:72px;}
@@ -459,9 +480,14 @@ svg{display:block;}
     </div>
     <div class="lc-h">Welcome back</div>
     <div class="lc-s">Sign in to your private workspace</div>
-    <div class="lf"><label>Email</label><input id="le" type="email" class="lfi" placeholder="your@email.com" autocomplete="email"></div>
-    <div class="lf"><label>Password</label><input id="lp" type="password" class="lfi" placeholder="••••••••"></div>
-    <button class="btn-login" id="lb2">Sign In</button>
+    <form id="login-form" onsubmit="event.preventDefault();login();">
+      <div class="lf"><label for="le">Email</label><input id="le" type="email" class="lfi" placeholder="your@email.com" autocomplete="email" required></div>
+      <div class="lf"><label for="lp">Password</label><input id="lp" type="password" class="lfi" placeholder="••••••••" autocomplete="current-password" required></div>
+      <button type="submit" class="btn-login" id="lb2">Sign In</button>
+    </form>
+    <div style="text-align:center;margin-top:12px;">
+      <button onclick="forgotPassword()" style="background:none;border:none;color:var(--t2);font-size:12px;cursor:pointer;text-decoration:underline;font-family:'Inter',sans-serif;">Forgot password?</button>
+    </div>
     <div id="lerr" class="lerr"></div>
   </div>
 </div>
@@ -469,23 +495,31 @@ svg{display:block;}
 <div id="sb-ov"></div>
 
 <div id="app">
-  <aside id="sb">
+  <aside id="sb" role="navigation" aria-label="Main navigation">
     <div class="sb-brand">
       <div class="sb-logo-row">
         <div class="sb-mark">K</div>
-        <div class="sb-wordmark">Project OS<span>Kulan Group Ltd</span></div>
+        <div class="sb-wordmark">Kulan OS<span>Kulan Group Ltd</span></div>
       </div>
       <div class="sb-actions">
         <button class="sb-add" id="sb-qa">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
           Quick Add
         </button>
-        <button class="sb-search" id="sb-srch">
+        <button class="sb-search" id="sb-srch" aria-label="Search">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         </button>
       </div>
     </div>
-    <nav id="sb-nav"></nav>
+    <nav id="sb-nav">
+      <!-- Skeleton shown until renderSB() populates this -->
+      <div id="sb-skeleton" style="padding:8px">
+        <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 6px 4px">Main</div>
+        ${[1,2,3,4,5].map(()=>`<div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>`).join('')}
+        <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 6px 4px;margin-top:4px">Tools</div>
+        ${[1,2,3,4].map(()=>`<div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>`).join('')}
+      </div>
+    </nav>
     <div id="sb-foot"></div>
   </aside>
 
@@ -501,7 +535,7 @@ svg{display:block;}
         Ask Kula
       </button>
     </div>
-    <div id="main"><div id="mi"></div></div>
+    <div id="main" role="main"><div id="mi"></div></div>
   </div>
 
   <!-- KULA AI PANEL -->
@@ -516,8 +550,9 @@ svg{display:block;}
           </div>
         </div>
         <div class="fg">
-          <span class="kh-badge" id="k-mem" style="display:none">memory on</span>
-          <button class="ibtn" id="k-close">
+          <span class="kh-badge" id="k-mem" style="display:none" title="Kula remembers the last 20 messages in this session">💬 memory on</span>
+          <button onclick="S.section='settings';closeKula();render();setTimeout(()=>{const el=document.getElementById('kula-memory-panel');if(el)el.scrollIntoView({behavior:'smooth'})},200)" style="font-size:9px;color:var(--t3);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0" title="View what Kula knows">memory</button>
+          <button class="ibtn" id="k-close" aria-label="Close Kula">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
         </div>
@@ -539,7 +574,7 @@ svg{display:block;}
         <button id="k-send">Send</button>
       </div>
       <div class="k-tools">
-        <button class="k-tool-btn" id="voice-btn" title="Voice input">
+        <button class="k-tool-btn" id="voice-btn" title="Voice input" aria-label="Voice input">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </button>
         <div class="k-clr" id="k-clr">Clear conversation</div>
@@ -554,6 +589,9 @@ svg{display:block;}
   <div class="fm-l">Focus Session · Kulan OS</div>
   <div class="fm-t" id="fm-t">Select a task</div>
   <div class="fm-time" id="fm-timer" style="color:#8b5cf6">25:00</div>
+  <div style="display:flex;gap:7px;margin-bottom:18px">
+    ${[15,25,45,60].map(m=>`<button class="fm-dur" data-min="${m}" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">${m}m</button>`).join('')}
+  </div>
   <div class="fm-btns">
     <button class="fm-btn p" id="fm-play">▶ Start</button>
     <button class="fm-btn" id="fm-reset">↺ Reset</button>
@@ -589,6 +627,31 @@ svg{display:block;}
 </div>
 
 <div id="mo"><div class="mdl" id="mbox"></div></div>
+
+<!-- Shortcut cheat sheet -->
+<div id="shortcuts-overlay" style="display:none;position:fixed;inset:0;z-index:250;align-items:center;justify-content:center;background:rgba(0,0,0,0.72);backdrop-filter:blur(6px);">
+  <div style="background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r3);padding:28px 32px;width:520px;max-width:92vw;box-shadow:var(--sh2);animation:scaleIn 0.2s ease">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+      <div style="font-size:16px;font-weight:700">Keyboard Shortcuts</div>
+      <button onclick="document.getElementById('shortcuts-overlay').style.display='none'" class="ibtn" aria-label="Close shortcuts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px">
+      ${[
+        ['/','Quick Add'],['⌘K','Search'],['?','This cheat sheet'],
+        ['G D','Dashboard'],['G P','Projects'],['G T','Tasks'],
+        ['G F','Focus'],['G G','Goals'],['G C','Career'],
+        ['G E','Ecosystem'],['G L','Log'],['G R','Review'],
+        ['Esc','Close any panel'],['Enter','Submit forms'],
+      ].map(([k,l])=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
+        <span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace;white-space:nowrap">${k}</span>
+        <span style="font-size:12px;color:var(--t2)">${l}</span>
+      </div>`).join('')}
+    </div>
+    <div style="margin-top:14px;font-size:10px;color:var(--t3);text-align:center">Press <kbd style="background:var(--sf2);border:1px solid var(--bd);border-radius:3px;padding:1px 5px;font-family:monospace">?</kbd> anytime to show this</div>
+  </div>
+</div>
 <div id="toast"></div>
 
 <!-- Bottom nav (mobile) -->
@@ -626,7 +689,10 @@ const db=createClient(SURL,SKEY);
 // ── THEMES & FONT ────────────────────────────────────────────
 const THEMES={dark:{label:'Dark',bg:'#08090e',sf:'#0e1018',acc:'#5b8def'},dim:{label:'Dim',bg:'#0f1117',sf:'#161820',acc:'#5b8def'},warm:{label:'Warm',bg:'#0e0a07',sf:'#15110c',acc:'#e07a40'},green:{label:'Forest',bg:'#070f08',sf:'#0c1610',acc:'#2eb86a'},light:{label:'Light',bg:'#f0f1f5',sf:'#ffffff',acc:'#3b6ef5'},lightpro:{label:'Light Pro',bg:'#f0f1f5',sf:'#ffffff',acc:'#4361ee'},darkref:{label:'Dark+',bg:'#06070c',sf:'#0c0e16',acc:'#5b8def'},sharpmono:{label:'Mono',bg:'#f5f5f5',sf:'#ffffff',acc:'#0a0a0a'}};
 const FSM={small:'13px',medium:'14px',large:'16px',xl:'18px'};
-let curTheme=localStorage.getItem('kos-theme')||'dark';
+// Migrate old theme key if present
+const _oldTheme=localStorage.getItem('kulan-theme');
+if(_oldTheme&&!localStorage.getItem('kos-theme')){localStorage.setItem('kos-theme',_oldTheme);localStorage.removeItem('kulan-theme');}
+let curTheme=localStorage.getItem('kos-theme')||'dim';
 let curFS=localStorage.getItem('kos-fs')||'medium';
 function applyTheme(k){curTheme=k;localStorage.setItem('kos-theme',k);document.body.className=k==='dark'?'':`th-${k}`;}
 function applyFS(k){curFS=k;localStorage.setItem('kos-fs',k);document.documentElement.style.setProperty('--fs',FSM[k]);}
@@ -799,13 +865,26 @@ async function generateBriefing(){
 function openKula(){
   document.getElementById('kula').classList.add('on');
   document.getElementById('kula-topbtn').classList.add('on');
+  // Move focus into the panel
+  setTimeout(()=>{
+    const inp=document.getElementById('k-in');
+    if(inp)inp.focus();
+  },300); // after slide-in animation
   if(!kHistory.length){
     addKMsg('ai',`Hey Muzz. I'm Kula.\n\nI have full context on your projects, tasks, goals, study progress, and job applications.\n\n**What I can do:**\n- Answer questions about your workspace\n- Take actions (add tasks, log entries, update goals)\n- Coach you on job applications\n- Quiz you on Security+ and ISC2\n- Give study strategy advice\n\nUse the mode buttons above or just tell me what you need.`);
     setTimeout(()=>generateBriefing(),600);
   }
   updateModeSugs();
 }
-function closeKula(){document.getElementById('kula').classList.remove('on');document.getElementById('kula-topbtn').classList.remove('on');}
+function closeKula(){
+  document.getElementById('kula').classList.remove('on');
+  document.getElementById('kula-topbtn').classList.remove('on');
+  // Return focus to trigger button
+  setTimeout(()=>{
+    const btn=document.getElementById('kula-topbtn');
+    if(btn)btn.focus();
+  },50);
+}
 
 function setKMode(mode){
   kMode=mode;
@@ -819,7 +898,7 @@ function updateModeSugs(){
   const sugsEl=document.getElementById('k-sugs');
   if(!sugsEl)return;
   const sugs={
-    chat:['What should I focus on?','Any overdue tasks?','Full workspace summary','Which projects need help?'],
+    chat:['What should I focus on?','Any overdue tasks?','Full workspace summary','Which projects need help?','Break down my Security+ study goal into tasks'],
     job:['How should I prepare for a SOC Analyst interview?','What skills should I highlight for IT Security Analyst roles?','Review my background for cybersecurity roles','What certifications matter most for my target roles?'],
     study:['Explain Security+ Domain 2: Threats and Vulnerabilities','What are the key concepts for ISC2 CC?','What should I study next?','Compare SOC Analyst day-to-day vs IT Security Analyst'],
     quiz:['Quiz me on Security+ Domain 1','Quiz me on Threats and Vulnerabilities','Quiz me on ISC2 CC Security Principles','Generate 3 Security+ practice questions'],
@@ -900,6 +979,13 @@ function handleQuizResponse(text){
 
 async function sendKula(text){
   if(!text.trim())return;
+  // Auto-detect breakdown requests
+  const breakdownMatch=text.match(/^(?:break\s?down|split|decompose|create tasks for)\s+(.+)/i);
+  if(breakdownMatch&&kMode==='chat'){
+    const pid=S.selProj||null;
+    await aiBreakdown(breakdownMatch[1].trim(),pid);
+    return;
+  }
   const inp=document.getElementById('k-in');
   const btn=document.getElementById('k-send');
   const sugs=document.getElementById('k-sugs');
@@ -931,7 +1017,7 @@ async function sendKula(text){
       const action=parseAction(reply);
       if(action)showActBar(action,descAct(action));
       const mem=document.getElementById('k-mem');
-      if(mem&&kHistory.length>4)mem.style.display='inline';
+      if(mem&&kHistory.length>=2)mem.style.display='inline';
     } else if(data.error){addKMsg('ai',`Error: ${data.error}`);}
   }catch(e){hideKThink();addKMsg('ai','Could not reach Kula. Check that the Edge Function is deployed.');}
   btn.disabled=false;
@@ -988,10 +1074,12 @@ async function pingInfra(id){pingStatus[id]='loading';renderInfra();try{const r=
 function renderInfra(){if(S.section==='infra'){document.getElementById('mi').innerHTML=vInfra();bindEvents();}}
 
 // ── POMODORO ──────────────────────────────────────────────────
+let pomoMins=parseInt(localStorage.getItem('kos-pomo-mins')||'25');
+function setPomoMins(m){pomoMins=m;localStorage.setItem('kos-pomo-mins',m);if(!pomo.on){pomo.rem=m*60;pomoPB();}document.querySelectorAll('.fm-dur').forEach(b=>b.style.background=parseInt(b.dataset.min)===m?'var(--acc)':'transparent');document.querySelectorAll('.fm-dur').forEach(b=>b.style.color=parseInt(b.dataset.min)===m?'#fff':'var(--t2)');}
 function pomoPB(){const d=document.getElementById('fm-timer'),b=document.getElementById('fm-play');if(!d)return;d.textContent=fmts(pomo.rem);d.style.color=pomo.rem<=60?'#fb7185':'#8b5cf6';if(b)b.textContent=pomo.on&&!pomo.paused?'⏸ Pause':'▶ Start';}
-function pomoStart(){if(pomo.on&&!pomo.paused){pomo.paused=true;clearInterval(pomo.iv);pomoPB();return;}if(pomo.paused){pomo.paused=false;}else{if(pomo.rem<=0)pomo.rem=25*60;}pomo.on=true;pomo.paused=false;pomo.iv=setInterval(()=>{pomo.rem--;if(pomo.rem<=0){clearInterval(pomo.iv);pomo.on=false;pomo.rem=0;pomo.sessions++;const el=document.getElementById('fm-sess');if(el)el.textContent=`${pomo.sessions} session${pomo.sessions!==1?'s':''} today`;if(pomo.task)db.from('logs').insert({text:`Completed 25-min focus session${pomo.task?' on '+pomo.task:''}`,tag:'SYSTEM',project:pomo.task||null});toast('🍅 Session complete!');}pomoPB();},1000);pomoPB();}
-function pomoReset(){clearInterval(pomo.iv);pomo.on=false;pomo.paused=false;pomo.rem=25*60;pomoPB();}
-function openFM(t=''){pomo.task=t;const el=document.getElementById('fm-t');if(el)el.textContent=t||'No task selected';document.getElementById('fm').classList.add('show');pomoPB();}
+function pomoStart(){if(pomo.on&&!pomo.paused){pomo.paused=true;clearInterval(pomo.iv);pomoPB();return;}if(pomo.paused){pomo.paused=false;}else{if(pomo.rem<=0)pomo.rem=pomoMins*60;}pomo.on=true;pomo.paused=false;pomo.iv=setInterval(()=>{pomo.rem--;if(pomo.rem<=0){clearInterval(pomo.iv);pomo.on=false;pomo.rem=0;pomo.sessions++;const el=document.getElementById('fm-sess');if(el)el.textContent=`${pomo.sessions} session${pomo.sessions!==1?'s':''} today`;if(pomo.task)db.from('logs').insert({text:`Completed ${pomoMins}-min focus session${pomo.task?' on '+pomo.task:''}`,tag:'SYSTEM',project:pomo.task||null});toast(`🍅 ${pomoMins}min session complete!`);}pomoPB();},1000);pomoPB();}
+function pomoReset(){clearInterval(pomo.iv);pomo.on=false;pomo.paused=false;pomo.rem=pomoMins*60;pomoPB();}
+function openFM(t=''){pomo.task=t;const el=document.getElementById('fm-t');if(el)el.textContent=t||'No task selected';document.getElementById('fm').classList.add('show');pomoPB();setPomoMins(pomoMins);}
 function closeFM(){pomoReset();document.getElementById('fm').classList.remove('show');}
 
 // ── SEARCH ────────────────────────────────────────────────────
@@ -1033,11 +1121,33 @@ async function login(){
   const email=document.getElementById('le').value.trim(),pass=document.getElementById('lp').value;
   const err=document.getElementById('lerr');err.textContent='';
   if(!email||!pass){err.textContent='Enter your email and password.';return;}
-  document.getElementById('lb2').textContent='Signing in...';
-  const {error}=await db.auth.signInWithPassword({email,password:pass});
-  document.getElementById('lb2').textContent='Sign In';
-  if(error){err.textContent=error.message;return;}
-  await boot();
+  const btn=document.getElementById('lb2');
+  btn.textContent='Signing in...';btn.disabled=true;
+  try{
+    const {error}=await db.auth.signInWithPassword({email,password:pass});
+    if(error){
+      err.textContent=error.message==='Invalid login credentials'
+        ?'Incorrect email or password.'
+        :'Sign in failed. Check your network and try again.';
+      btn.textContent='Sign In';btn.disabled=false;
+      return;
+    }
+    await boot();
+  }catch(e){
+    err.textContent='Connection issue. Check your network and try again.';
+    btn.textContent='Sign In';btn.disabled=false;
+  }
+}
+
+async function forgotPassword(){
+  const email=document.getElementById('le').value.trim();
+  const err=document.getElementById('lerr');
+  if(!email){err.textContent='Enter your email address first.';err.style.color='#f59e0b';return;}
+  try{
+    const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:'https://os.kulaninstitute.org'});
+    if(error){err.textContent=error.message;err.style.color='#fb7185';}
+    else{err.textContent='Password reset email sent. Check your inbox.';err.style.color='#22c55e';}
+  }catch{err.textContent='Connection issue. Try again.';err.style.color='#fb7185';}
 }
 async function logout(){await db.auth.signOut();document.getElementById('app').style.display='none';document.getElementById('login-screen').style.display='flex';}
 
@@ -1087,7 +1197,9 @@ function renderSB(){
       ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${n.label}${n.id==='tasks'&&uc>0?`<span class="ni-badge">${uc}</span>`:''}</button>`;
     });
   });
-  document.getElementById('sb-nav').innerHTML=html;
+  // Remove skeleton, populate real nav
+  const nav=document.getElementById('sb-nav');
+  nav.innerHTML=html;
   document.getElementById('sb-foot').innerHTML=`
     <div class="sb-user">
       <div class="sb-avatar">M</div>
@@ -1145,6 +1257,7 @@ function vDashboard(){
       <p style="font-size:13px;color:var(--t2)">Here's your Kulan Group overview.</p>
     </div>
     ${als.length?`<div class="abar"><span style="font-size:16px;flex-shrink:0">⏰</span><div>${als.map(a=>`<div style="font-size:12px;line-height:1.6"><span style="font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#f59e0b;margin-right:5px">${a.type}</span>${esc(a.name)} <span style="color:var(--t3);font-size:10px">· due ${fd(a.date)}</span></div>`).join('')}</div></div>`:''}
+    ${v7DayStrip()}
     <div class="g5" style="margin-bottom:16px">
       ${[{l:'Projects',v:S.projects.length,c:NCH.projects},{l:'In Progress',v:S.projects.filter(p=>p.status==='in-progress').length,c:NCH.tasks},{l:'Urgent',v:urg.length,c:'#fb7185'},{l:streak>0?`${streak}d Streak`:'Goals',v:streak>0?'🔥':S.goals.length,c:streak>0?'#fb923c':NCH.goals},{l:'Open Apps',v:openApps,c:NCH.career}].map(s=>`<div class="scard"><div class="snum" style="color:${s.c}">${s.v}</div><div class="slbl">${s.l}</div></div>`).join('')}
     </div>
@@ -1364,6 +1477,7 @@ function vCareer(){
           </div>
           ${j.next_step?`<div style="margin-top:8px;padding:7px 10px;background:${col}08;border-radius:6px;font-size:11px;color:${col}">→ Next: ${esc(j.next_step)}</div>`:''}
           ${j.notes?`<div style="margin-top:7px;padding-top:7px;border-top:1px solid var(--bd);font-size:11px;color:var(--t2);line-height:1.5">${esc(j.notes)}</div>`:''}
+          ${['Interview','Technical','Phone Screen'].includes(j.status)?`<button onclick="startInterviewPrep(${JSON.stringify({company:j.company,role:j.role||'',notes:j.notes||'',location:j.location||''})})" style="margin-top:9px;padding:6px 12px;border-radius:7px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.08);color:#a78bfa;font-size:11px;font-weight:600;cursor:pointer;width:100%">✦ Interview Prep with Kula</button>`:''}
         </div>`;
       }).join('')}
     </div>
@@ -1494,8 +1608,31 @@ function vSettings(){
       </div>
       <div class="set-c">
         <div class="set-ct"><div class="set-ico" style="background:rgba(139,92,246,0.1)">✦</div>Kula AI</div>
-        <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:13px">Claude-powered · Full workspace context · Actions · Voice input · Study coaching · Job coaching · Morning briefing</div>
-        <button class="btn btn-c" onclick="openKula()" style="background:#8b5cf6;font-size:12px">Open Kula</button>
+        <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:13px">Powered by Claude · Full workspace context · Actions · Voice · Study coaching · Job coaching · Morning briefing</div>
+        <button class="btn btn-c" onclick="openKula()" style="background:#8b5cf6;font-size:12px;margin-bottom:12px">Open Kula</button>
+        <div style="padding-top:12px;border-top:1px solid var(--bd)">
+          <div style="font-size:11px;font-weight:700;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.6px">What Kula Knows About You</div>
+          <div id="kula-memory-panel" style="display:flex;flex-direction:column;gap:6px">
+            ${[
+              {label:'Name',value:'Muzz (Mohamud)'},
+              {label:'Role',value:'Security Officer · Allied Universal, Columbus OH'},
+              {label:'Education',value:'WGU MS Cybersecurity · Franklin University BS'},
+              {label:'Certifications',value:'CompTIA Security+ SY0-701 (certified Apr 2026)'},
+              {label:'Target Roles',value:'SOC Analyst · IT Security Analyst · Columbus OH'},
+              {label:'Company',value:'Kulan Group Ltd — Founder & Executive Director'},
+              {label:'Study Goals',value:`Security+ ${S.domains.find(d=>d.cert==='Security+ SY0-701')?Math.round(S.domains.filter(d=>d.cert==='Security+ SY0-701').reduce((a,d)=>a+(d.progress||0),0)/Math.max(1,S.domains.filter(d=>d.cert==='Security+ SY0-701').length))+'%':'tracking'}` + ` · ISC2 CC ${S.domains.find(d=>d.cert==='ISC2 CC')?Math.round(S.domains.filter(d=>d.cert==='ISC2 CC').reduce((a,d)=>a+(d.progress||0),0)/Math.max(1,S.domains.filter(d=>d.cert==='ISC2 CC').length))+'%':'tracking'}`},
+              {label:'Open Jobs',value:`${S.jobs.filter(j=>!['Accepted','Rejected'].includes(j.status)).length} active application${S.jobs.filter(j=>!['Accepted','Rejected'].includes(j.status)).length!==1?'s':''}`},
+              {label:'Projects',value:`${S.projects.length} tracked · ${S.projects.filter(p=>p.status==='at-risk').length} at risk`},
+              {label:'Log Streak',value:`${calcStreak()} day${calcStreak()!==1?'s':''}`},
+            ].map(item=>`<div style="display:flex;gap:8px;padding:7px 10px;background:var(--sf2);border-radius:var(--r);border:1px solid var(--bd)">
+              <span style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;width:90px;padding-top:1px">${item.label}</span>
+              <span style="font-size:12px;color:var(--t1);flex:1">${item.value}</span>
+            </div>`).join('')}
+          </div>
+          <div style="margin-top:10px;padding:9px 12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:var(--r);font-size:11px;color:var(--t2);line-height:1.6">
+            Kula reads your live workspace data every time you send a message. This panel shows what it always knows. Conversation memory resets when you clear the chat.
+          </div>
+        </div>
       </div>
       <div class="set-c">
         <div class="set-ct"><div class="set-ico" style="background:rgba(34,197,94,0.08)">📊</div>Workspace</div>
@@ -1509,7 +1646,9 @@ function vSettings(){
       </div>
       <div class="set-c">
         <div class="set-ct"><div class="set-ico" style="background:rgba(34,211,238,0.08)">📄</div>Export & Account</div>
-        <div class="srow"><div><div class="srlbl">Export PDF</div><div class="srsub">Weekly summary</div></div><button class="btn btn-g" onclick="exportPDF()">Export</button></div>
+        <div class="srow"><div><div class="srlbl">Export PDF</div><div class="srsub">Printable weekly summary</div></div><button class="btn btn-g" onclick="exportPDF()">PDF</button></div>
+        <div class="srow"><div><div class="srlbl">Export CSV</div><div class="srsub">Tasks, goals, logs, jobs</div></div><button class="btn btn-g" onclick="exportCSV()">CSV</button></div>
+        <div class="srow"><div><div class="srlbl">Export JSON</div><div class="srsub">Full data backup</div></div><button class="btn btn-g" onclick="exportJSON()">JSON</button></div>
         <div class="srow"><div><div class="srlbl">Supabase</div><div class="srsub" style="font-family:monospace;font-size:10px">advphrgxoemjhgsqxkbl</div></div></div>
         <div class="srow"><div><div class="srlbl">Sign Out</div></div><button class="btn btn-d" onclick="logout()">Sign Out</button></div>
       </div>
@@ -1826,8 +1965,8 @@ function bindEvents(){
   // Modal backdrop
   document.getElementById('mo').onclick=e=>{if(e.target===document.getElementById('mo'))closeM();};
 
-  // Login
-  const lb=g('lb2');if(lb){lb.onclick=login;const lp=g('lp');if(lp)lp.onkeydown=e=>{if(e.key==='Enter')login();};}
+  // Login — form onsubmit handles Enter key natively
+  const lb=g('lb2');if(lb)lb.onclick=login;
 }
 
 // ── KEYBOARD SHORTCUTS ────────────────────────────────────────
@@ -1836,8 +1975,9 @@ document.addEventListener('keydown',e=>{
   const tag=document.activeElement.tagName;
   const typing=['INPUT','TEXTAREA','SELECT'].includes(tag);
   if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();return;}
-  if(e.key==='Escape'){closeSearch();closeQA();closeKula();closeFM();return;}
+  if(e.key==='Escape'){closeSearch();closeQA();closeKula();closeFM();document.getElementById('shortcuts-overlay').style.display='none';return;}
   if(e.key==='/'&&!typing){e.preventDefault();openQA();return;}
+  if(e.key==='?'&&!typing){e.preventDefault();document.getElementById('shortcuts-overlay').style.display='flex';return;}
   if(!typing){
     if(e.key==='g'){gBuf='g';setTimeout(()=>{gBuf='';},800);return;}
     if(gBuf==='g'){const map={d:'dashboard',p:'projects',t:'tasks',f:'focus',g:'goals',c:'career',e:'ecosystem',i:'infra',s:'study',l:'log',r:'review'};if(map[e.key]){S.section=map[e.key];S.selProj=null;gBuf='';render();}gBuf='';}
@@ -1848,7 +1988,10 @@ document.addEventListener('keydown',e=>{
 document.getElementById('kula-topbtn').onclick=openKula;
 document.getElementById('k-close').onclick=closeKula;
 document.getElementById('k-send').onclick=()=>sendKula(document.getElementById('k-in').value);
-document.getElementById('k-in').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendKula(document.getElementById('k-in').value);}});
+document.getElementById('k-in').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendKula(document.getElementById('k-in').value);}
+  if(e.key==='Escape'){e.stopPropagation();closeKula();}
+});
 document.getElementById('k-clr').onclick=clearKula;
 document.querySelectorAll('.k-mode').forEach(b=>{b.onclick=()=>setKMode(b.dataset.mode);});
 
@@ -1865,6 +2008,7 @@ document.getElementById('qa-in').onkeydown=e=>{if(e.key==='Enter')submitQA();if(
 document.getElementById('fm-x').onclick=closeFM;
 document.getElementById('fm-play').onclick=pomoStart;
 document.getElementById('fm-reset').onclick=pomoReset;
+document.querySelectorAll('.fm-dur').forEach(b=>{b.onclick=()=>setPomoMins(parseInt(b.dataset.min));});
 
 // ── MOBILE ────────────────────────────────────────────────────
 document.getElementById('mob-ham').onclick=openMob;
@@ -2025,6 +2169,113 @@ async function saveDigestEmail(){
   toast('Digest email saved.');
 }
 
+// ── CSV / JSON EXPORT ────────────────────────────────────────
+function exportCSV(){
+  const rows=[['Type','Text/Name','Status','Priority','Project','Due Date','Created']];
+  S.tasks.forEach(t=>rows.push(['Task',t.text,t.status,t.priority,pn(t.project_id)||'',t.due_date||'',t.created_at?.split('T')[0]||'']));
+  S.goals.forEach(g=>rows.push(['Goal',g.name,g.progress+'%','',g.category||'',g.deadline||'',g.created_at?.split('T')[0]||'']));
+  S.logs.forEach(l=>rows.push(['Log',l.text,l.tag,'',l.project||'','',l.created_at?.split('T')[0]||'']));
+  S.jobs.forEach(j=>rows.push(['Job',j.company+' — '+(j.role||''),j.status,'',j.location||'',j.applied_date||'',j.created_at?.split('T')[0]||'']));
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`kulan-os-export-${new Date().toISOString().split('T')[0]}.csv`;a.click();
+  toast('CSV downloaded.');
+}
+function exportJSON(){
+  const data={exported:new Date().toISOString(),projects:S.projects,tasks:S.tasks,goals:S.goals,logs:S.logs,jobs:S.jobs,domains:S.domains,focus:S.focus};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`kulan-os-backup-${new Date().toISOString().split('T')[0]}.json`;a.click();
+  toast('JSON backup downloaded.');
+}
+
+// ── 7-DAY CALENDAR STRIP ─────────────────────────────────────
+function v7DayStrip(){
+  const days=[];
+  for(let i=0;i<7;i++){
+    const d=new Date();d.setDate(d.getDate()+i);
+    const dateStr=d.toISOString().split('T')[0];
+    const dueTasks=S.tasks.filter(t=>t.due_date===dateStr&&t.status!=='done');
+    const isToday=i===0;
+    const dayName=i===0?'Today':i===1?'Tomorrow':d.toLocaleDateString('en-US',{weekday:'short'});
+    const dayNum=d.getDate();
+    days.push({dateStr,dueTasks,isToday,dayName,dayNum});
+  }
+  const hasDue=days.some(d=>d.dueTasks.length>0);
+  if(!hasDue)return '';
+  return `<div class="card" style="margin-bottom:14px;padding:14px 16px">
+    <div class="sl" style="margin-bottom:10px">Due This Week</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px">
+      ${days.map(d=>`<div style="text-align:center;padding:8px 4px;border-radius:var(--r);background:${d.isToday?'color-mix(in srgb,var(--acc) 10%,transparent)':'var(--sf2)'};border:1px solid ${d.isToday?'color-mix(in srgb,var(--acc) 30%,transparent)':'var(--bd)'}">
+        <div style="font-size:9px;font-weight:600;color:${d.isToday?'var(--acc)':'var(--t3)'};text-transform:uppercase;letter-spacing:0.8px">${d.dayName}</div>
+        <div style="font-size:16px;font-weight:800;color:${d.isToday?'var(--acc)':'var(--t1)'};margin:2px 0">${d.dayNum}</div>
+        ${d.dueTasks.length?`<div style="width:6px;height:6px;border-radius:50%;background:${d.dueTasks.some(t=>t.priority==='urgent')?'#fb7185':'#f59e0b'};margin:0 auto" title="${d.dueTasks.length} task${d.dueTasks.length!==1?'s':''}"></div>`:'<div style="width:6px;height:6px"></div>'}
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── AI TASK BREAKDOWN ─────────────────────────────────────────
+async function aiBreakdown(goalOrTask,projectId=null){
+  openKula();
+  const prompt=`Break down "${goalOrTask}" into 5-8 specific, actionable subtasks. For each task, suggest a priority (urgent/high/medium/low). Format as a numbered list, one task per line, with priority in parentheses. Example: 1. Research job description keywords (high)`;
+  addKMsg('user',`Break down: ${goalOrTask}`);
+  showKThink();
+  try{
+    const resp=await fetch(AIURL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SKEY}`},body:JSON.stringify({messages:[{role:'user',content:prompt}],context:buildCtx()})});
+    const data=await resp.json();
+    hideKThink();
+    if(data.content&&data.content[0]){
+      const reply=data.content[0].text;
+      addKMsg('ai',reply);
+      // Parse and show confirm button
+      const lines=reply.split('\n').filter(l=>/^\d+\./.test(l.trim()));
+      if(lines.length>0){
+        const box=document.getElementById('k-msgs');
+        const div=document.createElement('div');div.className='km-ai';
+        div.innerHTML=`<div class="kb" style="font-size:12px">
+          <div style="color:var(--acc);font-weight:600;margin-bottom:6px">Add all ${lines.length} tasks to ${projectId?pn(projectId):'workspace'}?</div>
+          <button id="breakdown-confirm" style="padding:6px 14px;border-radius:7px;border:1px solid rgba(91,141,239,0.3);background:rgba(91,141,239,0.1);color:var(--acc);font-size:11px;font-weight:600;cursor:pointer;margin-right:6px">Add All Tasks</button>
+          <button onclick="this.closest('.km-ai').remove()" style="padding:6px 12px;border-radius:7px;border:1px solid var(--bd);background:transparent;color:var(--t3);font-size:11px;cursor:pointer">Skip</button>
+        </div>`;
+        box.appendChild(div);box.scrollTop=box.scrollHeight;
+        document.getElementById('breakdown-confirm').onclick=async()=>{
+          div.remove();
+          let added=0;
+          for(const line of lines){
+            const match=line.match(/^\d+\.\s*(.+?)(?:\s*\((\w+)\))?\s*$/);
+            if(match){
+              const text=match[1].trim();
+              const pri=(['urgent','high','medium','low'].includes(match[2]?.toLowerCase()))?match[2].toLowerCase():'medium';
+              const r=await dbi('tasks',{text,project_id:projectId||null,status:'todo',priority:pri,tag:'BUILD',recurring:'none'});
+              if(r){S.tasks.unshift(r);added++;}
+            }
+          }
+          toast(`${added} tasks added.`);
+          render();
+          addKMsg('ai',`Done. Added ${added} tasks. You can find them in Tasks or in the project board.`);
+        };
+      }
+    }
+  }catch(e){hideKThink();addKMsg('ai','Could not reach Kula.');}
+}
+
+// ── INTERVIEW PREP MODE ───────────────────────────────────────
+function startInterviewPrep(job){
+  openKula();
+  setKMode('job');
+  const prompt=`I have an interview coming up at ${job.company} for the ${job.role||'position'} role. ${job.notes?'Notes I have: '+job.notes+'.':''} ${job.location?'Location: '+job.location+'.':''}
+
+Give me a targeted interview prep plan based on my background:
+- WGU MS Cybersecurity student
+- CompTIA Security+ SY0-701 certified
+- Desktop Technician at Franklin University
+- Security Officer at Allied Universal
+- Founder of Kulan Institute
+
+Include: likely interview questions for this role, how I should frame my experience, and any technical areas I should brush up on.`;
+  sendKula(prompt);
+}
+
 function render(){
   setAcc();renderSB();renderTopbar();renderBotNav();
   let html='';
@@ -2056,10 +2307,24 @@ async function boot(){
 }
 
 async function init(){
-  const {data:{session}}=await db.auth.getSession();
-  document.getElementById('loading').style.display='none';
-  if(session){await boot();}
-  else{document.getElementById('login-screen').style.display='flex';bindEvents();}
+  // Timeout after 9 seconds — prevents infinite spinner on network failure
+  const timeout=new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),9000));
+  try{
+    const {data:{session}}=await Promise.race([db.auth.getSession(),timeout]);
+    document.getElementById('loading').style.display='none';
+    if(session){await boot();}
+    else{document.getElementById('login-screen').style.display='flex';bindEvents();}
+  }catch(e){
+    // Network error or timeout — show login silently, no raw error
+    document.getElementById('loading').style.display='none';
+    document.getElementById('login-screen').style.display='flex';
+    bindEvents();
+    // Only show a message if it was a genuine network error, not just no session
+    if(e.message==='timeout'||e.message==='Failed to fetch'){
+      const err=document.getElementById('lerr');
+      if(err){err.textContent='';} // stay clean — user hasn't tried to log in yet
+    }
+  }
 }
 
 init();
