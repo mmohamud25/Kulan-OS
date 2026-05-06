@@ -24,7 +24,7 @@
   --sh:0 0 0 1px rgba(255,255,255,0.05),0 4px 24px rgba(0,0,0,0.6);
   --sh2:0 0 0 1px rgba(255,255,255,0.07),0 8px 32px rgba(0,0,0,0.7);
   --r:6px;--r2:10px;--r3:14px;
-  --acc:#5b8def;--fs:14px;--sbw:220px;
+  --acc:#5b8def;--fs:15px;--sbw:220px;
   /* Section accent colors */
   --c-d:#5b8def;--c-p:#22c55e;--c-t:#f59e0b;--c-f:#a78bfa;
   --c-g:#fb7185;--c-ca:#22d3ee;--c-i:#38bdf8;--c-st:#fb923c;
@@ -138,7 +138,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .sb-search:hover{color:var(--t1);background:var(--sf2);}
 /* Nav */
 #sb-nav{flex:1;padding:8px 8px;overflow-y:auto;}
-.n-sect{font-size:10px;font-weight:600;color:var(--t3);letter-spacing:0.8px;text-transform:uppercase;padding:10px 8px 4px;}
+.n-sect{font-size:10px;font-weight:600;color:var(--t3);letter-spacing:0.06em;text-transform:uppercase;padding:10px 8px 4px;}
 .ni{width:100%;display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;border:none;background:transparent;color:var(--t2);font-size:13px;font-weight:500;text-align:left;transition:all 0.13s;position:relative;margin-bottom:1px;}
 .ni svg{flex-shrink:0;opacity:0.55;transition:opacity 0.12s;}
 .ni:hover{background:var(--sf2);color:var(--t1);}
@@ -192,7 +192,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 #kula{position:fixed;top:0;right:-460px;width:460px;max-width:100vw;height:100vh;background:var(--sf);border-left:1px solid var(--bd2);display:flex;flex-direction:column;z-index:80;transition:right 0.32s cubic-bezier(0.16,1,0.3,1);box-shadow:-16px 0 48px rgba(0,0,0,0.5);}
 .fade-up{animation:fadeUp 0.2s cubic-bezier(0.16,1,0.3,1);}
 #mi{animation:fadeIn 0.18s ease;}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 #kula.on{right:0;}
 @media(max-width:768px){#kula{width:100vw;border-left:none;}}
 /* Header */
@@ -319,9 +319,9 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 /* ── FILTERS ─────────────────────────────────────────────── */
 .frow{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
 .flbl{font-size:9px;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;margin-right:2px;font-weight:700;}
-.fbtn{padding:4px 11px;border-radius:20px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;transition:all 0.12s;}
-.fbtn.act{border-color:var(--acc);color:var(--acc);background:rgba(91,141,239,0.06);}
-.fbtn:hover:not(.act){color:var(--t1);}
+.fbtn{padding:4px 11px;border-radius:20px;border:1px solid var(--bd);background:var(--sf2);color:var(--t2);font-size:11px;transition:all 0.12s;}
+.fbtn.act{border-color:var(--acc);color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,transparent);font-weight:600;box-shadow:0 0 0 1px var(--acc) inset;}
+.fbtn:hover:not(.act){color:var(--t1);background:var(--sf3);}
 
 /* ── PROJECT CARDS ───────────────────────────────────────── */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:12px;}
@@ -345,7 +345,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .kdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .klbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
 .kcnt{margin-left:auto;font-size:10px;color:var(--t3);background:rgba(255,255,255,0.05);padding:1px 7px;border-radius:7px;}
-.tc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 11px;margin-bottom:8px;cursor:grab;transition:box-shadow 0.15s ease,transform 0.15s ease,border-color 0.15s;border-left:3px solid transparent;}
+.tc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 11px;margin-bottom:8px;cursor:grab;transition:box-shadow 0.15s ease,transform 0.15s ease,border-color 0.15s;border-left:3px solid transparent;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 2px 8px rgba(0,0,0,0.03);}
 .tc:hover{box-shadow:0 2px 8px rgba(0,0,0,0.07),0 6px 20px rgba(0,0,0,0.05);transform:translateY(-1px);border-color:var(--bd2);}
 .tc:active{cursor:grabbing;transform:none;}
 .tc.dragging{opacity:0.28;}
@@ -358,7 +358,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 @media(max-width:768px){.kanban{grid-template-columns:repeat(2,1fr);}}
 
 /* ── STAT CARDS ──────────────────────────────────────────── */
-.scard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);padding:14px 16px;}
+.scard{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 12px rgba(0,0,0,0.03);transition:box-shadow 0.15s ease,transform 0.15s ease;}
+.scard:hover{box-shadow:0 2px 8px rgba(0,0,0,0.07),0 8px 24px rgba(0,0,0,0.05);transform:translateY(-1px);}
 .snum{font-size:26px;font-weight:800;line-height:1;margin-bottom:3px;letter-spacing:-0.5px;}
 .slbl{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:0.8px;font-weight:600;}
 
@@ -1566,7 +1567,7 @@ function vTasks(){
             const subs=S.tasks.filter(s=>s.parent_task_id===t.id);
             const subsDone=subs.filter(s=>s.status==='done').length;
             const projCol=pc2(t.project_id);
-            return `<div class="tc" draggable="true" data-tc="${t.id}" data-priority="${t.priority||'medium'}" style="border-left:3px solid ${t.project_id?projCol:'transparent'}">
+            return `<div class="tc" draggable="true" data-tc="${t.id}" data-priority="${t.priority||'medium'}" style="border-left:3px solid ${t.project_id?projCol:({urgent:'#ef4444',high:'#f59e0b',medium:'#6366f1',low:'#64748b'}[t.priority]||'#64748b')}">
               <div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:6px">
                 <div class="tc-chk ${t.status==='done'?'done':''}" data-quick-done="${t.id}">${t.status==='done'?bx('check',8,'#fff'):''}</div>
                 <div style="flex:1">
