@@ -3,8 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="Kulan OS — Private project workspace for Kulan Group Ltd">
+<meta name="description" content="Kulan OS — Private project workspace for Kulan Group Ltd. Manage projects, tasks, goals, career tracker, and AI assistant.">
 <meta name="robots" content="noindex,nofollow">
+<meta property="og:title" content="Kulan OS">
+<meta property="og:description" content="Private project workspace — Kulan Group Ltd">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://os.kulaninstitute.org">
+<meta name="theme-color" content="#0f1117">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://*.supabase.co https://cdn.jsdelivr.net https://fonts.googleapis.com https://fonts.gstatic.com https://api.anthropic.com https://api.resend.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://*.supabase.co https://api.anthropic.com https://api.resend.com;">
 <title>Kulan OS</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -24,14 +29,14 @@
   --c-g:#fb7185;--c-ca:#22d3ee;--c-i:#38bdf8;--c-st:#fb923c;
   --c-pk:#94a3b8;--c-l:#2dd4bf;--c-rv:#e879f9;--c-se:#64748b;
 }
-.th-light{--bg:#f2f2f0;--sf:#ffffff;--sf2:#f7f6f3;--sf3:#eeede9;--t1:#111118;--t2:#60607a;--t3:#c0c0cc;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.13);--sh:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.05);--sh2:0 2px 8px rgba(0,0,0,0.08),0 8px 28px rgba(0,0,0,0.07);--acc:#0891b2;}
+.th-light{--bg:#f2f2f0;--sf:#ffffff;--sf2:#f7f6f3;--sf3:#eeede9;--t1:#111118;--t2:#4a4a62;--t3:#b0b0be;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.13);--sh:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.05);--sh2:0 2px 8px rgba(0,0,0,0.08),0 8px 28px rgba(0,0,0,0.07);--acc:#0891b2;}
 .th-dim{--bg:#0f1117;--sf:#161820;--sf2:#1c1f2a;--sf3:#222636;--t1:#dce0f0;--t2:#6870a0;--t3:#30364a;--sh:0 2px 12px rgba(0,0,0,0.4),0 1px 3px rgba(0,0,0,0.2);--sh2:0 4px 24px rgba(0,0,0,0.5),0 1px 6px rgba(0,0,0,0.25);}
 .th-warm{--bg:#0e0b08;--sf:#17120d;--sf2:#1e1810;--sf3:#261f15;--t1:#f2e9e0;--t2:#8c7a68;--t3:#4a3828;--bd:rgba(255,200,150,0.07);--acc:#d4714a;}
 .th-green{--bg:#070f08;--sf:#0c1610;--sf2:#101d13;--sf3:#152417;--t1:#dff0e3;--t2:#6a9070;--t3:#2a4030;--bd:rgba(100,200,100,0.07);--acc:#2eb86a;}
 /* Light Pro — clean white, indigo accent, shadow depth */
 .th-lightpro{
   --bg:#f5f4f8;--sf:#ffffff;--sf2:#f0eff5;--sf3:#e8e7f0;
-  --t1:#0f0e1a;--t2:#5c6080;--t3:#b0b4c8;
+  --t1:#0f0e1a;--t2:#4a4e72;--t3:#b0b4c8;
   --bd:rgba(79,82,222,0.09);--bd2:rgba(79,82,222,0.18);
   --sh:0 1px 3px rgba(79,82,222,0.06),0 4px 16px rgba(0,0,0,0.06);
   --sh2:0 2px 8px rgba(79,82,222,0.08),0 8px 32px rgba(0,0,0,0.08);
@@ -775,7 +780,7 @@ const pb=(pct,col,h=4)=>`<div class="pb-w" style="height:${h}px"><div class="pb-
 const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const pn=id=>(S.projects.find(p=>p.id===id)||{}).name||'';
 const pc2=id=>(S.projects.find(p=>p.id===id)||{}).color||'#64748b';
-const fd=d=>d?new Date(d+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+const fd=d=>{if(!d)return '';try{const dt=new Date(d.length===10?d+'T12:00:00':d);return isNaN(dt.getTime())?'':dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch{return '';}};
 const mon=()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(0,0,0,0);return d.toISOString().split('T')[0];};
 const fmts=s=>{const m=Math.floor(s/60),sc=s%60;return `${m}:${String(sc).padStart(2,'0')}`;};
 const cc=()=>NCH[S.section]||'#5b8def';
