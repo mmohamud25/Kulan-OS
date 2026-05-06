@@ -592,10 +592,22 @@ svg{display:block;}
 <div id="fm">
   <button class="fm-x" id="fm-x">✕ Exit</button>
   <div class="fm-l">Focus Session · Kulan OS</div>
-  <div class="fm-t" id="fm-t">Select a task</div>
+  <div style="position:relative;margin-bottom:26px">
+    <div id="fm-t" onclick="toggleFMTaskPicker()" style="font-size:22px;font-weight:700;max-width:540px;text-align:center;line-height:1.35;cursor:pointer;color:var(--t2);display:flex;align-items:center;gap:8px;justify-content:center">
+      <span id="fm-t-txt">Select a task</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div id="fm-task-picker" style="display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r2);padding:8px;min-width:320px;max-height:220px;overflow-y:auto;box-shadow:var(--sh2);z-index:10;margin-top:8px">
+      <input id="fm-task-search" placeholder="Search tasks..." style="width:100%;background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);color:var(--t1);padding:7px 10px;font-size:12px;margin-bottom:6px" oninput="renderFMTasks(this.value)">
+      <div id="fm-task-list"></div>
+    </div>
+  </div>
   <div class="fm-time" id="fm-timer" style="color:#8b5cf6">25:00</div>
   <div style="display:flex;gap:7px;margin-bottom:18px">
-    ${[15,25,45,60].map(m=>`<button class="fm-dur" data-min="${m}" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">${m}m</button>`).join('')}
+    <button class="fm-dur" data-min="15" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">15m</button>
+    <button class="fm-dur" data-min="25" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">25m</button>
+    <button class="fm-dur" data-min="45" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">45m</button>
+    <button class="fm-dur" data-min="60" style="padding:5px 13px;border-radius:6px;border:1px solid var(--bd);background:transparent;color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;transition:all 0.14s">60m</button>
   </div>
   <div class="fm-btns">
     <button class="fm-btn p" id="fm-play">▶ Start</button>
@@ -643,16 +655,20 @@ svg{display:block;}
       </button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 24px">
-      ${[
-        ['/','Quick Add'],['⌘K','Search'],['?','This cheat sheet'],
-        ['G D','Dashboard'],['G P','Projects'],['G T','Tasks'],
-        ['G F','Focus'],['G G','Goals'],['G C','Career'],
-        ['G E','Ecosystem'],['G L','Log'],['G R','Review'],
-        ['Esc','Close any panel'],['Enter','Submit forms'],
-      ].map(([k,l])=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)">
-        <span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace;white-space:nowrap">${k}</span>
-        <span style="font-size:12px;color:var(--t2)">${l}</span>
-      </div>`).join('')}
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">/</span><span style="font-size:12px;color:var(--t2)">Quick Add</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">⌘K</span><span style="font-size:12px;color:var(--t2)">Search</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">?</span><span style="font-size:12px;color:var(--t2)">This cheat sheet</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G D</span><span style="font-size:12px;color:var(--t2)">Dashboard</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G P</span><span style="font-size:12px;color:var(--t2)">Projects</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G T</span><span style="font-size:12px;color:var(--t2)">Tasks</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G F</span><span style="font-size:12px;color:var(--t2)">Weekly Focus</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G G</span><span style="font-size:12px;color:var(--t2)">Goals</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G C</span><span style="font-size:12px;color:var(--t2)">Career</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G E</span><span style="font-size:12px;color:var(--t2)">Ecosystem</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G L</span><span style="font-size:12px;color:var(--t2)">Daily Log</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">G R</span><span style="font-size:12px;color:var(--t2)">Weekly Review</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">Esc</span><span style="font-size:12px;color:var(--t2)">Close any panel</span></div>
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--bd)"><span style="background:var(--sf2);border:1px solid var(--bd);border-radius:4px;padding:1px 7px;font-size:10px;color:var(--t2);font-family:monospace">Enter</span><span style="font-size:12px;color:var(--t2)">Submit forms</span></div>
     </div>
     <div style="margin-top:14px;font-size:10px;color:var(--t3);text-align:center">Press <kbd style="background:var(--sf2);border:1px solid var(--bd);border-radius:3px;padding:1px 5px;font-family:monospace">?</kbd> anytime to show this</div>
   </div>
@@ -780,7 +796,15 @@ const pb=(pct,col,h=4)=>`<div class="pb-w" style="height:${h}px"><div class="pb-
 const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const pn=id=>(S.projects.find(p=>p.id===id)||{}).name||'';
 const pc2=id=>(S.projects.find(p=>p.id===id)||{}).color||'#64748b';
-const fd=d=>{if(!d)return '';try{const dt=new Date(d.length===10?d+'T12:00:00':d);return isNaN(dt.getTime())?'':dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}catch{return '';}};
+const fd=d=>{
+  if(!d||d==='null'||d==='undefined')return '';
+  try{
+    const s=String(d).trim();
+    const dt=new Date(s.length===10?s+'T12:00:00':s);
+    if(isNaN(dt.getTime()))return '';
+    return dt.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }catch{return '';}
+};
 const mon=()=>{const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));d.setHours(0,0,0,0);return d.toISOString().split('T')[0];};
 const fmts=s=>{const m=Math.floor(s/60),sc=s%60;return `${m}:${String(sc).padStart(2,'0')}`;};
 const cc=()=>NCH[S.section]||'#5b8def';
@@ -1192,15 +1216,19 @@ function renderSB(){
   const groupLabels={main:'Main',tools:'Tools',system:'System'};
   let html='';
   Object.entries(groups).forEach(([gk,items])=>{
-    html+=`<div class="n-sect">${groupLabels[gk]}</div>`;
-    items.forEach(n=>{
-      const col=NCH[n.id],act=S.section===n.id,ico=NICONS[n.id]||'';
-      html+=`<button class="ni ${act?'act':''}" data-nav="${n.id}"
-        style="${act?`color:${col};--ni-c:${col}`:''}"
-        onmouseenter="if(!this.classList.contains('act'))this.style.color='${col}'"
-        onmouseleave="if(!this.classList.contains('act'))this.style.color=''"
-      ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${n.label}${n.id==='tasks'&&uc>0?`<span class="ni-badge">${uc}</span>`:''}</button>`;
-    });
+    const collapsed=gk==='tools'&&sbCollapsed[gk];
+    const canCollapse=gk==='tools';
+    html+=`<div class="n-sect" style="display:flex;align-items:center;justify-content:space-between;cursor:${canCollapse?'pointer':'default'}" ${canCollapse?`onclick="toggleSBGroup('${gk}')"`:''}>${groupLabels[gk]}${canCollapse?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.4;transition:transform 0.2s;transform:rotate(${collapsed?'-90deg':'0'})""><path d="m6 9 6 6 6-6"/></svg>`:''}</div>`;
+    if(!collapsed){
+      items.forEach(n=>{
+        const col=NCH[n.id],act=S.section===n.id,ico=NICONS[n.id]||'';
+        html+=`<button class="ni ${act?'act':''}" data-nav="${n.id}"
+          style="${act?`color:${col};--ni-c:${col}`:''}"
+          onmouseenter="if(!this.classList.contains('act'))this.style.color='${col}'"
+          onmouseleave="if(!this.classList.contains('act'))this.style.color=''"
+        ><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ico}</svg>${n.label}${n.id==='tasks'&&uc>0?`<span class="ni-badge">${uc}</span>`:''}</button>`;
+      });
+    }
   });
   // Remove skeleton, populate real nav
   const nav=document.getElementById('sb-nav');
@@ -1414,36 +1442,98 @@ function vTasks(){
 
 function vFocus(){
   const done=S.focus.filter(f=>f.done).length,total=S.focus.length;
+  // Find last week's incomplete tasks to suggest as carry-overs
+  const lastMon=new Date(mon()+'T12:00:00');lastMon.setDate(lastMon.getDate()-7);
+  const lastMonStr=lastMon.toISOString().split('T')[0];
   return `<div class="fade-up">
     <div style="margin-bottom:16px">
       <div style="font-size:12px;color:var(--t2);margin-bottom:7px">Week of ${new Date(mon()+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric'})} · ${done}/${total} done · Max 5</div>
       ${total?pb(total?Math.round(done/total*100):0,'#a78bfa',4):''}
     </div>
-    ${!total?`<div class="es" style="border:1px solid rgba(167,139,250,0.12);border-radius:var(--r3)"><div class="es-ico">🎯</div><div class="es-ttl">No focus items</div><div class="es-sub">What are you committing to this week?</div></div>`:''}
+    ${!total?`<div class="es" style="border:1px solid rgba(167,139,250,0.12);border-radius:var(--r3);margin-bottom:14px"><div class="es-ico">🎯</div><div class="es-ttl">No focus items this week</div><div class="es-sub">What are you committing to?</div></div>`:''}
     ${S.focus.map(f=>`<div class="fitem ${f.done?'done':''}">
       <div class="fchk ${f.done?'chk':''}" data-ft="${f.id}">${f.done?bx('check',9,'#fff'):''}</div>
       <div style="flex:1"><div style="font-size:13px;line-height:1.4;${f.done?'text-decoration:line-through;color:var(--t3)':''}">${esc(f.text)}</div>${f.project_id?`<div style="font-size:10px;color:var(--t3);margin-top:2px">${esc(pn(f.project_id))}</div>`:''}</div>
       <button class="ibtn" data-ftask="${esc(f.text)}">${bx('focus',12)}</button>
       <button class="ibtn del" data-df="${f.id}">${bx('trash',12)}</button>
     </div>`).join('')}
+    <!-- Kula carry-over suggestion -->
+    ${total<5?`<div style="margin-top:16px;padding:13px 15px;background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:var(--r2)">
+      <div style="font-size:10px;font-weight:700;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">✦ Suggestions from Kula</div>
+      <div style="font-size:12px;color:var(--t2);margin-bottom:10px">Based on your stale tasks and urgent items:</div>
+      ${smartSuggestions().slice(0,3).map(t=>`<div style="display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd)">
+        <span style="font-size:11px;flex:1">${esc(t.text)}</span>
+        <span style="font-size:9px;color:var(--t3)">${t.age}d old</span>
+        <button data-add-focus-task="${esc(t.text)}" data-add-focus-pid="${t.project_id||''}" style="font-size:10px;padding:3px 9px;border-radius:6px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.07);color:#a78bfa;cursor:pointer">Add to focus</button>
+      </div>`).join('')}
+      ${smartSuggestions().length===0?`<div style="font-size:11px;color:var(--t3)">No stale tasks found. All good!</div>`:''}
+    </div>`:''}
   </div>`;
 }
 
 function vGoals(){
   const cats=[...new Set(S.goals.map(g=>g.category||'General'))];
   return `<div class="fade-up">
-    ${!S.goals.length?`<div class="es"><div class="es-ico">⚡</div><div class="es-ttl">No goals yet</div></div>`:''}
-    ${cats.map(cat=>`<div style="margin-bottom:22px"><div class="sl">${esc(cat)}</div>
+    ${!S.goals.length?`<div class="es"><div class="es-ico">⚡</div><div class="es-ttl">No goals yet</div><div class="es-sub">Add a goal and link tasks to it to track progress automatically.</div></div>`:''}
+    ${cats.map(cat=>`<div style="margin-bottom:24px"><div class="sl">${esc(cat)}</div>
       ${S.goals.filter(g=>(g.category||'General')===cat).map(g=>{
         const gn=S.goalNotes.filter(n=>n.goal_id===g.id);
-        return `<div class="card" style="margin-bottom:10px;border-color:${g.color||NCH.goals}18">
+        const linkedTasks=S.tasks.filter(t=>t.goal_id===g.id);
+        const autoProg=linkedTasks.length?Math.round(linkedTasks.filter(t=>t.status==='done').length/linkedTasks.length*100):null;
+        const prog=autoProg!==null?autoProg:(g.progress||0);
+        const col=g.color||NCH.goals;
+        return `<div class="card" style="margin-bottom:12px;border-color:${col}18">
           <div class="fb" style="margin-bottom:10px">
-            <div><div style="font-size:15px;font-weight:700;margin-bottom:3px;letter-spacing:-0.1px">${esc(g.name)}</div>${g.deadline?`<div style="font-size:11px;color:var(--t3)">Target: ${fd(g.deadline)}</div>`:''}</div>
-            <div class="fg"><span style="font-size:26px;font-weight:800;color:${g.color||NCH.goals};letter-spacing:-0.5px">${g.progress||0}%</span>
-              <div class="rbtns" style="opacity:1"><button class="ibtn" data-update-goal="${g.id}">${bx('edit',12)}</button><button class="ibtn del" data-dg="${g.id}">${bx('trash',12)}</button></div>
+            <div style="flex:1">
+              <div style="font-size:15px;font-weight:700;margin-bottom:3px;letter-spacing:-0.1px">${esc(g.name)}</div>
+              ${g.description?`<div style="font-size:12px;color:var(--t2);margin-bottom:4px;line-height:1.5">${esc(g.description)}</div>`:''}
+              ${g.deadline?`<div style="font-size:11px;color:var(--t3)">Target: ${fd(g.deadline)}</div>`:''}
             </div>
-          </div>${pb(g.progress||0,g.color||NCH.goals,4)}
-          ${gn.length?`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)"><div class="sl" style="margin-bottom:6px">Notes</div>${gn.slice(0,2).map(n=>`<div class="rv-c" style="padding:8px 11px;margin-bottom:6px"><div style="font-size:12px;line-height:1.5">${esc(n.text)}</div><div style="font-size:10px;color:var(--t3);margin-top:3px">${fd(n.created_at)} · ${n.from_progress}% → ${n.to_progress}%</div></div>`).join('')}</div>`:''}
+            <div class="fg" style="gap:6px;flex-shrink:0">
+              <span style="font-size:26px;font-weight:800;color:${col};letter-spacing:-0.5px">${prog}%</span>
+              <div class="rbtns" style="opacity:1">
+                <button class="ibtn" data-update-goal="${g.id}">${bx('edit',12)}</button>
+                <button class="ibtn del" data-dg="${g.id}">${bx('trash',12)}</button>
+              </div>
+            </div>
+          </div>
+          <!-- Progress bar with milestones -->
+          <div style="position:relative;margin-bottom:12px">
+            ${pb(prog,col,6)}
+            <div style="position:absolute;top:0;left:0;right:0;height:6px;pointer-events:none">
+              ${[25,50,75].map(m=>`<div style="position:absolute;left:${m}%;top:-3px;width:1px;height:12px;background:var(--bd2);opacity:0.6"></div>`).join('')}
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px">
+              ${[0,25,50,75,100].map(m=>`<span style="font-size:8px;color:${prog>=m?col:'var(--t3)'};font-weight:600">${m}%</span>`).join('')}
+            </div>
+          </div>
+          ${autoProg!==null?`<div style="font-size:10px;color:var(--t3);margin-bottom:8px">⚡ Auto-calculated from ${linkedTasks.length} linked task${linkedTasks.length!==1?'s':''} · ${linkedTasks.filter(t=>t.status==='done').length} done</div>`:''}
+          <!-- Linked tasks -->
+          ${linkedTasks.length?`<div style="margin-bottom:10px">
+            <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px">Linked Tasks</div>
+            ${linkedTasks.slice(0,4).map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--bd)">
+              <div style="width:6px;height:6px;border-radius:50%;background:${t.status==='done'?'#22c55e':'var(--t3)'};flex-shrink:0"></div>
+              <span style="flex:1;font-size:12px;${t.status==='done'?'text-decoration:line-through;color:var(--t3)':''}">${esc(t.text)}</span>
+              <span style="font-size:9px;color:var(--t3)">${PM[t.priority]?.l||''}</span>
+            </div>`).join('')}
+            ${linkedTasks.length>4?`<div style="font-size:10px;color:var(--t3);padding:4px 0">+${linkedTasks.length-4} more</div>`:''}
+          </div>`:''}
+          <!-- Link a task -->
+          <div style="display:flex;gap:7px;align-items:center">
+            <select id="link-task-${g.id}" class="qsel" style="flex:1;font-size:11px">
+              <option value="">Link a task to this goal...</option>
+              ${S.tasks.filter(t=>!t.goal_id&&t.status!=='done').map(t=>`<option value="${t.id}">${esc(t.text.slice(0,40))}</option>`).join('')}
+            </select>
+            <button data-link-goal="${g.id}" class="btn btn-g" style="font-size:11px;padding:5px 10px">Link</button>
+          </div>
+          <!-- Notes -->
+          ${gn.length?`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)">
+            <div class="sl" style="margin-bottom:6px">Progress Notes</div>
+            ${gn.slice(0,2).map(n=>`<div class="rv-c" style="padding:8px 11px;margin-bottom:6px">
+              <div style="font-size:12px;line-height:1.5">${esc(n.text)}</div>
+              <div style="font-size:10px;color:var(--t3);margin-top:3px">${fd(n.created_at)} · ${n.from_progress}% → ${n.to_progress}%</div>
+            </div>`).join('')}
+          </div>`:''}
         </div>`;
       }).join('')}
     </div>`).join('')}
@@ -1454,16 +1544,24 @@ function vCareer(){
   const pipeline={};JOB_ST.forEach(s=>{pipeline[s]=S.jobs.filter(j=>j.status===s).length;});
   const fil=S.fJS==='All'?S.jobs:S.jobs.filter(j=>j.status===S.fJS);
   return `<div class="fade-up">
-    <div style="font-size:12px;color:var(--t2);margin-bottom:16px">Track your SOC Analyst and IT Security Analyst applications in Columbus, OH.</div>
-    <div class="js-pipe" style="margin-bottom:18px">
-      ${JOB_ST.map(s=>`<div class="jsp"><div class="jsp-n" style="color:${JOB_C[s]}">${pipeline[s]||0}</div><div class="jsp-l">${s}</div></div>`).join('')}
+    <div style="font-size:12px;color:var(--t2);margin-bottom:14px">SOC Analyst · IT Security Analyst · Columbus OH — click any stage to filter</div>
+    <!-- Kanban pipeline header -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:18px">
+      ${JOB_ST.slice(0,8).map(s=>{
+        const col=JOB_C[s];const cnt=pipeline[s]||0;const act=S.fJS===s;
+        return `<div onclick="S.fJS='${s}';render()" style="padding:10px 8px;border-radius:var(--r2);border:2px solid ${act?col:'var(--bd)'};background:${act?col+'12':'var(--sf)'};cursor:pointer;text-align:center;transition:all 0.14s">
+          <div style="font-size:20px;font-weight:800;color:${cnt>0||act?col:'var(--t3)'}">${cnt}</div>
+          <div style="font-size:9px;font-weight:700;color:${act?col:'var(--t3)'};text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">${s}</div>
+        </div>`;
+      }).join('')}
     </div>
+    <!-- Filter row -->
     <div class="frow" style="margin-bottom:14px">
-      <span class="flbl">Filter</span>
       <button class="fbtn ${S.fJS==='All'?'act':''}" data-fjs="All">All (${S.jobs.length})</button>
-      ${JOB_ST.filter(s=>pipeline[s]>0).map(s=>`<button class="fbtn ${S.fJS===s?'act':''}" data-fjs="${s}">${s}</button>`).join('')}
+      ${S.fJS!=='All'?`<button class="fbtn" data-fjs="All">✕ Clear filter</button>`:''}
     </div>
-    ${!S.jobs.length?`<div class="es" style="border:1px solid rgba(34,211,238,0.12);border-radius:var(--r3)"><div class="es-ico">💼</div><div class="es-ttl">No applications yet</div><div class="es-sub">Start tracking your job search. Click "Add Application" to begin.</div></div>`:''}
+    ${!S.jobs.length?`<div class="es" style="border:1px solid rgba(34,211,238,0.12);border-radius:var(--r3)"><div class="es-ico">💼</div><div class="es-ttl">No applications yet</div><div class="es-sub">Click "Add Application" to start tracking your job search.</div></div>`:''}
+    ${fil.length===0&&S.fJS!=='All'?`<div class="es"><div class="es-ico">🔍</div><div class="es-ttl">No ${S.fJS} applications</div><div class="es-sub"><button onclick="S.fJS='All';render()" style="background:none;border:none;color:var(--acc);cursor:pointer;font-size:13px;text-decoration:underline">Clear filter</button></div></div>`:''}
     <div style="display:flex;flex-direction:column;gap:9px">
       ${fil.map(j=>{
         const col=JOB_C[j.status]||NCH.career;
@@ -1471,7 +1569,7 @@ function vCareer(){
           <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:11px;margin-bottom:8px">
             <div><div class="jc-co">${esc(j.company)}</div>${j.role?`<div class="jc-role">${esc(j.role)}</div>`:''}</div>
             <div class="fg" style="gap:6px;flex-shrink:0">
-              <span class="js-stat" style="background:${col}10;color:${col};border:1px solid ${col}20">${j.status}</span>
+              <span class="js-stat" style="background:${col}10;color:${col};border:1px solid ${col}20;cursor:pointer" onclick="S.fJS='${j.status}';render()">${j.status}</span>
               <div class="rbtns" style="opacity:1"><button class="ibtn" data-ej="${j.id}">${bx('edit',12)}</button><button class="ibtn del" data-dj="${j.id}">${bx('trash',12)}</button></div>
             </div>
           </div>
@@ -1511,25 +1609,50 @@ function vInfra(){
 function vStudy(){
   const certs=[...new Set(S.domains.map(d=>d.cert).filter(Boolean))];
   const cCol={'Security+ SY0-701':'#38bdf8','ISC2 CC':'#22c55e'};
+  // Find tasks that might relate to study domains by keyword
+  function relatedTasks(domainName){
+    const kw=domainName.toLowerCase().replace(/domain\s*\d+:?\s*/,'').split(' ').filter(w=>w.length>3);
+    return S.tasks.filter(t=>t.status!=='done'&&kw.some(k=>t.text.toLowerCase().includes(k))).slice(0,3);
+  }
   return `<div class="fade-up">
-    ${!S.domains.length?`<div class="es"><div class="es-ico">📚</div><div class="es-ttl">No study domains</div><div class="es-sub">Add your Security+ and ISC2 CC domains</div></div>`:''}
+    ${!S.domains.length?`<div class="es"><div class="es-ico">📚</div><div class="es-ttl">No study domains</div><div class="es-sub">Add your Security+ and ISC2 CC domains to track progress</div></div>`:''}
     ${certs.map(cert=>{
       const cd=S.domains.filter(d=>d.cert===cert);
       const avg=Math.round(cd.reduce((a,d)=>a+(d.progress||0),0)/cd.length);
       const col=cCol[cert]||NCH.infra;
       return `<div style="margin-bottom:26px">
-        <div class="fb" style="margin-bottom:8px"><div class="sl" style="margin-bottom:0;color:${col}">${esc(cert)}</div>
-          <div class="fg"><span style="font-size:20px;font-weight:800;color:${col}">${avg}%</span>
+        <div class="fb" style="margin-bottom:8px">
+          <div class="sl" style="margin-bottom:0;color:${col}">${esc(cert)}</div>
+          <div class="fg">
+            <span style="font-size:20px;font-weight:800;color:${col}">${avg}%</span>
             <button onclick="openKula();setKMode('study');sendKula('What should I study next for ${esc(cert)}?')" style="font-size:10px;padding:3px 9px;border-radius:7px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.07);color:#a78bfa">Ask Kula</button>
           </div>
         </div>
-        ${pb(avg,col,4)}<div style="display:flex;flex-direction:column;gap:7px;margin-top:12px">
-          ${cd.map(d=>`<div class="card" style="padding:12px 16px"><div class="fb" style="margin-bottom:7px"><span style="font-size:13px">${esc(d.name)}</span>
-            <div class="fg"><span style="font-size:12px;color:${col};font-weight:600">${d.progress||0}%</span>
-              <button class="btn btn-g" data-ed="${d.id}" style="font-size:10px;padding:3px 9px">Update</button>
-              <button class="ibtn del" data-dd="${d.id}">${bx('trash',11)}</button>
-            </div></div>${pb(d.progress||0,col,2)}<div style="font-size:10px;color:var(--t3);margin-top:4px">${d.total||0} topics</div>
-          </div>`).join('')}
+        ${pb(avg,col,4)}
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:12px">
+          ${cd.map(d=>{
+            const related=relatedTasks(d.name);
+            return `<div class="card" style="padding:13px 16px">
+              <div class="fb" style="margin-bottom:7px">
+                <span style="font-size:13px;font-weight:600">${esc(d.name)}</span>
+                <div class="fg">
+                  <span style="font-size:12px;color:${col};font-weight:600">${d.progress||0}%</span>
+                  <button class="btn btn-g" data-ed="${d.id}" style="font-size:10px;padding:3px 9px">Update</button>
+                  <button class="ibtn del" data-dd="${d.id}">${bx('trash',11)}</button>
+                </div>
+              </div>
+              ${pb(d.progress||0,col,2)}
+              <div style="font-size:10px;color:var(--t3);margin-top:4px;margin-bottom:${related.length?'9px':'0'}">${d.total||0} topics</div>
+              ${related.length?`<div>
+                <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px">Related Tasks</div>
+                ${related.map(t=>`<div style="display:flex;align-items:center;gap:7px;padding:4px 0;border-bottom:1px solid var(--bd)">
+                  <div style="width:4px;height:4px;border-radius:50%;background:${PM[t.priority]?.c||'#64748b'};flex-shrink:0"></div>
+                  <span style="font-size:11px;flex:1;color:var(--t2)">${esc(t.text)}</span>
+                  ${ppill(t.priority)}
+                </div>`).join('')}
+              </div>`:''}
+            </div>`;
+          }).join('')}
         </div>
       </div>`;
     }).join('')}
@@ -1553,20 +1676,58 @@ function vSomeday(){
 
 function vLog(){
   const streak=calcStreak();
+  const MOODS=[{e:'😩',l:'Rough',v:1},{e:'😕',l:'Low',v:2},{e:'😐',l:'Ok',v:3},{e:'🙂',l:'Good',v:4},{e:'🔥',l:'Great',v:5}];
   return `<div class="fade-up">
-    ${streak>0?`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;padding:10px 14px;background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.16);border-radius:var(--r2)"><span style="font-size:17px">🔥</span><div><div style="font-size:13px;font-weight:600;color:#fb923c">${streak} day streak</div><div style="font-size:11px;color:var(--t3)">Keep logging daily</div></div></div>`:''}
+    ${streak>0
+      ?`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;padding:10px 14px;background:rgba(251,146,60,0.06);border:1px solid rgba(251,146,60,0.16);border-radius:var(--r2)"><span style="font-size:17px">🔥</span><div><div style="font-size:13px;font-weight:600;color:#fb923c">${streak} day streak</div><div style="font-size:11px;color:var(--t3)">Keep logging daily</div></div></div>`
+      :`<div style="display:flex;align-items:center;gap:9px;margin-bottom:14px;padding:10px 14px;background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r2)"><span style="font-size:17px">🔥</span><div><div style="font-size:13px;font-weight:600;color:var(--t2)">No streak yet</div><div style="font-size:11px;color:var(--t3)">Log an entry below to start your streak. Every day you log, the counter goes up.</div></div></div>`
+    }
     <div class="card" style="margin-bottom:16px;border-color:rgba(45,212,191,0.15)">
       <div class="sl" style="color:${NCH.log}">New Entry</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap">
-        <select id="lg-tag" class="qsel">${TAGS.map(t=>`<option value="${t}">${t}</option>`).join('')}</select>
-        <input id="lg-proj" type="text" class="fi2" placeholder="Project (optional)" style="width:180px">
-        <input id="lg-text" type="text" class="fi2" placeholder="What happened today?" style="flex:1;min-width:180px">
-        <button class="btn btn-c" id="lg-btn" style="background:${NCH.log}">Log it</button>
+      <!-- Mood picker -->
+      <div style="margin-bottom:12px">
+        <div style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px">How's it going?</div>
+        <div style="display:flex;gap:7px">
+          ${MOODS.map(m=>`<button class="lg-mood" data-mood="${m.v}" style="flex:1;padding:8px 4px;border-radius:var(--r);border:1px solid var(--bd);background:transparent;cursor:pointer;transition:all 0.13s;text-align:center">
+            <div style="font-size:18px">${m.e}</div>
+            <div style="font-size:8px;color:var(--t3);margin-top:2px;font-weight:600">${m.l}</div>
+          </button>`).join('')}
+        </div>
       </div>
+      <!-- Entry row -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">
+        <select id="lg-tag" class="qsel">${TAGS.map(t=>`<option value="${t}">${t}</option>`).join('')}</select>
+        <input id="lg-proj" type="text" class="fi2" placeholder="Project (optional)" style="width:160px">
+        <input id="lg-text" type="text" class="fi2" placeholder="What happened today?" style="flex:1;min-width:180px">
+      </div>
+      <!-- Linked task -->
+      <div style="display:flex;gap:6px;align-items:center;margin-bottom:10px">
+        <select id="lg-task" class="qsel" style="flex:1;font-size:11px">
+          <option value="">Link a task (optional)</option>
+          ${S.tasks.filter(t=>t.status!=='done').slice(0,20).map(t=>`<option value="${t.id}">${esc(t.text.slice(0,45))}</option>`).join('')}
+        </select>
+      </div>
+      <button class="btn btn-c" id="lg-btn" style="background:${NCH.log}">Log it</button>
     </div>
     <div class="sl">Activity Feed</div>
     <div style="display:flex;flex-direction:column;gap:7px">
-      ${S.logs.map(l=>`<div class="card"><div style="display:flex;gap:9px;align-items:flex-start">${tpill(l.tag||'UPDATE')}<div style="flex:1">${l.project?`<div style="font-size:10px;color:${NCH.log};margin-bottom:2px;font-weight:700">${esc(l.project)}</div>`:''}<div style="font-size:13px;line-height:1.5">${esc(l.text)}</div><div style="font-size:10px;color:var(--t3);margin-top:2px">${fd(l.created_at)}</div></div><button class="ibtn del" data-dl="${l.id}">${bx('trash',11)}</button></div></div>`).join('')}
+      ${S.logs.map(l=>{
+        const MOOD_MAP={1:'😩',2:'😕',3:'😐',4:'🙂',5:'🔥'};
+        const lt=S.tasks.find(t=>t.id===l.linked_task_id);
+        return `<div class="card"><div style="display:flex;gap:9px;align-items:flex-start">
+          ${tpill(l.tag||'UPDATE')}
+          <div style="flex:1">
+            ${l.project?`<div style="font-size:10px;color:${NCH.log};margin-bottom:2px;font-weight:700">${esc(l.project)}</div>`:''}
+            <div style="font-size:13px;line-height:1.5">${esc(l.text)}</div>
+            ${lt?`<div style="font-size:10px;color:var(--t3);margin-top:3px">🔗 ${esc(lt.text)}</div>`:''}
+            <div style="display:flex;align-items:center;gap:8px;margin-top:3px">
+              <div style="font-size:10px;color:var(--t3)">${fd(l.created_at)}</div>
+              ${l.mood?`<span style="font-size:13px">${MOOD_MAP[l.mood]||''}</span>`:''}
+            </div>
+          </div>
+          <button class="ibtn del" data-dl="${l.id}">${bx('trash',11)}</button>
+        </div></div>`;
+      }).join('')}
       ${!S.logs.length?'<div style="text-align:center;padding:26px;color:var(--t3)">No entries yet.</div>':''}
     </div>
   </div>`;
@@ -1651,11 +1812,17 @@ function vSettings(){
       </div>
       <div class="set-c">
         <div class="set-ct"><div class="set-ico" style="background:rgba(34,211,238,0.08)">📄</div>Export & Account</div>
-        <div class="srow"><div><div class="srlbl">Export PDF</div><div class="srsub">Printable weekly summary</div></div><button class="btn btn-g" onclick="exportPDF()">PDF</button></div>
+        <div class="srow"><div><div class="srlbl">Browser Notifications</div><div class="srsub">Alerts for urgent tasks and overdue items</div></div><button class="btn btn-g" onclick="requestNotifications()" id="notif-btn">${localStorage.getItem('kos-notifs')==='1'?'✓ Enabled':'Enable'}</button></div>
         <div class="srow"><div><div class="srlbl">Export CSV</div><div class="srsub">Tasks, goals, logs, jobs</div></div><button class="btn btn-g" onclick="exportCSV()">CSV</button></div>
         <div class="srow"><div><div class="srlbl">Export JSON</div><div class="srsub">Full data backup</div></div><button class="btn btn-g" onclick="exportJSON()">JSON</button></div>
-        <div class="srow"><div><div class="srlbl">Supabase</div><div class="srsub" style="font-family:monospace;font-size:10px">advphrgxoemjhgsqxkbl</div></div></div>
         <div class="srow"><div><div class="srlbl">Sign Out</div></div><button class="btn btn-d" onclick="logout()">Sign Out</button></div>
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--bd)">
+          <button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="font-size:10px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:'Inter',sans-serif">Developer info ▾</button>
+          <div style="display:none;margin-top:8px;padding:9px 12px;background:var(--sf2);border-radius:var(--r);border:1px solid var(--bd)">
+            <div style="font-size:10px;color:var(--t3);font-family:monospace">Supabase: advphrgxoemjhgsqxkbl</div>
+            <div style="font-size:10px;color:var(--t3);margin-top:3px">Edge Functions: kulan-ai · kulan-digest · kulan-sync</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>`;
@@ -1722,7 +1889,8 @@ function mTask(e=null,pid=null){
     <div class="mg2"><div class="fl2"><label>Project</label><select id="m-pid" class="fi2"><option value="">No project</option>${S.projects.map(p=>`<option value="${p.id}" ${pId===p.id?'selected':''}>${esc(p.name)}</option>`).join('')}</select></div><div class="fl2"><label>Status</label><select id="m-st" class="fi2">${TCOLS.map(s=>`<option value="${s}" ${e?.status===s?'selected':''}>${SM[s]?.l||s}</option>`).join('')}</select></div></div>
     <div class="mg2"><div class="fl2"><label>Priority</label><select id="m-pri" class="fi2">${PRIS.map(p=>`<option value="${p}" ${e?.priority===p?'selected':''}>${PM[p]?.l||p}</option>`).join('')}</select></div><div class="fl2"><label>Tag</label><select id="m-tag" class="fi2">${TAGS.map(t=>`<option value="${t}" ${e?.tag===t?'selected':''}>${t}</option>`).join('')}</select></div></div>
     <div class="mg2"><div class="fl2"><label>Estimate (hrs)</label><input id="m-est" type="number" step="0.5" class="fi2" value="${e?.estimate||''}" placeholder="0.5"></div><div class="fl2"><label>Due Date</label><input id="m-due" type="date" class="fi2" value="${e?.due_date||''}"></div></div>
-    <div class="fl2"><label>Recurring <span style="color:var(--t3);font-weight:400;font-size:10px">(auto-recreates when moved to Done)</span></label>
+    <div class="fl2"><label>Linked Goal</label><select id="m-goal" class="fi2"><option value="">No goal</option>${S.goals.map(g=>`<option value="${g.id}" ${e?.goal_id===g.id?'selected':''}>${esc(g.name)}</option>`).join('')}</select></div>
+    <div class="fl2"><label>Recurring</label>
       <select id="m-rec" class="fi2">${RECS.map(r=>`<option value="${r}" ${(e?.recurring||'none')===r?'selected':''}>${r==='none'?'None':r.charAt(0).toUpperCase()+r.slice(1)}</option>`).join('')}</select>
     </div>
     ${mF()}`);
@@ -1730,7 +1898,7 @@ function mTask(e=null,pid=null){
     const text=document.getElementById('m-text').value.trim();
     if(!text){toast('Task required.',true);return;}
     const btn=document.getElementById('m-ok');btn.disabled=true;btn.textContent='Saving...';
-    const d={text,project_id:document.getElementById('m-pid').value||null,status:document.getElementById('m-st').value,priority:document.getElementById('m-pri').value,tag:document.getElementById('m-tag').value,estimate:parseFloat(document.getElementById('m-est').value)||null,due_date:document.getElementById('m-due').value||null,recurring:document.getElementById('m-rec').value};
+    const d={text,project_id:document.getElementById('m-pid').value||null,status:document.getElementById('m-st').value,priority:document.getElementById('m-pri').value,tag:document.getElementById('m-tag').value,estimate:parseFloat(document.getElementById('m-est').value)||null,due_date:document.getElementById('m-due').value||null,goal_id:document.getElementById('m-goal').value||null,recurring:document.getElementById('m-rec').value};
     if(e){await dbu('tasks',e.id,d);const i=S.tasks.findIndex(t=>t.id===e.id);if(i>-1)S.tasks[i]={...S.tasks[i],...d};toast('Updated.');}
     else{const r=await dbi('tasks',d);if(r){S.tasks.unshift(r);toast('Task added.');}}
     closeM();render();
@@ -1740,16 +1908,17 @@ function mTask(e=null,pid=null){
 function mGoal(e=null){
   showM(`<div class="mtitle">${e?'Edit Goal':'New Goal'}</div>
     <div class="fl2"><label>Goal *</label><input id="m-name" type="text" class="fi2" value="${esc(e?.name||'')}" placeholder="What are you working toward?" autofocus></div>
+    <div class="fl2"><label>Description</label><textarea id="m-desc" class="fi2" placeholder="What does success look like? Why does it matter?">${esc(e?.description||'')}</textarea></div>
     <div class="mg2"><div class="fl2"><label>Category</label><input id="m-cat" type="text" class="fi2" value="${esc(e?.category||'')}" placeholder="Certification, Career..."></div><div class="fl2"><label>Color</label><select id="m-col" class="fi2">${COLORS.map(c=>`<option value="${c}" ${e?.color===c?'selected':''}>${c}</option>`).join('')}</select></div></div>
     <div class="mg2"><div class="fl2"><label>Progress %</label><input id="m-prog" type="number" min="0" max="100" class="fi2" value="${e?.progress||0}"></div><div class="fl2"><label>Target Date</label><input id="m-dead" type="date" class="fi2" value="${e?.deadline||''}"></div></div>
-    ${e?`<div class="fl2"><label>Progress Note <span style="color:var(--t3);font-weight:400;font-size:10px">(what moved it?)</span></label><textarea id="m-gnote" class="fi2" placeholder="What did you accomplish?"></textarea></div>`:''}
+    ${e?`<div class="fl2"><label>Progress Note</label><textarea id="m-gnote" class="fi2" placeholder="What moved it?"></textarea></div>`:''}
     ${mF()}`);
   document.getElementById('m-ok').onclick=async()=>{
     const name=document.getElementById('m-name').value.trim();
     if(!name){toast('Name required.',true);return;}
     const btn=document.getElementById('m-ok');btn.disabled=true;btn.textContent='Saving...';
     const newProg=parseInt(document.getElementById('m-prog').value)||0;
-    const d={name,category:document.getElementById('m-cat').value.trim(),color:document.getElementById('m-col').value,progress:newProg,deadline:document.getElementById('m-dead').value||null};
+    const d={name,description:document.getElementById('m-desc').value.trim()||null,category:document.getElementById('m-cat').value.trim(),color:document.getElementById('m-col').value,progress:newProg,deadline:document.getElementById('m-dead').value||null};
     if(e){const nt=document.getElementById('m-gnote')?.value.trim();if(nt&&newProg!==e.progress){const n=await dbi('goal_notes',{goal_id:e.id,text:nt,from_progress:e.progress||0,to_progress:newProg});if(n)S.goalNotes.unshift(n);}await dbu('goals',e.id,d);const i=S.goals.findIndex(g=>g.id===e.id);if(i>-1)S.goals[i]={...S.goals[i],...d};toast('Updated.');}
     else{const r=await dbi('goals',d);if(r){S.goals.unshift(r);toast('Goal added.');}}
     closeM();render();
@@ -1947,22 +2116,52 @@ function bindEvents(){
     });
   });
 
-  // Log
+  // Settings
+  mi.querySelectorAll('[data-theme]').forEach(b=>{b.onclick=()=>{applyTheme(b.dataset.theme);render();};});
+  mi.querySelectorAll('[data-fsset]').forEach(b=>{b.onclick=()=>{applyFS(b.dataset.fsset);render();};});
+
+  // Mood picker
+  let selectedMood=null;
+  mi.querySelectorAll('.lg-mood').forEach(b=>{
+    b.onclick=()=>{
+      selectedMood=parseInt(b.dataset.mood);
+      mi.querySelectorAll('.lg-mood').forEach(x=>{x.style.background='transparent';x.style.borderColor='var(--bd)';});
+      b.style.background='rgba(91,141,239,0.08)';b.style.borderColor='var(--acc)';
+    };
+  });
+
+  // Log button — include mood and linked task
   const lgb=g('lg-btn');
   if(lgb){
     const doLog=async()=>{
       const text=g('lg-text')?.value.trim();if(!text){toast('Enter something.',true);return;}
       lgb.textContent='Logging...';lgb.disabled=true;
-      const r=await dbi('logs',{text,tag:g('lg-tag')?.value||'UPDATE',project:g('lg-proj')?.value.trim()||null});
-      if(r){S.logs.unshift(r);toast('Logged.');}
+      const r=await dbi('logs',{text,tag:g('lg-tag')?.value||'UPDATE',project:g('lg-proj')?.value.trim()||null,mood:selectedMood||null,linked_task_id:g('lg-task')?.value||null});
+      if(r){S.logs.unshift(r);toast('Logged.');selectedMood=null;}
       lgb.textContent='Log it';lgb.disabled=false;render();
     };
     lgb.onclick=doLog;const lt=g('lg-text');if(lt)lt.onkeydown=e=>{if(e.key==='Enter')doLog();};
   }
 
-  // Settings
-  mi.querySelectorAll('[data-theme]').forEach(b=>{b.onclick=()=>{applyTheme(b.dataset.theme);render();};});
-  mi.querySelectorAll('[data-fsset]').forEach(b=>{b.onclick=()=>{applyFS(b.dataset.fsset);render();};});
+  // Link task to goal
+  mi.querySelectorAll('[data-link-goal]').forEach(b=>{
+    b.onclick=async()=>{
+      const gid=b.dataset.linkGoal;
+      const sel=document.getElementById(`link-task-${gid}`);
+      if(!sel||!sel.value){toast('Select a task first.',true);return;}
+      const ok=await dbu('tasks',sel.value,{goal_id:gid});
+      if(ok){const t=S.tasks.find(x=>x.id===sel.value);if(t)t.goal_id=gid;toast('Task linked to goal.');render();}
+    };
+  });
+
+  // Add stale task to weekly focus
+  mi.querySelectorAll('[data-add-focus-task]').forEach(b=>{
+    b.onclick=async()=>{
+      if(S.focus.length>=5){toast('Max 5 focus items.',true);return;}
+      const r=await dbi('weekly_focus',{text:b.dataset.addFocusTask,project_id:b.dataset.addFocusPid||null,week_of:mon(),done:false});
+      if(r){S.focus.unshift(r);toast('Added to focus.');render();}
+    };
+  });
 
   // Sync buttons
   mi.querySelectorAll('[data-sync]').forEach(b=>{b.onclick=()=>syncApp(b.dataset.sync);});
@@ -2014,6 +2213,14 @@ document.getElementById('fm-x').onclick=closeFM;
 document.getElementById('fm-play').onclick=pomoStart;
 document.getElementById('fm-reset').onclick=pomoReset;
 document.querySelectorAll('.fm-dur').forEach(b=>{b.onclick=()=>setPomoMins(parseInt(b.dataset.min));});
+// Close task picker when clicking outside focus mode overlay
+document.getElementById('fm').addEventListener('click',e=>{
+  const picker=document.getElementById('fm-task-picker');
+  const trigger=document.getElementById('fm-t');
+  if(picker&&picker.style.display!=='none'&&!picker.contains(e.target)&&!trigger?.contains(e.target)){
+    picker.style.display='none';
+  }
+});
 
 // ── MOBILE ────────────────────────────────────────────────────
 document.getElementById('mob-ham').onclick=openMob;
@@ -2281,6 +2488,65 @@ Include: likely interview questions for this role, how I should frame my experie
   sendKula(prompt);
 }
 
+// ── FOCUS TASK PICKER ────────────────────────────────────────
+function toggleFMTaskPicker(){
+  const p=document.getElementById('fm-task-picker');
+  if(!p)return;
+  const isOpen=p.style.display!=='none';
+  p.style.display=isOpen?'none':'block';
+  if(!isOpen){renderFMTasks('');setTimeout(()=>document.getElementById('fm-task-search')?.focus(),50);}
+}
+function renderFMTasks(filter=''){
+  const list=document.getElementById('fm-task-list');if(!list)return;
+  const open=S.tasks.filter(t=>t.status!=='done'&&(!filter||t.text.toLowerCase().includes(filter.toLowerCase())));
+  if(!open.length){list.innerHTML='<div style="font-size:12px;color:var(--t3);padding:8px;text-align:center">No open tasks</div>';return;}
+  list.innerHTML=open.slice(0,12).map(t=>`<div onclick="selectFMTask('${t.id}','${esc(t.text)}')" style="padding:8px 10px;border-radius:var(--r);cursor:pointer;font-size:12px;color:var(--t1);display:flex;align-items:center;gap:8px;transition:background 0.1s" onmouseenter="this.style.background='var(--sf2)'" onmouseleave="this.style.background='transparent'">
+    <span style="width:4px;height:4px;border-radius:50%;background:${PM[t.priority||'medium']?.c||'#64748b'};flex-shrink:0"></span>
+    <span style="flex:1">${esc(t.text)}</span>
+    ${pn(t.project_id)?`<span style="font-size:10px;color:var(--t3)">${esc(pn(t.project_id))}</span>`:''}
+  </div>`).join('');
+}
+function selectFMTask(id,text){
+  pomo.task=text;
+  const txt=document.getElementById('fm-t-txt');
+  if(txt){txt.textContent=text;txt.parentElement.style.color='var(--t1)';}
+  document.getElementById('fm-task-picker').style.display='none';
+}
+
+// ── SIDEBAR COLLAPSIBLE GROUPS ────────────────────────────────
+const sbCollapsed=JSON.parse(localStorage.getItem('kos-sb-collapsed')||'{}');
+function toggleSBGroup(gk){
+  sbCollapsed[gk]=!sbCollapsed[gk];
+  localStorage.setItem('kos-sb-collapsed',JSON.stringify(sbCollapsed));
+  renderSB();
+}
+
+// ── BROWSER NOTIFICATIONS ────────────────────────────────────
+async function requestNotifications(){
+  if(!('Notification'in window)){toast('Notifications not supported in this browser.',true);return;}
+  const perm=await Notification.requestPermission();
+  if(perm==='granted'){
+    localStorage.setItem('kos-notifs','1');
+    toast('Notifications enabled.');
+    scheduleNotifications();
+  } else {toast('Notification permission denied.',true);}
+}
+function scheduleNotifications(){
+  if(localStorage.getItem('kos-notifs')!=='1')return;
+  if(Notification.permission!=='granted')return;
+  const urg=S.tasks.filter(t=>t.priority==='urgent'&&t.status!=='done');
+  const overdue=S.tasks.filter(t=>t.status!=='done'&&t.due_date&&new Date(t.due_date+'T12:00:00')<new Date());
+  if(urg.length>0||overdue.length>0){
+    setTimeout(()=>{
+      new Notification('Kulan OS',{
+        body:`${urg.length?`${urg.length} urgent task${urg.length!==1?'s':''}. `:''}${overdue.length?`${overdue.length} overdue.`:''}`,
+        icon:'https://os.kulaninstitute.org/favicon.ico',
+        tag:'kulan-urgent',
+      });
+    },2000);
+  }
+}
+
 function render(){
   setAcc();renderSB();renderTopbar();renderBotNav();
   let html='';
@@ -2309,6 +2575,7 @@ async function boot(){
   initVoice();
   await loadAll();
   render();
+  scheduleNotifications();
 }
 
 async function init(){
