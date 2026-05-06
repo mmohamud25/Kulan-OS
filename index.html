@@ -1108,7 +1108,17 @@ function setPomoMins(m){pomoMins=m;localStorage.setItem('kos-pomo-mins',m);if(!p
 function pomoPB(){const d=document.getElementById('fm-timer'),b=document.getElementById('fm-play');if(!d)return;d.textContent=fmts(pomo.rem);d.style.color=pomo.rem<=60?'#fb7185':'#8b5cf6';if(b)b.textContent=pomo.on&&!pomo.paused?'⏸ Pause':'▶ Start';}
 function pomoStart(){if(pomo.on&&!pomo.paused){pomo.paused=true;clearInterval(pomo.iv);pomoPB();return;}if(pomo.paused){pomo.paused=false;}else{if(pomo.rem<=0)pomo.rem=pomoMins*60;}pomo.on=true;pomo.paused=false;pomo.iv=setInterval(()=>{pomo.rem--;if(pomo.rem<=0){clearInterval(pomo.iv);pomo.on=false;pomo.rem=0;pomo.sessions++;const el=document.getElementById('fm-sess');if(el)el.textContent=`${pomo.sessions} session${pomo.sessions!==1?'s':''} today`;if(pomo.task)db.from('logs').insert({text:`Completed ${pomoMins}-min focus session${pomo.task?' on '+pomo.task:''}`,tag:'SYSTEM',project:pomo.task||null});toast(`🍅 ${pomoMins}min session complete!`);}pomoPB();},1000);pomoPB();}
 function pomoReset(){clearInterval(pomo.iv);pomo.on=false;pomo.paused=false;pomo.rem=pomoMins*60;pomoPB();}
-function openFM(t=''){pomo.task=t;const el=document.getElementById('fm-t');if(el)el.textContent=t||'No task selected';document.getElementById('fm').classList.add('show');pomoPB();setPomoMins(pomoMins);}
+function openFM(t=''){
+  pomo.task=t;
+  const el=document.getElementById('fm-t-txt');
+  if(el){el.textContent=t||'Select a task';el.parentElement.style.color=t?'var(--t1)':'var(--t2)';}
+  document.getElementById('fm').classList.add('show');
+  pomoPB();
+  setPomoMins(pomoMins);
+  // Restore session count display
+  const sess=document.getElementById('fm-sess');
+  if(sess)sess.textContent=`${pomo.sessions} session${pomo.sessions!==1?'s':''} today`;
+}
 function closeFM(){pomoReset();document.getElementById('fm').classList.remove('show');}
 
 // ── SEARCH ────────────────────────────────────────────────────
@@ -1218,7 +1228,7 @@ function renderSB(){
   Object.entries(groups).forEach(([gk,items])=>{
     const collapsed=gk==='tools'&&sbCollapsed[gk];
     const canCollapse=gk==='tools';
-    html+=`<div class="n-sect" style="display:flex;align-items:center;justify-content:space-between;cursor:${canCollapse?'pointer':'default'}" ${canCollapse?`onclick="toggleSBGroup('${gk}')"`:''}>${groupLabels[gk]}${canCollapse?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.4;transition:transform 0.2s;transform:rotate(${collapsed?'-90deg':'0'})""><path d="m6 9 6 6 6-6"/></svg>`:''}</div>`;
+    html+=`<div class="n-sect" style="display:flex;align-items:center;justify-content:space-between;cursor:${canCollapse?'pointer':'default'};user-select:none" ${canCollapse?`onclick="toggleSBGroup('${gk}')"`:''}>${groupLabels[gk]}${canCollapse?`<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.65;transition:transform 0.2s;transform:rotate(${collapsed?'-90deg':'0deg'})"><path d="m6 9 6 6 6-6"/></svg>`:''}</div>`;
     if(!collapsed){
       items.forEach(n=>{
         const col=NCH[n.id],act=S.section===n.id,ico=NICONS[n.id]||'';
@@ -1385,20 +1395,29 @@ function vProjDetail(){
           ${!colT.length?'<div style="text-align:center;padding:18px 0;font-size:11px;color:var(--t3)">Empty</div>':''}
           ${colT.map(t=>{
             const cmts=S.comments.filter(c=>c.task_id===t.id);
+            const isOverdue=t.due_date&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<new Date();
+            const isDueSoon=t.due_date&&!isOverdue&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<=new Date(Date.now()+3*864e5);
+            const subs=S.tasks.filter(s=>s.parent_task_id===t.id);
+            const subsDone=subs.filter(s=>s.status==='done').length;
             return `<div class="tc" draggable="true" data-tc="${t.id}">
               ${isRec(t)?`<span class="rec-b">↻ ${t.recurring}</span><br>`:''}
               <div class="tc-txt">${esc(t.text)}</div>
               <div class="tc-meta">${ppill(t.priority)}<div class="fg" style="gap:3px">
-                ${t.due_date?`<span style="font-size:9px;color:var(--t3)">${fd(t.due_date)}</span>`:''}
+                ${t.due_date?`<span style="font-size:9px;font-weight:${isOverdue?'700':'400'};color:${isOverdue?'#fb7185':isDueSoon?'#f59e0b':'var(--t3)'}">${isOverdue?'⚠ ':isDueSoon?'⏰ ':''}${fd(t.due_date)}</span>`:''}
+                ${subs.length?`<span style="font-size:9px;color:var(--t3)">${subsDone}/${subs.length} sub</span>`:''}
                 ${cmts.length?`<span style="font-size:9px;color:var(--t3)">${bx('chat',9)} ${cmts.length}</span>`:''}
                 <button class="ibtn" data-ftask="${esc(t.text)}">${bx('focus',11)}</button>
                 <button class="ibtn" data-et="${t.id}">${bx('edit',11)}</button>
                 <button class="ibtn del" data-dt="${t.id}">${bx('trash',11)}</button>
               </div></div>
               ${t.tag?`<div style="margin-top:6px">${tpill(t.tag)}</div>`:''}
+              ${subs.length?`<div style="margin-top:7px;padding-top:7px;border-top:1px solid var(--bd)">${subs.map(s=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><div style="width:5px;height:5px;border-radius:50%;border:1.5px solid ${s.status==='done'?'#22c55e':'var(--t3)'};background:${s.status==='done'?'#22c55e':'transparent'};flex-shrink:0"></div><span style="font-size:11px;${s.status==='done'?'text-decoration:line-through;color:var(--t3)':'color:var(--t2)'};flex:1">${esc(s.text)}</span></div>`).join('')}</div>`:''}
               <div style="display:flex;gap:6px;margin-top:8px">
                 <input class="fi2" placeholder="Comment..." data-cmt-task="${t.id}" style="font-size:11px;padding:5px 9px;flex:1">
                 <button class="ibtn" data-add-cmt="${t.id}" style="color:var(--acc);font-size:11px;padding:4px 7px">+</button>
+              </div>
+              <div style="display:flex;gap:5px;margin-top:5px">
+                <input placeholder="+ subtask" data-sub-parent="${t.id}" style="flex:1;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--t2);font-size:11px;padding:3px 0;outline:none" onkeydown="if(event.key==='Enter')addSubtask(this)">
               </div>
             </div>`;
           }).join('')}
@@ -1421,19 +1440,31 @@ function vTasks(){
         return `<div class="kcol" data-col="${col}">
           <div class="khdr"><span class="kdot" style="background:${cm.c}"></span><span class="klbl" style="color:${cm.c}">${cm.l}</span><span class="kcnt">${colT.length}</span></div>
           ${!colT.length?'<div style="text-align:center;padding:18px 0;font-size:11px;color:var(--t3)">Nothing here</div>':''}
-          ${colT.map(t=>`<div class="tc" draggable="true" data-tc="${t.id}">
+          ${colT.map(t=>{
+            const isOverdue=t.due_date&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<new Date();
+            const isDueSoon=t.due_date&&!isOverdue&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<=new Date(Date.now()+3*864e5);
+            const subs=S.tasks.filter(s=>s.parent_task_id===t.id);
+            const subsDone=subs.filter(s=>s.status==='done').length;
+            return `<div class="tc" draggable="true" data-tc="${t.id}">
             ${pn(t.project_id)?`<div class="tc-proj" style="color:${pc2(t.project_id)}">${esc(pn(t.project_id))}</div>`:''}
             ${isRec(t)?`<span class="rec-b">↻ ${t.recurring}</span><br>`:''}
             <div class="tc-txt">${esc(t.text)}</div>
             <div class="tc-meta">${ppill(t.priority)}<div class="fg" style="gap:3px">
               ${t.estimate?`<span style="font-size:9px;color:var(--t3)">${t.estimate}h</span>`:''}
-              ${t.due_date?`<span style="font-size:9px;color:var(--t3)">${fd(t.due_date)}</span>`:''}
+              ${t.due_date?`<span style="font-size:9px;font-weight:${isOverdue?'700':'400'};color:${isOverdue?'#fb7185':isDueSoon?'#f59e0b':'var(--t3)'}">${isOverdue?'⚠ ':isDueSoon?'⏰ ':''}${fd(t.due_date)}</span>`:''}
+              ${subs.length?`<span style="font-size:9px;color:var(--t3)">${subsDone}/${subs.length} sub</span>`:''}
               <button class="ibtn" data-ftask="${esc(t.text)}">${bx('focus',11)}</button>
               <button class="ibtn" data-et="${t.id}">${bx('edit',11)}</button>
               <button class="ibtn del" data-dt="${t.id}">${bx('trash',11)}</button>
             </div></div>
             ${t.tag?`<div style="margin-top:6px">${tpill(t.tag)}</div>`:''}
-          </div>`).join('')}
+            ${subs.length?`<div style="margin-top:7px;padding-top:7px;border-top:1px solid var(--bd)">${subs.map(s=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><div style="width:5px;height:5px;border-radius:50%;border:1.5px solid ${s.status==='done'?'#22c55e':'var(--t3)'};background:${s.status==='done'?'#22c55e':'transparent'};flex-shrink:0"></div><span style="font-size:11px;${s.status==='done'?'text-decoration:line-through;color:var(--t3)':'color:var(--t2)'};flex:1">${esc(s.text)}</span></div>`).join('')}</div>`:''}
+            <!-- Add subtask -->
+            <div style="display:flex;gap:5px;margin-top:7px">
+              <input placeholder="+ subtask" data-sub-parent="${t.id}" style="flex:1;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--t2);font-size:11px;padding:3px 0;outline:none" onkeydown="if(event.key==='Enter')addSubtask(this)">
+            </div>
+          </div>`;
+          }).join('')}
         </div>`;
       }).join('')}
     </div>
@@ -1812,7 +1843,7 @@ function vSettings(){
       </div>
       <div class="set-c">
         <div class="set-ct"><div class="set-ico" style="background:rgba(34,211,238,0.08)">📄</div>Export & Account</div>
-        <div class="srow"><div><div class="srlbl">Browser Notifications</div><div class="srsub">Alerts for urgent tasks and overdue items</div></div><button class="btn btn-g" onclick="requestNotifications()" id="notif-btn">${localStorage.getItem('kos-notifs')==='1'?'✓ Enabled':'Enable'}</button></div>
+        <div class="srow"><div><div class="srlbl">Browser Notifications</div><div class="srsub">Urgent tasks and overdue items · you'll be asked for permission</div></div><button class="btn btn-g" onclick="requestNotifications()" id="notif-btn">${localStorage.getItem('kos-notifs')==='1'?'✓ Enabled':'Enable'}</button></div>
         <div class="srow"><div><div class="srlbl">Export CSV</div><div class="srsub">Tasks, goals, logs, jobs</div></div><button class="btn btn-g" onclick="exportCSV()">CSV</button></div>
         <div class="srow"><div><div class="srlbl">Export JSON</div><div class="srsub">Full data backup</div></div><button class="btn btn-g" onclick="exportJSON()">JSON</button></div>
         <div class="srow"><div><div class="srlbl">Sign Out</div></div><button class="btn btn-d" onclick="logout()">Sign Out</button></div>
@@ -2521,7 +2552,29 @@ function toggleSBGroup(gk){
   renderSB();
 }
 
-// ── BROWSER NOTIFICATIONS ────────────────────────────────────
+// ── SUBTASKS ──────────────────────────────────────────────────
+async function addSubtask(inp){
+  const text=inp.value.trim();
+  if(!text)return;
+  const parentId=inp.dataset.subParent;
+  const parent=S.tasks.find(t=>t.id===parentId);
+  if(!parent)return;
+  inp.value='';
+  inp.disabled=true;
+  const r=await dbi('tasks',{
+    text,
+    parent_task_id:parentId,
+    project_id:parent.project_id||null,
+    goal_id:parent.goal_id||null,
+    status:'todo',
+    priority:parent.priority||'medium',
+    tag:parent.tag||'UPDATE',
+    recurring:'none'
+  });
+  if(r){S.tasks.push(r);render();}
+  inp.disabled=false;
+}
+
 async function requestNotifications(){
   if(!('Notification'in window)){toast('Notifications not supported in this browser.',true);return;}
   const perm=await Notification.requestPermission();
