@@ -17,11 +17,12 @@
 <style>
 /* ── TOKENS ──────────────────────────────────────────────── */
 :root{
-  --bg:#08090e;--sf:#0e1018;--sf2:#14161f;--sf3:#1a1d28;
-  --t1:#eceef5;--t2:#7880a0;--t3:#363d52;
-  --bd:rgba(255,255,255,0.055);--bd2:rgba(255,255,255,0.1);
-  --sh:0 2px 12px rgba(0,0,0,0.35),0 1px 3px rgba(0,0,0,0.2);
-  --sh2:0 4px 24px rgba(0,0,0,0.5),0 1px 6px rgba(0,0,0,0.25);
+  /* OLED dark — Vercel/shadcn/Linear gold standard */
+  --bg:#09090b;--sf:#111113;--sf2:#18181b;--sf3:#1f2028;
+  --t1:#fafafa;--t2:#71717a;--t3:#27272a;
+  --bd:rgba(255,255,255,0.06);--bd2:rgba(255,255,255,0.11);
+  --sh:0 0 0 1px rgba(255,255,255,0.05),0 4px 24px rgba(0,0,0,0.6);
+  --sh2:0 0 0 1px rgba(255,255,255,0.07),0 8px 32px rgba(0,0,0,0.7);
   --r:6px;--r2:10px;--r3:14px;
   --acc:#5b8def;--fs:14px;--sbw:220px;
   /* Section accent colors */
@@ -30,7 +31,7 @@
   --c-pk:#94a3b8;--c-l:#2dd4bf;--c-rv:#e879f9;--c-se:#64748b;
 }
 .th-light{--bg:#f2f2f0;--sf:#ffffff;--sf2:#f7f6f3;--sf3:#eeede9;--t1:#111118;--t2:#4a4a62;--t3:#b0b0be;--bd:rgba(0,0,0,0.07);--bd2:rgba(0,0,0,0.13);--sh:0 1px 3px rgba(0,0,0,0.07),0 4px 12px rgba(0,0,0,0.05);--sh2:0 2px 8px rgba(0,0,0,0.08),0 8px 28px rgba(0,0,0,0.07);--acc:#0891b2;}
-.th-dim{--bg:#0f1117;--sf:#161820;--sf2:#1c1f2a;--sf3:#222636;--t1:#dce0f0;--t2:#6870a0;--t3:#30364a;--sh:0 2px 12px rgba(0,0,0,0.4),0 1px 3px rgba(0,0,0,0.2);--sh2:0 4px 24px rgba(0,0,0,0.5),0 1px 6px rgba(0,0,0,0.25);}
+.th-dim{--bg:#0f1117;--sf:#14161f;--sf2:#1c1f2a;--sf3:#212433;--t1:#dce0f0;--t2:#6870a0;--t3:#2e3348;--sh:0 2px 14px rgba(0,0,0,0.45),0 1px 3px rgba(0,0,0,0.2);--sh2:0 4px 28px rgba(0,0,0,0.55),0 1px 6px rgba(0,0,0,0.25);}
 .th-warm{--bg:#0e0b08;--sf:#17120d;--sf2:#1e1810;--sf3:#261f15;--t1:#f2e9e0;--t2:#8c7a68;--t3:#4a3828;--bd:rgba(255,200,150,0.07);--acc:#d4714a;}
 .th-green{--bg:#070f08;--sf:#0c1610;--sf2:#101d13;--sf3:#152417;--t1:#dff0e3;--t2:#6a9070;--t3:#2a4030;--bd:rgba(100,200,100,0.07);--acc:#2eb86a;}
 /* Light Pro — clean white, indigo accent, shadow depth */
@@ -86,6 +87,10 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 @keyframes scaleIn{from{opacity:0;transform:scale(0.97)}to{opacity:1;transform:scale(1)}}
 @keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+@keyframes pulse-kula{0%,100%{box-shadow:0 2px 10px rgba(139,92,246,0.35)}50%{box-shadow:0 2px 18px rgba(139,92,246,0.6)}}
+/* Skeleton shimmer */
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+.skel-line{background:linear-gradient(90deg,var(--sf2) 25%,var(--sf3) 50%,var(--sf2) 75%);background-size:400px 100%;animation:shimmer 1.4s ease infinite;border-radius:6px;}
 @keyframes briefIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .fade-up{animation:fadeUp 0.22s ease;}
 
@@ -115,7 +120,9 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 #app{display:none;height:100vh;flex-direction:row;position:relative;}
 
 /* ── SIDEBAR ─────────────────────────────────────────────── */
-#sb{width:var(--sbw);background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;height:100vh;flex-shrink:0;transition:background 0.25s,transform 0.25s;}
+#sb{width:var(--sbw);background:var(--sf);border-right:1px solid var(--bd);display:flex;flex-direction:column;height:100vh;flex-shrink:0;transition:background 0.25s,transform 0.25s;box-shadow:2px 0 20px rgba(0,0,0,0.07);}
+.th-dark #sb,.th-dim #sb,.th-warm #sb,.th-green #sb,.th-darkref #sb{background:linear-gradient(180deg,var(--sf) 0%,var(--bg) 100%);box-shadow:2px 0 24px rgba(0,0,0,0.25);}
+.th-light #sb,.th-lp #sb{box-shadow:2px 0 12px rgba(0,0,0,0.05);}
 /* Top brand */
 .sb-brand{padding:16px 16px 12px;border-bottom:1px solid var(--bd);}
 .sb-logo-row{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
@@ -131,14 +138,14 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .sb-search:hover{color:var(--t1);background:var(--sf2);}
 /* Nav */
 #sb-nav{flex:1;padding:8px 8px;overflow-y:auto;}
-.n-sect{font-size:10px;font-weight:600;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 8px 4px;}
-.ni{width:100%;display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:7px;border:none;background:transparent;color:var(--t2);font-size:13px;font-weight:400;text-align:left;transition:all 0.12s;position:relative;margin-bottom:1px;}
+.n-sect{font-size:10px;font-weight:600;color:var(--t3);letter-spacing:0.8px;text-transform:uppercase;padding:10px 8px 4px;}
+.ni{width:100%;display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;border:none;background:transparent;color:var(--t2);font-size:13px;font-weight:500;text-align:left;transition:all 0.13s;position:relative;margin-bottom:1px;}
 .ni svg{flex-shrink:0;opacity:0.55;transition:opacity 0.12s;}
 .ni:hover{background:var(--sf2);color:var(--t1);}
 .ni:hover svg{opacity:0.8;}
-.ni.act{color:var(--t1);background:var(--sf2);font-weight:500;}
+.ni.act{color:var(--ni-c,var(--acc));background:color-mix(in srgb,var(--ni-c,var(--acc)) 10%,transparent);font-weight:600;}
 .ni.act svg{opacity:1;}
-.ni.act::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:60%;border-radius:0 2px 2px 0;background:var(--ni-c,var(--acc));}
+.ni.act::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:65%;border-radius:0 2px 2px 0;background:var(--ni-c,var(--acc));}
 .ni-badge{margin-left:auto;font-size:9px;font-weight:700;background:rgba(251,113,133,0.18);color:#fb7185;padding:1px 6px;border-radius:6px;}
 /* Footer */
 #sb-foot{padding:10px 12px;border-top:1px solid var(--bd);}
@@ -161,15 +168,19 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 }
 
 /* ── TOPBAR ──────────────────────────────────────────────── */
-#topbar{height:52px;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 18px;gap:10px;flex-shrink:0;}
+/* ── TOPBAR FROSTED GLASS ───────────────────────────────────── */
+#topbar{height:52px;background:rgba(var(--sf-rgb,14,16,24),0.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 18px;gap:10px;flex-shrink:0;position:sticky;top:0;z-index:30;}
+.th-light #topbar{background:rgba(255,255,255,0.82);}
+.th-lp #topbar{background:rgba(245,244,248,0.82);}
+.th-sharpmono #topbar{background:var(--sf);backdrop-filter:none;}
 #mob-ham{display:none;background:none;border:none;color:var(--t2);padding:4px;border-radius:6px;}
 @media(max-width:768px){#mob-ham{display:flex;align-items:center;}}
 #tb-ttl{flex:1;font-size:14px;font-weight:600;color:var(--t1);}
 #tb-acts{display:flex;gap:7px;align-items:center;}
 /* Kula topbar button */
-#kula-topbtn{display:flex;align-items:center;gap:7px;padding:6px 13px;border-radius:9px;border:1px solid rgba(167,139,250,0.3);background:rgba(167,139,250,0.07);color:#a78bfa;font-size:12px;font-weight:600;transition:all 0.14s;white-space:nowrap;}
-#kula-topbtn:hover{background:rgba(167,139,250,0.13);border-color:rgba(167,139,250,0.5);}
-#kula-topbtn.on{background:rgba(167,139,250,0.15);border-color:#a78bfa;color:#c4b5fd;}
+#kula-topbtn{display:flex;align-items:center;gap:7px;padding:6px 14px;border-radius:20px;border:none;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-size:12px;font-weight:600;transition:all 0.18s;white-space:nowrap;box-shadow:0 2px 10px rgba(139,92,246,0.35);animation:pulse-kula 3s ease-in-out infinite;}
+#kula-topbtn:hover{opacity:0.9;box-shadow:0 3px 16px rgba(139,92,246,0.5);}
+#kula-topbtn.on{background:linear-gradient(135deg,#7c3aed,#a855f7);box-shadow:0 2px 14px rgba(139,92,246,0.55);}
 .kula-live{width:5px;height:5px;border-radius:50%;background:#22c55e;animation:pulse 2.5s infinite;}
 
 /* ── MAIN ────────────────────────────────────────────────── */
@@ -178,7 +189,10 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 @media(max-width:768px){#main{padding:14px;padding-bottom:76px;}}
 
 /* ── KULA PANEL ──────────────────────────────────────────── */
-#kula{position:fixed;top:0;right:-460px;width:460px;max-width:100vw;height:100vh;background:var(--sf);border-left:1px solid var(--bd2);display:flex;flex-direction:column;z-index:80;transition:right 0.28s cubic-bezier(0.4,0,0.2,1);box-shadow:-16px 0 48px rgba(0,0,0,0.5);}
+#kula{position:fixed;top:0;right:-460px;width:460px;max-width:100vw;height:100vh;background:var(--sf);border-left:1px solid var(--bd2);display:flex;flex-direction:column;z-index:80;transition:right 0.32s cubic-bezier(0.16,1,0.3,1);box-shadow:-16px 0 48px rgba(0,0,0,0.5);}
+.fade-up{animation:fadeUp 0.2s cubic-bezier(0.16,1,0.3,1);}
+#mi{animation:fadeIn 0.18s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 #kula.on{right:0;}
 @media(max-width:768px){#kula{width:100vw;border-left:none;}}
 /* Header */
@@ -253,7 +267,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 
 /* ── SHARED ──────────────────────────────────────────────── */
 .sl{font-size:9px;font-weight:700;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:11px;}
-.card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);padding:18px 20px;transition:background 0.25s;}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:18px 20px;transition:box-shadow 0.18s ease,transform 0.18s ease,background 0.25s,border-color 0.18s;}
+.card:hover{box-shadow:var(--sh2);transform:translateY(-1px);border-color:var(--bd2);}
 .bdg{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:9px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;white-space:nowrap;}
 .pb-w{border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.05);}
 .pb-f{height:100%;border-radius:10px;}
@@ -274,13 +289,32 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .btn-g:hover{color:var(--t1);border-color:var(--bd2);background:var(--sf2);}
 .btn-d{background:rgba(251,113,133,0.08);border:1px solid rgba(251,113,133,0.2);color:#fb7185;}
 .btn-d:hover{background:rgba(251,113,133,0.15);}
-.btn-c{color:#fff;}
-.btn-c:hover{opacity:0.88;}
-.ibtn{background:none;border:none;padding:4px;color:var(--t3);display:inline-flex;align-items:center;border-radius:5px;transition:all 0.12s;}
+.btn-c{color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
+.btn-c:hover{opacity:0.88;box-shadow:0 3px 12px rgba(0,0,0,0.2);}
+.ibtn{background:none;border:none;padding:6px;color:var(--t2);display:inline-flex;align-items:center;border-radius:7px;transition:all 0.12s;width:28px;height:28px;justify-content:center;}
 .ibtn:hover{color:var(--t1);background:rgba(255,255,255,0.07);}
 .ibtn.del:hover{color:#fb7185;background:rgba(251,113,133,0.1);}
 .rbtns{display:flex;gap:2px;opacity:0;transition:opacity 0.12s;}
 .card:hover .rbtns,.pc:hover .rbtns,.tc:hover .rbtns,.jc:hover .rbtns{opacity:1;}
+/* Three-dot context menu */
+.tc-menu{position:relative;display:inline-flex;}
+.tc-menu-btn{background:none;border:none;color:var(--t2);width:22px;height:22px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;line-height:1;transition:all 0.12s;padding:0;}
+.tc-menu-btn:hover{color:var(--t1);background:rgba(255,255,255,0.07);}
+.tc-drop{position:absolute;right:0;top:100%;margin-top:3px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r2);padding:4px;z-index:50;box-shadow:var(--sh2);min-width:120px;display:none;}
+.tc-drop.open{display:block;animation:fadeUp 0.12s ease;}
+.tc-drop-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;font-size:12px;color:var(--t2);cursor:pointer;white-space:nowrap;transition:all 0.1s;}
+.tc-drop-item:hover{background:var(--sf2);color:var(--t1);}
+.tc-drop-item.danger{color:#fb7185;}
+.tc-drop-item.danger:hover{background:rgba(251,113,133,0.08);}
+/* Quick complete checkbox on task cards */
+.tc-chk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--t3);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.14s;background:transparent;}
+.tc-chk:hover{border-color:var(--acc);}
+.tc-chk.done{background:#22c55e;border-color:#22c55e;}
+/* Left border by project color */
+.tc{border-left:3px solid transparent;}
+.tc[data-proj-col]{border-left-color:var(--tc-proj-col);}
+/* Section topbar accent */
+#topbar{transition:border-bottom-color 0.25s;}
 
 /* ── FILTERS ─────────────────────────────────────────────── */
 .frow{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
@@ -303,12 +337,17 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .kanban{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;}
 .kcol{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);padding:12px;min-height:180px;transition:border-color 0.13s;}
 .kcol.dov{border-color:var(--acc);}
-.khdr{display:flex;align-items:center;gap:7px;margin-bottom:11px;}
+.kcol[data-col="todo"]{background:color-mix(in srgb,#94a3b8 4%,var(--sf));}
+.kcol[data-col="in-progress"]{background:color-mix(in srgb,#f59e0b 5%,var(--sf));}
+.kcol[data-col="review"]{background:color-mix(in srgb,#6366f1 4%,var(--sf));}
+.kcol[data-col="done"]{background:color-mix(in srgb,#22c55e 4%,var(--sf));}
+.khdr{display:flex;align-items:center;gap:7px;margin-bottom:11px;position:sticky;top:0;z-index:2;padding:3px 0 6px;background:inherit;backdrop-filter:blur(8px);}
 .kdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
 .klbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
 .kcnt{margin-left:auto;font-size:10px;color:var(--t3);background:rgba(255,255,255,0.05);padding:1px 7px;border-radius:7px;}
-.tc{background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);padding:10px 11px;margin-bottom:8px;cursor:grab;transition:all 0.13s;}
-.tc:active{cursor:grabbing;}
+.tc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 11px;margin-bottom:8px;cursor:grab;transition:box-shadow 0.15s ease,transform 0.15s ease,border-color 0.15s;border-left:3px solid transparent;}
+.tc:hover{box-shadow:0 2px 8px rgba(0,0,0,0.07),0 6px 20px rgba(0,0,0,0.05);transform:translateY(-1px);border-color:var(--bd2);}
+.tc:active{cursor:grabbing;transform:none;}
 .tc.dragging{opacity:0.28;}
 .tc-proj{font-size:9px;font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.4px;}
 .tc-txt{font-size:13px;line-height:1.45;margin-bottom:8px;font-weight:400;}
@@ -519,16 +558,16 @@ svg{display:block;}
     <nav id="sb-nav">
       <div id="sb-skeleton" style="padding:8px">
         <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 6px 4px">Main</div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
         <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:1.5px;text-transform:uppercase;padding:10px 6px 4px;margin-top:4px">Tools</div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
-        <div style="height:30px;background:var(--sf2);border-radius:7px;margin-bottom:3px;animation:pulse 1.5s infinite"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
+        <div class="skel-line" style="height:30px;margin-bottom:4px"></div>
       </div>
     </nav>
     <div id="sb-foot"></div>
@@ -587,6 +626,9 @@ svg{display:block;}
       <div class="k-tools">
         <button class="k-tool-btn" id="voice-btn" title="Voice input" aria-label="Voice input">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <button class="k-tool-btn" id="tts-btn" title="Voice replies off" onclick="toggleTTS()" aria-label="Toggle voice replies">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
         </button>
         <div class="k-clr" id="k-clr">Clear conversation</div>
       </div>
@@ -785,6 +827,7 @@ const TEMPLATES=[
 let S={section:'dashboard',selProj:null,fV:'All',fS:'All',fP:'All',fJS:'All',
   projects:[],tasks:[],goals:[],infra:[],logs:[],domains:[],
   focus:[],someday:[],comments:[],goalNotes:[],reviews:[],jobs:[]};
+let kulaMemory=[]; // persistent facts stored in Supabase
 let dragId=null,mobOpen=false;
 let pomo={on:false,paused:false,rem:25*60,iv:null,task:'',sessions:0};
 let pingStatus={};
@@ -862,13 +905,39 @@ function buildCtx(){
   const dueSoon=S.tasks.filter(t=>t.status!=='done'&&t.due_date&&new Date(t.due_date+'T12:00:00')>=now&&new Date(t.due_date+'T12:00:00')<=new Date(now.getTime()+7*864e5));
   const urg=S.tasks.filter(t=>t.priority==='urgent'&&t.status!=='done');
   const streak=calcStreak();
-  let ctx=`=== PROJECTS ===\n`;
+
+  // Today's mood from most recent log entry
+  const todayLog=S.logs.find(l=>new Date(l.created_at).toDateString()===now.toDateString());
+  const MOOD_MAP={1:'Rough',2:'Low',3:'Ok',4:'Good',5:'Great'};
+  const todayMood=todayLog?.mood?MOOD_MAP[todayLog.mood]:'unknown';
+
+  // Goal drift — goals with no linked task completed in 7+ days
+  const driftGoals=S.goals.filter(g=>{
+    const linked=S.tasks.filter(t=>t.goal_id===g.id&&t.status==='done');
+    if(!linked.length)return g.progress>0&&g.progress<100;
+    const lastDone=Math.max(...linked.map(t=>new Date(t.created_at||0).getTime()));
+    return Date.now()-lastDone>7*864e5&&(g.progress||0)<100;
+  });
+
+  let ctx=`=== CURRENT PAGE: ${S.section.toUpperCase()} ===\n`;
+  ctx+=`=== TODAY: ${now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'})} ===\n`;
+  ctx+=`=== MOOD TODAY: ${todayMood} ===\n\n`;
+
+  // Inject persistent memory
+  if(kulaMemory.length){
+    ctx+=`=== KULA MEMORY (persistent facts about Muzz) ===\n`;
+    kulaMemory.forEach(m=>ctx+=`• ${m.fact}\n`);
+    ctx+='\n';
+  }
+
+  ctx+=`=== PROJECTS ===\n`;
   S.projects.forEach(p=>{const hs=health(p),pr=pprog(p.id),pt=S.tasks.filter(t=>t.project_id===p.id&&t.status!=='done');ctx+=`• ${p.name} | ${p.vertical||''} | ${p.status} | health:${hs}${pr!==null?` | ${pr}%`:''}${pt.length?` | ${pt.length} open tasks`:''}\n`;if(p.pinned_note)ctx+=`  📌 ${p.pinned_note}\n`;});
   ctx+=`\n=== URGENT ===\n`;urg.forEach(t=>ctx+=`• ${t.text}${pn(t.project_id)?' ['+pn(t.project_id)+']':''}\n`);
   ctx+=`\n=== IN PROGRESS ===\n`;S.tasks.filter(t=>t.status==='in-progress').forEach(t=>ctx+=`• ${t.text}${pn(t.project_id)?' ['+pn(t.project_id)+']':''}\n`);
   if(overdue.length){ctx+=`\n=== OVERDUE ===\n`;overdue.forEach(t=>ctx+=`• ${t.text} — due ${fd(t.due_date)}\n`);}
   if(dueSoon.length){ctx+=`\n=== DUE THIS WEEK ===\n`;dueSoon.forEach(t=>ctx+=`• ${t.text} — ${fd(t.due_date)}\n`);}
   ctx+=`\n=== GOALS ===\n`;S.goals.forEach(g=>ctx+=`• ${g.name} | ${g.progress||0}% | ${g.deadline||'no date'} | id:${g.id}\n`);
+  if(driftGoals.length){ctx+=`\n=== GOAL DRIFT (no progress in 7+ days) ===\n`;driftGoals.forEach(g=>ctx+=`• ${g.name} (${g.progress||0}%)\n`);}
   ctx+=`\n=== WEEKLY FOCUS (${S.focus.filter(f=>f.done).length}/${S.focus.length}) ===\n`;S.focus.forEach(f=>ctx+=`• [${f.done?'✓':'○'}] ${f.text}\n`);
   ctx+=`\n=== STUDY ===\n`;const certs=[...new Set(S.domains.map(d=>d.cert).filter(Boolean))];certs.forEach(cert=>{const cd=S.domains.filter(d=>d.cert===cert);const avg=Math.round(cd.reduce((a,d)=>a+(d.progress||0),0)/cd.length);ctx+=`${cert}: ${avg}% overall\n`;cd.forEach(d=>ctx+=`  ${d.name}: ${d.progress||0}% (${d.total||0} topics)\n`);});
   ctx+=`\n=== JOB SEARCH (${S.jobs.length} apps) ===\n`;const jbs={};S.jobs.forEach(j=>{if(!jbs[j.status])jbs[j.status]=[];jbs[j.status].push(j.company);});Object.entries(jbs).forEach(([s,cs])=>ctx+=`${s}: ${cs.join(', ')}\n`);S.jobs.filter(j=>j.next_step).slice(0,5).forEach(j=>ctx+=`  → ${j.company}: ${j.next_step}\n`);
@@ -1014,6 +1083,8 @@ function handleQuizResponse(text){
 
 async function sendKula(text){
   if(!text.trim())return;
+  // Always open the panel when a message is sent
+  openKula();
   // Auto-detect breakdown requests
   const breakdownMatch=text.match(/^(?:break\s?down|split|decompose|create tasks for)\s+(.+)/i);
   if(breakdownMatch&&kMode==='chat'){
@@ -1049,6 +1120,11 @@ async function sendKula(text){
       if(kMode==='quiz'){handleQuizResponse(reply);}
       else if(kMode==='linkedin'){handleLinkedInResponse(reply);}
       else{addKMsg('ai',reply);}
+      // Speak the reply if TTS enabled
+      speakText(reply);
+      // Auto-detect and save memory facts
+      const memFact=detectMemory(text);
+      if(memFact){await saveMemory(memFact);}
       const action=parseAction(reply);
       if(action)showActBar(action,descAct(action));
       const mem=document.getElementById('k-mem');
@@ -1075,11 +1151,19 @@ function initVoice(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   voiceRec=new SR();
   voiceRec.continuous=false;voiceRec.interimResults=false;voiceRec.lang='en-US';
-  voiceRec.onresult=e=>{
+  voiceRec.onresult=async e=>{
     const t=e.results[0][0].transcript;
-    document.getElementById('k-in').value=t;
     stopVoice();
-    setTimeout(()=>sendKula(t),200);
+    // Try intent parsing first
+    const intentResult=await parseVoiceIntent(t);
+    if(intentResult){
+      addKMsg('user',t);
+      addKMsg('ai',intentResult);
+      speakText(intentResult);
+    } else {
+      document.getElementById('k-in').value=t;
+      setTimeout(()=>sendKula(t),200);
+    }
   };
   voiceRec.onerror=()=>stopVoice();
   voiceRec.onend=()=>stopVoice();
@@ -1198,7 +1282,7 @@ async function logout(){await db.auth.signOut();document.getElementById('app').s
 
 // ── DATA ──────────────────────────────────────────────────────
 async function loadAll(){
-  const [p,t,g,i,l,d,f,s,cm,gn,rv,jb]=await Promise.all([
+  const [p,t,g,i,l,d,f,s,cm,gn,rv,jb,km]=await Promise.all([
     db.from('projects').select('*').order('created_at',{ascending:false}),
     db.from('tasks').select('*').order('created_at',{ascending:false}),
     db.from('goals').select('*').order('created_at',{ascending:false}),
@@ -1211,12 +1295,14 @@ async function loadAll(){
     db.from('goal_notes').select('*').order('created_at',{ascending:false}),
     db.from('weekly_reviews').select('*').order('created_at',{ascending:false}),
     db.from('job_applications').select('*').order('created_at',{ascending:false}),
+    db.from('kula_memory').select('*').order('created_at',{ascending:false}).limit(30),
   ]);
   S.projects=p.data||[];S.tasks=t.data||[];S.goals=g.data||[];
   S.infra=i.data||[];S.logs=l.data||[];S.domains=d.data||[];
   S.focus=f.data||[];S.someday=s.data||[];
   S.comments=cm.data||[];S.goalNotes=gn.data||[];S.reviews=rv.data||[];
   S.jobs=jb.data||[];
+  kulaMemory=km.data||[];
   if(p.error)toast('Projects load error',true);
 }
 async function dbi(table,data){const {data:r,error}=await db.from(table).insert(data).select().single();if(error){toast('Save failed: '+error.message,true);console.error(table,error);return null;}return r;}
@@ -1268,7 +1354,28 @@ function renderSB(){
 
 function renderTopbar(){
   const col=cc(),n=NAVITEMS.find(x=>x.id===S.section);
-  document.getElementById('tb-ttl').innerHTML=`<span style="font-size:14px;font-weight:600">${n?.label||''}</span>`;
+  // Set page accent and topbar border
+  document.documentElement.style.setProperty('--page-acc',col);
+  document.getElementById('topbar').style.borderBottom=`1px solid var(--bd)`;
+  document.getElementById('topbar').style.boxShadow=`0 1px 0 ${col}28`;
+
+  // Smart section stats
+  const stats={
+    dashboard:`${S.projects.length} projects · ${S.tasks.filter(t=>t.status!=='done').length} open tasks`,
+    projects:`${S.projects.length} total · ${S.projects.filter(p=>p.status==='in-progress').length} active`,
+    tasks:`${S.tasks.filter(t=>t.status!=='done').length} open · ${S.tasks.filter(t=>t.status==='in-progress').length} in progress`,
+    focus:`${S.focus.filter(f=>f.done).length}/${S.focus.length} done this week`,
+    goals:`${S.goals.length} goals · avg ${S.goals.length?Math.round(S.goals.reduce((a,g)=>a+(g.progress||0),0)/S.goals.length):0}%`,
+    career:`${S.jobs.filter(j=>!['Accepted','Rejected'].includes(j.status)).length} active apps`,
+    study:`${S.domains.length?Math.round(S.domains.reduce((a,d)=>a+(d.progress||0),0)/S.domains.length):0}% avg progress`,
+    log:`${calcStreak()}d streak · ${S.logs.length} entries`,
+  };
+  const stat=stats[S.section]||'';
+
+  document.getElementById('tb-ttl').innerHTML=`
+    <span style="font-size:14px;font-weight:600">${n?.label||''}</span>
+    ${stat?`<span style="font-size:11px;color:var(--t2);margin-left:10px;font-weight:400">${stat}</span>`:''}
+  `;
   const a=document.getElementById('tb-acts');let h='';
   if(S.section==='projects'&&!S.selProj) h=`<button class="btn btn-c" id="tb-ap" style="background:${col}">${bx('plus',12)} Add Project</button>`;
   else if(S.section==='projects'&&S.selProj) h=`<button class="btn btn-g" id="tb-bk">← Back</button><button class="btn btn-c" id="tb-atd" style="background:${NCH.tasks};font-size:12px">${bx('plus',12)} Task</button>`;
@@ -1281,7 +1388,6 @@ function renderTopbar(){
   else if(S.section==='review')   h=`<button class="btn btn-c" id="tb-ar" style="background:${col}">${bx('plus',12)} New Review</button>`;
   else if(S.section==='career')   h=`<button class="btn btn-c" id="tb-aj" style="background:${col}">${bx('plus',12)} Add Application</button>`;
   a.innerHTML=h;
-  // Keep Kula active state
   document.getElementById('kula-topbtn').classList.toggle('on',document.getElementById('kula').classList.contains('on'));
 }
 
@@ -1405,7 +1511,7 @@ function vProjDetail(){
             const isDueSoon=t.due_date&&!isOverdue&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<=new Date(Date.now()+3*864e5);
             const subs=S.tasks.filter(s=>s.parent_task_id===t.id);
             const subsDone=subs.filter(s=>s.status==='done').length;
-            return `<div class="tc" draggable="true" data-tc="${t.id}">
+            return `<div class="tc" draggable="true" data-tc="${t.id}" data-priority="${t.priority||'medium'}">
               ${isRec(t)?`<span class="rec-b">↻ ${t.recurring}</span><br>`:''}
               <div class="tc-txt">${esc(t.text)}</div>
               <div class="tc-meta">${ppill(t.priority)}<div class="fg" style="gap:3px">
@@ -1443,34 +1549,51 @@ function vTasks(){
     <div class="kanban">
       ${TCOLS.map(col=>{
         const cm=SM[col],colT=fil.filter(t=>t.status===col);
-        return `<div class="kcol" data-col="${col}">
-          <div class="khdr"><span class="kdot" style="background:${cm.c}"></span><span class="klbl" style="color:${cm.c}">${cm.l}</span><span class="kcnt">${colT.length}</span></div>
+        const isEmpty=colT.length===0;
+        const isCollapsed=isEmpty&&localStorage.getItem('kos-col-'+col)==='1';
+        return `<div class="kcol" data-col="${col}" style="${isCollapsed?'min-height:auto':''}">
+          <div class="khdr" style="cursor:${isEmpty?'pointer':'default'}" onclick="${isEmpty?`toggleKCol('${col}')`:''}" >
+            <span class="kdot" style="background:${cm.c}"></span>
+            <span class="klbl" style="color:${cm.c}">${cm.l}</span>
+            <span class="kcnt">${colT.length}</span>
+            ${isEmpty?`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:auto;opacity:0.5;transform:rotate(${isCollapsed?'-90':'0'}deg);transition:transform 0.2s"><path d="m6 9 6 6 6-6"/></svg>`:''}
+          </div>
+          ${isCollapsed?'':`
           ${!colT.length?'<div style="text-align:center;padding:18px 0;font-size:11px;color:var(--t3)">Nothing here</div>':''}
           ${colT.map(t=>{
             const isOverdue=t.due_date&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<new Date();
             const isDueSoon=t.due_date&&!isOverdue&&t.status!=='done'&&new Date(t.due_date+'T12:00:00')<=new Date(Date.now()+3*864e5);
             const subs=S.tasks.filter(s=>s.parent_task_id===t.id);
             const subsDone=subs.filter(s=>s.status==='done').length;
-            return `<div class="tc" draggable="true" data-tc="${t.id}">
-            ${pn(t.project_id)?`<div class="tc-proj" style="color:${pc2(t.project_id)}">${esc(pn(t.project_id))}</div>`:''}
-            ${isRec(t)?`<span class="rec-b">↻ ${t.recurring}</span><br>`:''}
-            <div class="tc-txt">${esc(t.text)}</div>
-            <div class="tc-meta">${ppill(t.priority)}<div class="fg" style="gap:3px">
-              ${t.estimate?`<span style="font-size:9px;color:var(--t3)">${t.estimate}h</span>`:''}
-              ${t.due_date?`<span style="font-size:9px;font-weight:${isOverdue?'700':'400'};color:${isOverdue?'#fb7185':isDueSoon?'#f59e0b':'var(--t3)'}">${isOverdue?'⚠ ':isDueSoon?'⏰ ':''}${fd(t.due_date)}</span>`:''}
-              ${subs.length?`<span style="font-size:9px;color:var(--t3)">${subsDone}/${subs.length} sub</span>`:''}
-              <button class="ibtn" data-ftask="${esc(t.text)}">${bx('focus',11)}</button>
-              <button class="ibtn" data-et="${t.id}">${bx('edit',11)}</button>
-              <button class="ibtn del" data-dt="${t.id}">${bx('trash',11)}</button>
-            </div></div>
-            ${t.tag?`<div style="margin-top:6px">${tpill(t.tag)}</div>`:''}
-            ${subs.length?`<div style="margin-top:7px;padding-top:7px;border-top:1px solid var(--bd)">${subs.map(s=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><div style="width:5px;height:5px;border-radius:50%;border:1.5px solid ${s.status==='done'?'#22c55e':'var(--t3)'};background:${s.status==='done'?'#22c55e':'transparent'};flex-shrink:0"></div><span style="font-size:11px;${s.status==='done'?'text-decoration:line-through;color:var(--t3)':'color:var(--t2)'};flex:1">${esc(s.text)}</span></div>`).join('')}</div>`:''}
-            <!-- Add subtask -->
-            <div style="display:flex;gap:5px;margin-top:7px">
-              <input placeholder="+ subtask" data-sub-parent="${t.id}" style="flex:1;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--t2);font-size:11px;padding:3px 0;outline:none" onkeydown="if(event.key==='Enter')addSubtask(this)">
-            </div>
-          </div>`;
-          }).join('')}
+            const projCol=pc2(t.project_id);
+            return `<div class="tc" draggable="true" data-tc="${t.id}" data-priority="${t.priority||'medium'}" style="border-left:3px solid ${t.project_id?projCol:'transparent'}">
+              <div style="display:flex;align-items:flex-start;gap:7px;margin-bottom:6px">
+                <div class="tc-chk ${t.status==='done'?'done':''}" data-quick-done="${t.id}">${t.status==='done'?bx('check',8,'#fff'):''}</div>
+                <div style="flex:1">
+                  ${pn(t.project_id)?`<div class="tc-proj" style="color:${projCol}">${esc(pn(t.project_id))}</div>`:''}
+                  ${isRec(t)?`<span class="rec-b">↻ ${t.recurring}</span>`:''}
+                  <div class="tc-txt" style="${t.status==='done'?'text-decoration:line-through;color:var(--t3)':''}">${esc(t.text)}</div>
+                </div>
+                <div class="tc-menu">
+                  <button class="tc-menu-btn" onclick="event.stopPropagation();toggleTCMenu('${t.id}')">⋯</button>
+                  <div class="tc-drop" id="tcm-${t.id}">
+                    <div class="tc-drop-item" data-ftask="${esc(t.text)}">${bx('focus',12)} Focus</div>
+                    <div class="tc-drop-item" data-et="${t.id}">${bx('edit',12)} Edit</div>
+                    <div class="tc-drop-item danger" data-dt="${t.id}">${bx('trash',12)} Delete</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+                ${ppill(t.priority)}
+                ${t.estimate?`<span style="font-size:9px;color:var(--t3)">${t.estimate}h</span>`:''}
+                ${t.due_date?`<span style="font-size:9px;font-weight:${isOverdue?'700':'400'};color:${isOverdue?'#fb7185':isDueSoon?'#f59e0b':'var(--t3)'}">${isOverdue?'⚠ ':isDueSoon?'⏰ ':''}${fd(t.due_date)}</span>`:''}
+                ${subs.length?`<span style="font-size:9px;color:var(--t3)">${subsDone}/${subs.length} sub</span>`:''}
+                ${t.tag?tpill(t.tag):''}
+              </div>
+              ${subs.length?`<div style="margin-top:7px;padding-top:7px;border-top:1px solid var(--bd)">${subs.map(s=>`<div style="display:flex;align-items:center;gap:6px;padding:3px 0"><div style="width:5px;height:5px;border-radius:50%;border:1.5px solid ${s.status==='done'?'#22c55e':'var(--t3)'};background:${s.status==='done'?'#22c55e':'transparent'};flex-shrink:0"></div><span style="font-size:11px;${s.status==='done'?'text-decoration:line-through;color:var(--t3)':'color:var(--t2)'};flex:1">${esc(s.text)}</span></div>`).join('')}</div>`:''}
+              <input placeholder="+ subtask" data-sub-parent="${t.id}" style="width:100%;background:transparent;border:none;border-bottom:1px solid var(--bd);color:var(--t2);font-size:11px;padding:5px 0 3px;outline:none;margin-top:6px" onkeydown="if(event.key==='Enter')addSubtask(this)">
+            </div>`;
+          }).join('')}`}
         </div>`;
       }).join('')}
     </div>
@@ -1816,21 +1939,14 @@ function vSettings(){
         <div style="padding-top:12px;border-top:1px solid var(--bd)">
           <div style="font-size:11px;font-weight:700;color:var(--t2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.6px">What Kula Knows About You</div>
           <div id="kula-memory-panel" style="display:flex;flex-direction:column;gap:6px">
-            ${[
-              {label:'Name',value:'Muzz (Mohamud)'},
-              {label:'Role',value:'Security Officer · Allied Universal, Columbus OH'},
-              {label:'Education',value:'WGU MS Cybersecurity · Franklin University BS'},
-              {label:'Certifications',value:'CompTIA Security+ SY0-701 (certified Apr 2026)'},
-              {label:'Target Roles',value:'SOC Analyst · IT Security Analyst · Columbus OH'},
-              {label:'Company',value:'Kulan Group Ltd — Founder & Executive Director'},
-              {label:'Study Goals',value:`Security+ ${S.domains.find(d=>d.cert==='Security+ SY0-701')?Math.round(S.domains.filter(d=>d.cert==='Security+ SY0-701').reduce((a,d)=>a+(d.progress||0),0)/Math.max(1,S.domains.filter(d=>d.cert==='Security+ SY0-701').length))+'%':'tracking'}` + ` · ISC2 CC ${S.domains.find(d=>d.cert==='ISC2 CC')?Math.round(S.domains.filter(d=>d.cert==='ISC2 CC').reduce((a,d)=>a+(d.progress||0),0)/Math.max(1,S.domains.filter(d=>d.cert==='ISC2 CC').length))+'%':'tracking'}`},
-              {label:'Open Jobs',value:`${S.jobs.filter(j=>!['Accepted','Rejected'].includes(j.status)).length} active application${S.jobs.filter(j=>!['Accepted','Rejected'].includes(j.status)).length!==1?'s':''}`},
-              {label:'Projects',value:`${S.projects.length} tracked · ${S.projects.filter(p=>p.status==='at-risk').length} at risk`},
-              {label:'Log Streak',value:`${calcStreak()} day${calcStreak()!==1?'s':''}`},
-            ].map(item=>`<div style="display:flex;gap:8px;padding:7px 10px;background:var(--sf2);border-radius:var(--r);border:1px solid var(--bd)">
-              <span style="font-size:10px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;width:90px;padding-top:1px">${item.label}</span>
-              <span style="font-size:12px;color:var(--t1);flex:1">${item.value}</span>
-            </div>`).join('')}
+            ${kulaMemory.length?kulaMemory.slice(0,15).map(m=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sf2);border-radius:var(--r);border:1px solid var(--bd)">
+              <span style="font-size:12px;flex:1;color:var(--t1)">${esc(m.fact)}</span>
+              <button data-del-mem="${m.id}" class="ibtn del" style="width:22px;height:22px;opacity:0.6">${bx('trash',10)}</button>
+            </div>`).join(''):`<div style="font-size:12px;color:var(--t3);padding:8px 0">No memories yet. Kula will remember things you tell it during conversations.</div>`}
+            <div style="display:flex;gap:7px;margin-top:5px">
+              <input id="mem-add-inp" type="text" class="fi2" placeholder='e.g. "I have an interview at CyberCo on May 15"' style="flex:1;font-size:12px">
+              <button class="btn btn-g" id="mem-add-btn" style="font-size:11px;padding:5px 11px">Remember</button>
+            </div>
           </div>
           <div style="margin-top:10px;padding:9px 12px;background:rgba(139,92,246,0.05);border:1px solid rgba(139,92,246,0.15);border-radius:var(--r);font-size:11px;color:var(--t2);line-height:1.6">
             Kula reads your live workspace data every time you send a message. This panel shows what it always knows. Conversation memory resets when you clear the chat.
@@ -2097,6 +2213,16 @@ function bindEvents(){
   mi.querySelectorAll('[data-add-cmt]').forEach(b=>{b.onclick=async()=>{const inp=mi.querySelector(`[data-cmt-task="${b.dataset.addCmt}"]`);if(!inp||!inp.value.trim())return;const r=await dbi('task_comments',{task_id:b.dataset.addCmt,text:inp.value.trim()});if(r){S.comments.push(r);toast('Comment added.');render();}};});
   mi.querySelectorAll('[data-cmt-task]').forEach(inp=>{inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const btn=mi.querySelector(`[data-add-cmt="${inp.dataset.cmtTask}"]`);if(btn)btn.click();}};});
 
+  // Quick complete
+  mi.querySelectorAll('[data-quick-done]').forEach(b=>{
+    b.onclick=e=>{e.stopPropagation();quickDone(b.dataset.quickDone);};
+  });
+
+  // Three-dot menu items
+  mi.querySelectorAll('.tc-drop-item[data-ftask]').forEach(b=>{b.onclick=e=>{e.stopPropagation();openFM(b.dataset.ftask);};});
+  mi.querySelectorAll('.tc-drop-item[data-et]').forEach(b=>{b.onclick=e=>{e.stopPropagation();const t=S.tasks.find(x=>x.id===b.dataset.et);if(t)mTask(t);};});
+  mi.querySelectorAll('.tc-drop-item[data-dt]').forEach(b=>{b.onclick=e=>{e.stopPropagation();const id=b.dataset.dt;confirmDel('Delete this task?',async()=>{await dbd('tasks',id);S.tasks=S.tasks.filter(t=>t.id!==id);closeM();toast('Deleted.');render();});};});
+
   // Ping
   mi.querySelectorAll('[data-ping]').forEach(b=>{b.onclick=()=>pingInfra(b.dataset.ping);});
 
@@ -2152,6 +2278,25 @@ function bindEvents(){
       dragId=null;render();
     });
   });
+
+  // Memory panel
+  mi.querySelectorAll('[data-del-mem]').forEach(b=>{
+    b.onclick=async()=>{await deleteMemory(b.dataset.delMem);render();toast('Memory removed.');};
+  });
+  const memBtn=g('mem-add-btn');
+  if(memBtn){
+    const doAddMem=async()=>{
+      const inp=g('mem-add-inp');
+      const fact=inp?.value.trim();
+      if(!fact){toast('Enter something to remember.',true);return;}
+      await saveMemory(fact);
+      if(inp)inp.value='';
+      render();toast('Kula will remember this.');
+    };
+    memBtn.onclick=doAddMem;
+    const mi2=g('mem-add-inp');
+    if(mi2)mi2.onkeydown=e=>{if(e.key==='Enter')doAddMem();};
+  }
 
   // Settings
   mi.querySelectorAll('[data-theme]').forEach(b=>{b.onclick=()=>{applyTheme(b.dataset.theme);render();};});
@@ -2425,7 +2570,7 @@ function exportCSV(){
   S.goals.forEach(g=>rows.push(['Goal',g.name,g.progress+'%','',g.category||'',g.deadline||'',g.created_at?.split('T')[0]||'']));
   S.logs.forEach(l=>rows.push(['Log',l.text,l.tag,'',l.project||'','',l.created_at?.split('T')[0]||'']));
   S.jobs.forEach(j=>rows.push(['Job',j.company+' — '+(j.role||''),j.status,'',j.location||'',j.applied_date||'',j.created_at?.split('T')[0]||'']));
-  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`kulan-os-export-${new Date().toISOString().split('T')[0]}.csv`;a.click();
   toast('CSV downloaded.');
@@ -2558,7 +2703,196 @@ function toggleSBGroup(gk){
   renderSB();
 }
 
-// ── SUBTASKS ──────────────────────────────────────────────────
+// ── KULA MEMORY ───────────────────────────────────────────────
+async function saveMemory(fact){
+  const r=await dbi('kula_memory',{fact});
+  if(r){kulaMemory.unshift(r);return r;}
+  return null;
+}
+async function deleteMemory(id){
+  await dbd('kula_memory',id);
+  kulaMemory=kulaMemory.filter(m=>m.id!==id);
+}
+// Auto-extract memories from Kula conversation
+function detectMemory(text){
+  const triggers=[
+    /i have (?:an? )?interview (?:at|with) ([\w\s]+?) (?:on|this|next)/i,
+    /i(?:[\x27]m| am) studying (?:for )?(.+?)(?:\.|$)/i,
+    /my (?:target|goal) (?:salary|role) is (.+?)(?:\.|$)/i,
+    /i(?:[\x27]m| am) (?:applying|looking) for (.+?) (?:role|position|job)/i,
+    /remind(?:er)?: (.+?)(?:\.|$)/i,
+    /remember (?:that )?(.+?)(?:\.|$)/i,
+  ];
+  for(const rx of triggers){
+    const m=text.match(rx);
+    if(m)return m[0].trim();
+  }
+  return null;
+}
+
+// ── TEXT-TO-SPEECH ────────────────────────────────────────────
+let ttsEnabled=localStorage.getItem('kos-tts')==='1';
+let ttsVoice=null;
+
+function initTTS(){
+  if(!('speechSynthesis'in window))return;
+  const loadVoices=()=>{
+    const voices=speechSynthesis.getVoices();
+    // Prefer a natural English voice
+    ttsVoice=voices.find(v=>v.name.includes('Samantha')||v.name.includes('Karen')||v.name.includes('Daniel'))
+      ||voices.find(v=>v.lang.startsWith('en'))
+      ||voices[0]||null;
+  };
+  loadVoices();
+  speechSynthesis.onvoiceschanged=loadVoices;
+}
+
+function speakText(text){
+  if(!ttsEnabled||!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  // Strip markdown and action tags
+  const clean=text
+    .replace(/<action>[\s\S]*?<\/action>/g,'')
+    .replace(/\*\*(.*?)\*\*/g,'$1')
+    .replace(/`(.*?)`/g,'$1')
+    .replace(/^[•\-]\s/gm,'')
+    .replace(/#{1,3}\s/g,'')
+    .trim()
+    .slice(0,400); // keep TTS short
+  const utt=new SpeechSynthesisUtterance(clean);
+  utt.rate=1.05;utt.pitch=1.0;utt.volume=0.9;
+  if(ttsVoice)utt.voice=ttsVoice;
+  speechSynthesis.speak(utt);
+}
+
+function toggleTTS(){
+  ttsEnabled=!ttsEnabled;
+  localStorage.setItem('kos-tts',ttsEnabled?'1':'0');
+  if(!ttsEnabled)speechSynthesis.cancel();
+  const btn=document.getElementById('tts-btn');
+  if(btn){btn.classList.toggle('active',ttsEnabled);btn.title=ttsEnabled?'Voice replies on':'Voice replies off';}
+  toast(ttsEnabled?'Kula will speak replies':'Voice replies off');
+}
+
+// ── VOICE-TO-ACTION ───────────────────────────────────────────
+const INTENT_PATTERNS=[
+  {rx:/^(?:add|create|new) (?:a )?task[:\s]+(.+?)(?:\s+by\s+(.+?))?$/i,   type:'add_task'},
+  {rx:/^(?:log|diary|note)[:\s]+(.+)$/i,                                    type:'add_log'},
+  {rx:/^(?:add to|focus)[:\s]+(.+)$/i,                                      type:'add_focus'},
+  {rx:/^(?:mark|complete|done)[:\s]+(.+)$/i,                                type:'complete_task'},
+  {rx:/^(?:start (?:focus|timer))[:\s]*(.*)$/i,                             type:'start_focus'},
+  {rx:/^(?:my mood is|feeling)[:\s]+(.+)$/i,                                type:'log_mood'},
+  {rx:/^(?:remember|remember that)[:\s]+(.+)$/i,                            type:'save_memory'},
+];
+const MOOD_WORDS={rough:1,bad:1,terrible:1,low:2,meh:2,ok:3,okay:3,fine:3,good:4,great:5,amazing:5,excellent:5,fantastic:5};
+
+async function parseVoiceIntent(text){
+  for(const p of INTENT_PATTERNS){
+    const m=text.match(p.rx);
+    if(!m)continue;
+    if(p.type==='add_task'){
+      const taskText=m[1].trim();
+      const dueRaw=m[2]?.trim();
+      let due=null;
+      if(dueRaw){
+        const d=new Date(dueRaw+' 2026');
+        if(!isNaN(d.getTime()))due=d.toISOString().split('T')[0];
+        else if(/friday/i.test(dueRaw)){const d2=new Date();d2.setDate(d2.getDate()+(5-d2.getDay()+7)%7||7);due=d2.toISOString().split('T')[0];}
+        else if(/tomorrow/i.test(dueRaw)){const d2=new Date();d2.setDate(d2.getDate()+1);due=d2.toISOString().split('T')[0];}
+        else if(/monday/i.test(dueRaw)){const d2=new Date();d2.setDate(d2.getDate()+(1-d2.getDay()+7)%7||7);due=d2.toISOString().split('T')[0];}
+      }
+      const r=await dbi('tasks',{text:taskText,status:'todo',priority:'medium',tag:'UPDATE',recurring:'none',due_date:due});
+      if(r){S.tasks.unshift(r);toast('Task added by voice.');render();}
+      return 'Added task: ' + taskText + (due?' due '+fd(due):'');
+    }
+    if(p.type==='add_log'){
+      const r=await dbi('logs',{text:m[1].trim(),tag:'UPDATE'});
+      if(r){S.logs.unshift(r);toast('Logged.');render();}
+      return 'Logged: ' + m[1].trim();
+    }
+    if(p.type==='add_focus'){
+      if(S.focus.length>=5)return 'Focus list is full (max 5).';
+      const r=await dbi('weekly_focus',{text:m[1].trim(),week_of:mon(),done:false});
+      if(r){S.focus.unshift(r);render();}
+      return 'Added to focus: ' + m[1].trim();
+    }
+    if(p.type==='complete_task'){
+      const q=m[1].toLowerCase();
+      const t=S.tasks.find(t=>t.status!=='done'&&t.text.toLowerCase().includes(q));
+      return 'Could not find a task matching: ' + m[1];
+      await dbu('tasks',t.id,{status:'done'});t.status='done';render();
+      return 'Marked done: ' + t.text;
+    }
+    if(p.type==='start_focus'){
+      const q=m[1]?.toLowerCase()||'';
+      const t=q?S.tasks.find(t=>t.status!=='done'&&t.text.toLowerCase().includes(q)):S.tasks.find(t=>t.status!=='done'&&t.priority==='urgent')||S.tasks.find(t=>t.status!=='done');
+      openFM(t?.text||'');
+      return t?'Starting focus on: ' + (t.text||''):'Opening focus timer.';
+    }
+    if(p.type==='log_mood'){
+      const word=m[1].toLowerCase().trim();
+      const moodVal=MOOD_WORDS[word]||3;
+      const r=await dbi('logs',{text:`Mood check-in: ${m[1].trim()}`,tag:'UPDATE',mood:moodVal});
+      if(r){S.logs.unshift(r);render();}
+      return `Logged mood: ${m[1].trim()}`;
+    }
+    if(p.type==='save_memory'){
+      await saveMemory(m[1].trim());
+      return 'Got it. Saved to memory: ' + m[1].trim();
+    }
+  }
+  return null; // no intent matched — fall through to Claude
+}
+
+// ── GOAL DRIFT CHECK ──────────────────────────────────────────
+function checkGoalDrift(){
+  const driftGoals=S.goals.filter(g=>{
+    if((g.progress||0)>=100)return false;
+    const linked=S.tasks.filter(t=>t.goal_id===g.id&&t.status==='done');
+    if(!linked.length)return (g.progress||0)>0;
+    const lastDone=Math.max(...linked.map(t=>new Date(t.created_at||0).getTime()));
+    return Date.now()-lastDone>7*864e5;
+  });
+  if(driftGoals.length&&!sessionStorage.getItem('drift-shown')){
+    sessionStorage.setItem('drift-shown','1');
+    setTimeout(()=>{
+      openKula();
+      const names=driftGoals.map(g=>g.name).join(', ');
+      addKMsg('ai',`👋 Quick check-in — you haven't made progress on **${names}** in over a week. Want to talk through what's blocking you, or should I suggest some tasks to move it forward?`);
+    },3000);
+  }
+}
+
+function toggleTCMenu(id){
+  // Close all other menus first
+  document.querySelectorAll('.tc-drop.open').forEach(m=>{if(m.id!==`tcm-${id}`)m.classList.remove('open');});
+  const m=document.getElementById(`tcm-${id}`);
+  if(m)m.classList.toggle('open');
+}
+// Close menus on outside click
+document.addEventListener('click',()=>{
+  document.querySelectorAll('.tc-drop.open').forEach(m=>m.classList.remove('open'));
+});
+
+function toggleKCol(col){
+  const key=`kos-col-${col}`;
+  const cur=localStorage.getItem(key)==='1';
+  localStorage.setItem(key,cur?'0':'1');
+  render();
+}
+
+async function quickDone(taskId){
+  const task=S.tasks.find(t=>t.id===taskId);
+  if(!task)return;
+  const newStatus=task.status==='done'?'todo':'done';
+  const ok=await dbu('tasks',taskId,{status:newStatus});
+  if(ok){
+    task.status=newStatus;
+    if(newStatus==='done'&&isRec(task))await handleRec(task);
+    render();
+  }
+}
+
 async function addSubtask(inp){
   const text=inp.value.trim();
   if(!text)return;
@@ -2598,7 +2932,7 @@ function scheduleNotifications(){
   if(urg.length>0||overdue.length>0){
     setTimeout(()=>{
       new Notification('Kulan OS',{
-        body:`${urg.length?`${urg.length} urgent task${urg.length!==1?'s':''}. `:''}${overdue.length?`${overdue.length} overdue.`:''}`,
+        body:(urg.length?urg.length+' urgent task'+(urg.length!==1?'s':'')+'. ':'')+( overdue.length?overdue.length+' overdue.':''),
         icon:'https://os.kulaninstitute.org/favicon.ico',
         tag:'kulan-urgent',
       });
@@ -2632,9 +2966,11 @@ async function boot(){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('app').style.display='flex';
   initVoice();
+  initTTS();
   await loadAll();
   render();
   scheduleNotifications();
+  checkGoalDrift();
 }
 
 async function init(){
