@@ -1044,11 +1044,70 @@ function showKThink(){const box=document.getElementById('k-msgs');const d=docume
 function hideKThink(){const el=document.getElementById('k-think');if(el)el.remove();}
 
 function parseAction(text){const m=text.match(/<action>([\s\S]*?)<\/action>/);if(!m)return null;try{return JSON.parse(m[1].trim());}catch{return null;}}
-function descAct(a){const nm=a.project_id?pn(a.project_id):'';if(a.type==='add_task')return `Add task "${a.text}"${nm?' → '+nm:''}`;if(a.type==='add_log')return `Log "${a.text}"`;if(a.type==='update_goal_progress')return `Update goal to ${a.progress}%`;if(a.type==='add_focus')return `Add "${a.text}" to focus`;if(a.type==='update_project_status')return `Set project status to ${a.status}`;return a.type;}
+function descAct(a){
+  const nm=a.project_id?pn(a.project_id):'';
+  const t=a.text||a.title||a.name||'';
+  if(a.type==='add_task')      return `Add task "${t}"${nm?' → '+nm:''}${a.priority?' ('+a.priority+')':''}`;
+  if(a.type==='add_project')   return `Create project "${t||a.name}"`;
+  if(a.type==='add_goal')      return `Add goal "${t||a.name}"`;
+  if(a.type==='add_log')       return `Log "${t}"`;
+  if(a.type==='add_focus')     return `Add "${t}" to weekly focus`;
+  if(a.type==='update_goal_progress') return `Update goal progress to ${a.progress}%`;
+  if(a.type==='update_project_status') return `Set project status to ${a.status}`;
+  if(a.type==='mark_task_done') return `Mark done: "${a.task||t}"`;
+  if(a.type==='start_focus')   return `Start focus timer${a.task?' on "'+a.task+'"':''}`;
+  return a.type;
+}
 
 async function execAction(a){
   const {type,...data}=a;
   try{
+    // Handle client-side actions directly — no Edge Function needed
+    if(type==='add_task'){
+      const pid=data.project_id||S.projects.find(p=>p.name.toLowerCase().includes((data.project||'').toLowerCase()))?.id||null;
+      const r=await dbi('tasks',{text:data.text||data.title||data.name,project_id:pid,status:'todo',priority:data.priority||'medium',tag:data.tag||'UPDATE',recurring:'none',due_date:data.due||data.due_date||null,goal_id:data.goal_id||null});
+      if(r){S.tasks.unshift(r);render();return 'Task added.';}
+    }
+    if(type==='add_project'){
+      const r=await dbi('projects',{name:data.name||data.text,vertical:data.vertical||'Kulan Group',status:data.status||'active',color:data.color||'#5b8def'});
+      if(r){S.projects.unshift(r);render();return 'Project added.';}
+    }
+    if(type==='add_goal'){
+      const r=await dbi('goals',{name:data.name||data.text,category:data.category||'General',progress:0,deadline:data.deadline||data.due||null,description:data.description||null});
+      if(r){S.goals.unshift(r);render();return 'Goal added.';}
+    }
+    if(type==='add_log'){
+      const r=await dbi('logs',{text:data.text,tag:data.tag||'UPDATE',project:data.project||null});
+      if(r){S.logs.unshift(r);render();return 'Logged.';}
+    }
+    if(type==='add_focus'){
+      if(S.focus.length>=5)return 'Focus list full (max 5).';
+      const pid=data.project_id||S.projects.find(p=>p.name.toLowerCase().includes((data.project||'').toLowerCase()))?.id||null;
+      const r=await dbi('weekly_focus',{text:data.text,project_id:pid,week_of:mon(),done:false});
+      if(r){S.focus.unshift(r);render();return 'Added to focus.';}
+    }
+    if(type==='update_goal_progress'){
+      const g=S.goals.find(x=>x.id===data.goal_id||x.name.toLowerCase().includes((data.goal||'').toLowerCase()));
+      if(!g)return 'Goal not found.';
+      await dbu('goals',g.id,{progress:data.progress});
+      g.progress=data.progress;render();return `Goal updated to ${data.progress}%.`;
+    }
+    if(type==='update_project_status'){
+      const p=S.projects.find(x=>x.id===data.project_id||x.name.toLowerCase().includes((data.project||'').toLowerCase()));
+      if(!p)return 'Project not found.';
+      await dbu('projects',p.id,{status:data.status});
+      p.status=data.status;render();return `Project set to ${data.status}.`;
+    }
+    if(type==='mark_task_done'){
+      const t=S.tasks.find(x=>x.id===data.task_id||x.text.toLowerCase().includes((data.task||'').toLowerCase()));
+      if(!t)return 'Task not found.';
+      await dbu('tasks',t.id,{status:'done'});t.status='done';render();return `Marked done: ${t.text}`;
+    }
+    if(type==='start_focus'){
+      const t=data.task?S.tasks.find(x=>x.text.toLowerCase().includes(data.task.toLowerCase())):null;
+      openFM(t?.text||data.task||'');return 'Focus timer opened.';
+    }
+    // Fallback to Edge Function for anything else
     const r=await fetch(AIURL,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${SKEY}`},body:JSON.stringify({action:type,actionData:data})});
     const res=await r.json();
     if(res.action_error)throw new Error(res.action_error);
@@ -1106,7 +1165,7 @@ async function sendKula(text){
 
   // Build system context hint based on mode
   const modeHint={
-    chat:'',
+    chat:`\n\nYou can take actions by including a JSON block wrapped in <action></action> tags. Available actions:\n- Add task: <action>{"type":"add_task","text":"task name","priority":"urgent|high|medium|low","project":"project name","due":"YYYY-MM-DD"}</action>\n- Add project: <action>{"type":"add_project","name":"project name","vertical":"Kulan Institute|Kulan Studio|Kulan Careers|KI Connect","status":"active|in-progress"}</action>\n- Add goal: <action>{"type":"add_goal","name":"goal name","category":"Career|Certification|Personal","deadline":"YYYY-MM-DD","description":"why this matters"}</action>\n- Log entry: <action>{"type":"add_log","text":"log text","tag":"UPDATE|BUILD|WIN|STUDY"}</action>\n- Add to weekly focus: <action>{"type":"add_focus","text":"focus item","project":"project name"}</action>\n- Update goal progress: <action>{"type":"update_goal_progress","goal":"goal name","progress":75}</action>\n- Update project status: <action>{"type":"update_project_status","project":"project name","status":"active|complete|at-risk"}</action>\n- Mark task done: <action>{"type":"mark_task_done","task":"task name"}</action>\n- Open focus timer: <action>{"type":"start_focus","task":"task name"}</action>\n\nOnly include an action block when the user explicitly asks you to create, add, update, or change something. Always explain what you're about to do before including the action block.`,
     job:'\n\nCurrent mode: JOB COACHING. Focus on giving Muzz specific, actionable interview prep and job search coaching based on his actual background (WGU MS Cybersecurity, CompTIA Security+ SY0-701 in progress, Desktop Technician at Franklin University, Security Officer at Allied Universal, Founder of Kulan Institute). Target roles: SOC Analyst and IT Security Analyst in Columbus OH.',
     study:'\n\nCurrent mode: STUDY MODE. Act as a cybersecurity study coach. Give clear, structured explanations of security concepts. Reference the specific domains and topics in his study tracker. Suggest what to study next based on his progress.',
     quiz:'\n\nCurrent mode: QUIZ MODE. Generate 1-3 practice questions in multiple choice format (A, B, C, D). Format each question clearly with the question on its own line, then options labeled A), B), C), D). After the user answers, explain why the correct answer is correct.',
