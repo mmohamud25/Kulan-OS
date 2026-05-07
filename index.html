@@ -291,8 +291,8 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .btn-d:hover{background:rgba(251,113,133,0.15);}
 .btn-c{color:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.15);}
 .btn-c:hover{opacity:0.88;box-shadow:0 3px 12px rgba(0,0,0,0.2);}
-.ibtn{background:none;border:none;padding:6px;color:var(--t2);display:inline-flex;align-items:center;border-radius:7px;transition:all 0.12s;width:28px;height:28px;justify-content:center;}
-.ibtn:hover{color:var(--t1);background:rgba(255,255,255,0.07);}
+.ibtn{background:none;border:none;padding:5px;color:var(--t2);display:inline-flex;align-items:center;border-radius:7px;transition:all 0.12s;width:32px;height:32px;justify-content:center;}
+.ibtn:hover{color:var(--t1);background:var(--sf2);}
 .ibtn.del:hover{color:#fb7185;background:rgba(251,113,133,0.1);}
 .rbtns{display:flex;gap:2px;opacity:0;transition:opacity 0.12s;}
 .card:hover .rbtns,.pc:hover .rbtns,.tc:hover .rbtns,.jc:hover .rbtns{opacity:1;}
@@ -1470,7 +1470,7 @@ function vProjects(){
           <div class="fb">${bdg(p.status)}<div class="fg" style="gap:5px">
             ${tc?`<span style="font-size:10px;color:var(--t2);background:rgba(255,255,255,0.05);padding:2px 7px;border-radius:7px">${tc}t</span>`:''}
             <span class="hdot" style="background:${hcol}" title="Health: ${hs}/100"></span>
-            <div class="rbtns"><button class="ibtn" data-ep="${p.id}">${bx('edit',12)}</button><button class="ibtn del" data-dp="${p.id}">${bx('trash',12)}</button></div>
+            <div class="rbtns"><button class="ibtn" data-ep="${p.id}">${bx('edit',14)}</button><button class="ibtn del" data-dp="${p.id}">${bx('trash',14)}</button></div>
           </div></div>
           <div style="font-size:10px;color:var(--t3);font-family:monospace;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.url||'')}</div>
           ${pr!==null?`<div style="height:2px;background:rgba(255,255,255,0.05);border-radius:10px;overflow:hidden;margin-top:9px"><div style="width:${pr}%;height:100%;background:${col};border-radius:10px"></div></div>`:''}
@@ -1580,9 +1580,9 @@ function vTasks(){
                 <div class="tc-menu">
                   <button class="tc-menu-btn" onclick="event.stopPropagation();toggleTCMenu('${t.id}')">⋯</button>
                   <div class="tc-drop" id="tcm-${t.id}">
-                    <div class="tc-drop-item" data-ftask="${esc(t.text)}">${bx('focus',12)} Focus</div>
-                    <div class="tc-drop-item" data-et="${t.id}">${bx('edit',12)} Edit</div>
-                    <div class="tc-drop-item danger" data-dt="${t.id}">${bx('trash',12)} Delete</div>
+                    <div class="tc-drop-item" data-ftask="${esc(t.text)}">${bx('focus',14)} Focus</div>
+                    <div class="tc-drop-item" data-et="${t.id}">${bx('edit',14)} Edit</div>
+                    <div class="tc-drop-item danger" data-dt="${t.id}">${bx('trash',14)} Delete</div>
                   </div>
                 </div>
               </div>
@@ -1617,8 +1617,8 @@ function vFocus(){
     ${S.focus.map(f=>`<div class="fitem ${f.done?'done':''}">
       <div class="fchk ${f.done?'chk':''}" data-ft="${f.id}">${f.done?bx('check',9,'#fff'):''}</div>
       <div style="flex:1"><div style="font-size:13px;line-height:1.4;${f.done?'text-decoration:line-through;color:var(--t3)':''}">${esc(f.text)}</div>${f.project_id?`<div style="font-size:10px;color:var(--t3);margin-top:2px">${esc(pn(f.project_id))}</div>`:''}</div>
-      <button class="ibtn" data-ftask="${esc(f.text)}">${bx('focus',12)}</button>
-      <button class="ibtn del" data-df="${f.id}">${bx('trash',12)}</button>
+      <button class="ibtn" data-ftask="${esc(f.text)}">${bx('focus',14)}</button>
+      <button class="ibtn del" data-df="${f.id}">${bx('trash',14)}</button>
     </div>`).join('')}
     <!-- Kula carry-over suggestion -->
     ${total<5?`<div style="margin-top:16px;padding:13px 15px;background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.15);border-radius:var(--r2)">
@@ -1655,8 +1655,8 @@ function vGoals(){
             <div class="fg" style="gap:6px;flex-shrink:0">
               <span style="font-size:26px;font-weight:800;color:${col};letter-spacing:-0.5px">${prog}%</span>
               <div class="rbtns" style="opacity:1">
-                <button class="ibtn" data-update-goal="${g.id}">${bx('edit',12)}</button>
-                <button class="ibtn del" data-dg="${g.id}">${bx('trash',12)}</button>
+                <button class="ibtn" data-update-goal="${g.id}">${bx('edit',14)}</button>
+                <button class="ibtn del" data-dg="${g.id}">${bx('trash',14)}</button>
               </div>
             </div>
           </div>
@@ -1735,7 +1735,7 @@ function vCareer(){
             <div><div class="jc-co">${esc(j.company)}</div>${j.role?`<div class="jc-role">${esc(j.role)}</div>`:''}</div>
             <div class="fg" style="gap:6px;flex-shrink:0">
               <span class="js-stat" style="background:${col}10;color:${col};border:1px solid ${col}20;cursor:pointer" onclick="S.fJS='${j.status}';render()">${j.status}</span>
-              <div class="rbtns" style="opacity:1"><button class="ibtn" data-ej="${j.id}">${bx('edit',12)}</button><button class="ibtn del" data-dj="${j.id}">${bx('trash',12)}</button></div>
+              <div class="rbtns" style="opacity:1"><button class="ibtn" data-ej="${j.id}">${bx('edit',14)}</button><button class="ibtn del" data-dj="${j.id}">${bx('trash',14)}</button></div>
             </div>
           </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap">
@@ -1762,7 +1762,7 @@ function vInfra(){
           <div><div style="font-size:16px;font-weight:700;margin-bottom:3px">${esc(i.project)}</div><div style="font-size:11px;color:var(--t2)">${esc(i.provider||'')}</div><div style="font-size:10px;color:var(--t3);font-family:monospace;margin-top:3px">${esc(i.project_ref||'')}</div></div>
           <div class="fg" style="gap:6px">${bdg(i.status)}
             <button style="padding:3px 10px;border-radius:7px;border:1px solid var(--bd);background:transparent;color:${ps==='ok'?'#22c55e':ps==='fail'?'#fb7185':'var(--t2)'};font-size:10px;font-weight:500" data-ping="${i.id}">${ps==='loading'?'Pinging...':ps==='ok'?'✓ Alive':ps==='fail'?'✗ No response':'Ping'}</button>
-            <div class="rbtns" style="opacity:1"><button class="ibtn" data-ei="${i.id}">${bx('edit',12)}</button><button class="ibtn del" data-di="${i.id}">${bx('trash',12)}</button></div>
+            <div class="rbtns" style="opacity:1"><button class="ibtn" data-ei="${i.id}">${bx('edit',14)}</button><button class="ibtn del" data-di="${i.id}">${bx('trash',14)}</button></div>
           </div>
         </div>
         <div style="background:var(--sf2);border-radius:7px;padding:9px 12px;font-size:12px;color:var(--t2);line-height:1.6">${esc(i.note||'')}</div>
