@@ -307,8 +307,9 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .tc-drop-item.danger{color:#fb7185;}
 .tc-drop-item.danger:hover{background:rgba(251,113,133,0.08);}
 /* Quick complete checkbox on task cards */
-.lg-mood:hover{transform:scale(1.06);border-color:var(--bd2) !important;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.lg-mood.selected{transform:scale(1.06);box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+.lg-mood{transition:all 0.16s cubic-bezier(0.16,1,0.3,1) !important;}
+.lg-mood:hover{transform:scale(1.07);box-shadow:0 3px 10px rgba(0,0,0,0.12);}
+.lg-mood.selected{transform:scale(1.07);box-shadow:0 2px 14px rgba(0,0,0,0.18);}
 .tc-chk{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--t3);flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.14s;background:transparent;}
 .tc-chk:hover{border-color:var(--acc);}
 .tc-chk.done{background:#22c55e;border-color:#22c55e;}
@@ -345,7 +346,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .kcol[data-col="done"]{background:color-mix(in srgb,#22c55e 4%,var(--sf));}
 .khdr{display:flex;align-items:center;gap:7px;margin-bottom:11px;position:sticky;top:0;z-index:2;padding:3px 0 6px;background:inherit;backdrop-filter:blur(8px);}
 .kdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.klbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+.klbl{font-size:10px;font-weight:700;letter-spacing:0.02em;}
 .kcnt{margin-left:auto;font-size:10px;color:var(--t3);background:rgba(255,255,255,0.05);padding:1px 7px;border-radius:7px;}
 .tc{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:10px 11px;margin-bottom:8px;cursor:grab;transition:box-shadow 0.15s ease,transform 0.15s ease,border-color 0.15s;border-left:3px solid transparent;box-shadow:0 1px 3px rgba(0,0,0,0.05),0 2px 8px rgba(0,0,0,0.03);}
 .tc:hover{box-shadow:0 2px 8px rgba(0,0,0,0.07),0 6px 20px rgba(0,0,0,0.05);transform:translateY(-1px);border-color:var(--bd2);}
@@ -355,7 +356,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;}
 .tc-txt{font-size:13px;line-height:1.45;margin-bottom:8px;font-weight:400;}
 .ppill{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;}
 .ppip{width:4px;height:4px;border-radius:50%;}
-.tpill{font-size:8px;font-weight:700;padding:1px 6px;border-radius:4px;letter-spacing:1px;text-transform:uppercase;}
+.tpill{font-size:9px;font-weight:600;padding:2px 7px;border-radius:6px;letter-spacing:0.03em;}
 .rec-b{font-size:9px;padding:1px 6px;border-radius:4px;background:rgba(59,130,246,0.1);color:#60a5fa;margin-bottom:5px;display:inline-block;}
 @media(max-width:768px){.kanban{grid-template-columns:repeat(2,1fr);}}
 
@@ -760,7 +761,7 @@ const db=createClient(SURL,SKEY);
 
 // ── THEMES & FONT ────────────────────────────────────────────
 const THEMES={dark:{label:'Dark',bg:'#08090e',sf:'#0e1018',acc:'#5b8def'},dim:{label:'Dim',bg:'#0f1117',sf:'#161820',acc:'#5b8def'},warm:{label:'Warm',bg:'#0e0a07',sf:'#15110c',acc:'#e07a40'},green:{label:'Forest',bg:'#070f08',sf:'#0c1610',acc:'#2eb86a'},light:{label:'Light',bg:'#f0f1f5',sf:'#ffffff',acc:'#3b6ef5'},lightpro:{label:'Light Pro',bg:'#f0f1f5',sf:'#ffffff',acc:'#4361ee'},darkref:{label:'Dark+',bg:'#06070c',sf:'#0c0e16',acc:'#5b8def'},sharpmono:{label:'Mono',bg:'#f5f5f5',sf:'#ffffff',acc:'#0a0a0a'}};
-const FSM={small:'13px',medium:'14px',large:'16px',xl:'18px'};
+const FSM={small:'13px',medium:'15px',large:'16px',xl:'18px'};
 // Migrate old theme key if present
 const _oldTheme=localStorage.getItem('kulan-theme');
 if(_oldTheme&&!localStorage.getItem('kos-theme')){localStorage.setItem('kos-theme',_oldTheme);localStorage.removeItem('kulan-theme');}
@@ -1444,7 +1445,7 @@ function vDashboard(){
     </div>
     <div class="card">
       <div class="sl">Recent Activity</div>
-      ${S.logs.length?S.logs.slice(0,5).map((l,i)=>`<div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;${i<4?'border-bottom:1px solid var(--bd)':''}">${tpill(l.tag||'UPDATE')}<div style="flex:1"><div style="font-size:12px;line-height:1.5">${esc(l.text)}</div><div style="font-size:10px;color:var(--t3);margin-top:2px">${fd(l.created_at)}${l.project?' · '+esc(l.project):''}</div></div></div>`).join(''):'<div style="color:var(--t3)">No entries yet.</div>'}
+      ${S.logs.length?S.logs.slice(0,5).map(l=>`<div style="display:flex;gap:9px;align-items:flex-start;padding:9px 11px;background:var(--sf);border:1px solid var(--bd);border-radius:9px;margin-bottom:5px">${tpill(l.tag||'UPDATE')}<div style="flex:1"><div style="font-size:12px;line-height:1.5">${esc(l.text)}</div><div style="font-size:10px;color:var(--t3);margin-top:2px">${fd(l.created_at)}${l.project?' · '+esc(l.project):''}</div></div></div>`).join(''):'<div style="color:var(--t3)">No entries yet.</div>'}
     </div>
   </div>`;
 }
@@ -1879,7 +1880,7 @@ function vLog(){
       ${S.logs.map(l=>{
         const MOOD_MAP={1:'😩',2:'😕',3:'😐',4:'🙂',5:'🔥'};
         const lt=S.tasks.find(t=>t.id===l.linked_task_id);
-        return `<div class="card"><div style="display:flex;gap:9px;align-items:flex-start">
+        return `<div class="card" style="padding:12px 15px"><div style="display:flex;gap:9px;align-items:flex-start">
           ${tpill(l.tag||'UPDATE')}
           <div style="flex:1">
             ${l.project?`<div style="font-size:10px;color:${NCH.log};margin-bottom:2px;font-weight:700">${esc(l.project)}</div>`:''}
@@ -2971,6 +2972,11 @@ function render(){
   else if(S.section==='review')    html=vReview();
   else if(S.section==='settings')  html=vSettings();
   document.getElementById('mi').innerHTML=html;
+  // Re-trigger page fade animation on every section switch
+  const _mi=document.getElementById('mi');
+  _mi.style.animation='none';
+  void _mi.offsetHeight; // force reflow
+  _mi.style.animation='';
   bindEvents();
 }
 
